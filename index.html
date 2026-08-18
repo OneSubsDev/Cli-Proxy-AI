@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proxy AI trên máy bạn — cài đặt và sử dụng</title>
+<meta name="description" content="Hướng dẫn cài và dùng proxy AI cho người không rành công nghệ, kèm bộ tạo cấu hình tự động.">
+<style>
+  :root{
+    --ground:#F2F5F6; --surface:#FFFFFF; --surface-2:#E7EDEE;
+    --ink:#132227; --ink-2:#40565C; --ink-3:#6C8288;
+    --line:#CBD8DA; --accent:#0B6E5F; --accent-soft:#DCEDE8;
+    --warn:#9A6412; --warn-soft:#F7ECD6;
+    --code-bg:#132227; --code-ink:#DDE8E6; --code-dim:#7B9498;
+    --shadow:0 1px 2px rgba(19,34,39,.06),0 8px 24px -16px rgba(19,34,39,.28);
+    --display:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1719;--surface:#162225;--surface-2:#1E2E32;--ink:#E4EDEC;--ink-2:#A9BFC1;
+      --ink-3:#7B9498;--line:#2A3D41;--accent:#4FBFA5;--accent-soft:#14322D;--warn:#D9A441;
+      --warn-soft:#2E2415;--code-bg:#0A1214;--code-ink:#CFE0DD;--code-dim:#6C8288;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1719;--surface:#162225;--surface-2:#1E2E32;--ink:#E4EDEC;--ink-2:#A9BFC1;
+    --ink-3:#7B9498;--line:#2A3D41;--accent:#4FBFA5;--accent-soft:#14322D;--warn:#D9A441;
+    --warn-soft:#2E2415;--code-bg:#0A1214;--code-ink:#CFE0DD;--code-dim:#6C8288;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0;background:var(--ground);color:var(--ink);
+    font-family:var(--body);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- khung trang ---------- */
+  .shell{display:grid;grid-template-columns:262px minmax(0,1fr);gap:0;max-width:1240px;margin:0 auto}
+
+  nav.side{
+    position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+    border-right:1px solid var(--line);padding:34px 22px 40px;
+  }
+  .brandmark{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25;margin:0 0 4px}
+  .brandsub{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 26px}
+  nav.side .grp{margin-bottom:22px}
+  nav.side .grp > span{
+    display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:8px;
+  }
+  nav.side a{
+    display:block;padding:5px 10px;margin-left:-10px;border-radius:6px;
+    color:var(--ink-2);text-decoration:none;font-size:14.5px;line-height:1.45;
+  }
+  nav.side a:hover{background:var(--surface-2);color:var(--ink)}
+  nav.side a.on{background:var(--accent-soft);color:var(--accent);font-weight:650}
+  nav.side a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+  main{padding:0 40px 110px;min-width:0}
+  .inner{max-width:820px}
+
+  /* ---------- chu ---------- */
+  header.top{padding:64px 0 34px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  h1{font-family:var(--display);font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+  .lede{font-size:19px;color:var(--ink-2);margin:0;max-width:58ch;text-wrap:pretty}
+
+  section.part{padding-top:16px}
+  .parthead{
+    display:flex;align-items:baseline;gap:14px;margin:64px 0 4px;
+    padding-top:26px;border-top:2px solid var(--accent);
+  }
+  .parthead .pn{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+  h2{font-family:var(--display);font-weight:600;font-size:31px;letter-spacing:-.015em;margin:0;text-wrap:balance}
+  h3{font-family:var(--display);font-weight:600;font-size:23px;letter-spacing:-.01em;margin:46px 0 6px;text-wrap:balance}
+  h3 .num{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.06em;margin-right:11px;vertical-align:.16em}
+  h4{font-family:var(--body);font-weight:650;font-size:16.5px;margin:26px 0 8px}
+  p{margin:0 0 14px;max-width:64ch;text-wrap:pretty}
+  .sub{color:var(--ink-2);margin:0 0 20px;max-width:64ch}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,summary:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  strong{font-weight:650}
+  ol.steps{margin:0 0 18px;padding-left:22px;line-height:1.9;max-width:64ch}
+  ol.steps li{margin-bottom:4px}
+  ul.plain{max-width:64ch;padding-left:20px}
+  ul.plain li{margin-bottom:7px}
+
+  .menu{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent);padding:.16em .5em;border-radius:4px;white-space:nowrap;font-weight:600}
+  code:not(pre code){font-family:var(--mono);font-size:.87em;background:var(--surface-2);padding:.14em .42em;border-radius:4px;color:var(--ink)}
+
+  /* ---------- khoi code ---------- */
+  .codebox{margin:0 0 16px;border-radius:9px;overflow:hidden;border:1px solid var(--line);background:var(--code-bg)}
+  .codebar{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:9px 12px 9px 14px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.09);
+  }
+  .codebar .fp{font-family:var(--mono);font-size:12px;color:var(--code-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .copy{
+    font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--code-ink);
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);
+    padding:4px 11px;border-radius:5px;cursor:pointer;white-space:nowrap;
+  }
+  .copy:hover{background:rgba(255,255,255,.18)}
+  .copy.done{background:var(--accent);border-color:var(--accent);color:#fff}
+  .codebox pre{margin:0;padding:15px 17px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--code-ink);background:none}
+  .codebox pre .c{color:var(--code-dim)}
+
+  /* ---------- anh ---------- */
+  figure.shot{margin:22px 0 28px}
+  figure.shot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);background:var(--surface)}
+  figure.shot figcaption{font-size:14.5px;color:var(--ink-3);margin:10px 2px 0;max-width:64ch}
+
+  .diagram{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:26px 22px 20px;margin:30px 0 10px;box-shadow:var(--shadow);overflow-x:auto}
+  .diagram svg{display:block;min-width:560px;width:100%;height:auto}
+  .cap{font-size:14.5px;color:var(--ink-3);margin:0 0 8px;max-width:64ch}
+
+  /* ---------- ghi chu ---------- */
+  .note{border-left:2.5px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 8px 8px 0;margin:20px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note p{margin:0;max-width:60ch;font-size:15.5px}
+  .note p + p{margin-top:9px}
+  .note .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px}
+  .note.warn .tag{color:var(--warn)}
+
+  .tw{overflow-x:auto;margin:0 0 16px}
+  table{border-collapse:collapse;width:100%;font-size:15px;min-width:420px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom-color:var(--ink-3)}
+  td code{white-space:nowrap}
+
+  details{border-bottom:1px solid var(--line);padding:14px 0}
+  summary{cursor:pointer;font-weight:600;font-size:15.5px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+";font-family:var(--mono);color:var(--accent);margin-right:11px;font-weight:400}
+  details[open] summary::before{content:"−"}
+  details p{margin:11px 0 2px;color:var(--ink-2);font-size:15.5px}
+
+  /* ---------- bo tao cau hinh ---------- */
+  .builder{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:4px 24px 26px;margin:24px 0 10px}
+  .fset{border:0;padding:22px 0 0;margin:0}
+  .fset + .fset{border-top:1px solid var(--line);margin-top:22px}
+  .fset legend{
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);padding:0;margin-bottom:4px;
+  }
+  .fhint{font-size:14px;color:var(--ink-3);margin:0 0 14px;max-width:56ch}
+  .opts{display:flex;flex-wrap:wrap;gap:9px}
+  .opt{position:relative}
+  .opt input{position:absolute;opacity:0;width:0;height:0}
+  .opt span{
+    display:block;cursor:pointer;user-select:none;
+    border:1px solid var(--line);background:var(--ground);border-radius:8px;
+    padding:9px 15px;font-size:15px;font-weight:600;color:var(--ink-2);
+  }
+  .opt span small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:1px}
+  .opt input:checked + span{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+  .opt input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+  .opt input:disabled + span{opacity:.4;cursor:not-allowed}
+
+  .row{display:flex;flex-wrap:wrap;gap:16px;margin-top:6px}
+  .field{flex:1 1 240px;min-width:0}
+  .field label{display:block;font-size:13.5px;font-weight:650;margin-bottom:5px;color:var(--ink-2)}
+  .field select,.field input{
+    width:100%;font-family:var(--mono);font-size:13.5px;color:var(--ink);
+    background:var(--ground);border:1px solid var(--line);border-radius:7px;padding:9px 11px;
+  }
+  .field .fh{font-size:12.5px;color:var(--ink-3);margin:5px 0 0}
+
+  #plan-wrap[hidden]{display:none}
+  .empty{
+    border:2px dashed var(--line);border-radius:9px;padding:30px 20px;text-align:center;
+    color:var(--ink-3);font-size:15px;background:var(--ground);
+  }
+  .outhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 10px}
+  .outhead h4{margin:0}
+  .badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:3px 9px;border-radius:4px}
+
+  footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-3);font-size:14px}
+
+  @media (max-width:940px){
+    .shell{grid-template-columns:1fr}
+    nav.side{
+      position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);
+      padding:22px 24px 16px;
+    }
+    nav.side .grp{margin-bottom:14px}
+    nav.side .navwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 20px}
+    main{padding:0 24px 90px}
+    header.top{padding:36px 0 30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<nav class="side" aria-label="Mục lục">
+  <p class="brandmark">Proxy AI<br>trên máy bạn</p>
+  <p class="brandsub">Cài đặt &amp; sử dụng</p>
+  <div class="navwrap">
+    <div class="grp">
+      <span>Phần 1 · Giới thiệu</span>
+      <a href="#la-gi">Proxy AI là gì</a>
+      <a href="#nen-biet">Ba điều nên biết</a>
+      <a href="#chuan-bi">Bạn cần chuẩn bị</a>
+    </div>
+    <div class="grp">
+      <span>Phần 2 · Cài đặt</span>
+      <a href="#tai-ve">01 · Tải và cài</a>
+      <a href="#cai-loi">02 · Cài phần lõi</a>
+      <a href="#bat-proxy">03 · Bật proxy</a>
+      <a href="#dang-nhap">04 · Đăng nhập tài khoản</a>
+      <a href="#doi-khoa">05 · Đổi khoá bảo vệ</a>
+      <a href="#theo-doi">06 · Theo dõi mức dùng</a>
+    </div>
+    <div class="grp">
+      <span>Phần 3 · Sử dụng</span>
+      <a href="#quy-tac">Quy tắc chung</a>
+      <a href="#tao-cau-hinh">Tạo cấu hình cho tôi</a>
+      <a href="#truc-trac">Gặp trục trặc</a>
+      <a href="#hoi-dap">Câu hỏi hay gặp</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="inner">
+
+<header class="top">
+  <p class="eyebrow">Hướng dẫn · khoảng 10 phút · làm một lần</p>
+  <h1>Proxy AI trên máy bạn</h1>
+  <p class="lede">Bạn có tài khoản ChatGPT, Claude hoặc Gemini và muốn dùng nó trong các
+  công cụ lập trình. Trang này hướng dẫn cài, và tự tạo sẵn cấu hình cho công cụ bạn chọn —
+  không cần biết lập trình.</p>
+</header>
+
+<!-- ============ PHẦN 1 ============ -->
+<section class="part">
+<div class="parthead"><span class="pn">Phần 1</span><h2>Giới thiệu</h2></div>
+
+<h3 id="la-gi">Proxy AI là gì?</h3>
+<p class="sub">Hiểu trong một phút, trước khi bắt tay vào cài.</p>
+
+<p>Mỗi công ty AI nói một “thứ tiếng” riêng. Công cụ viết cho Claude thì không hiểu tài
+khoản ChatGPT, và ngược lại. Bình thường bạn có tài khoản nào thì buộc phải dùng đúng
+công cụ của hãng đó.</p>
+
+<p><strong>Proxy là một người phiên dịch chạy ngay trên máy bạn.</strong> Công cụ nói
+tiếng nào, nó nghe tiếng đó, rồi dịch sang tiếng của nhà cung cấp mà bạn có tài khoản.
+Hai bên không cần biết đến nhau.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 720 232" role="img" aria-label="Sơ đồ: bốn loại tài khoản bên trái nối vào proxy ở giữa, proxy nối ra bốn loại công cụ bên phải, mọi tổ hợp đều được">
+  <defs>
+    <marker id="ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="12">
+    <text x="72" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">BẠN CÓ</text>
+    <text x="360" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">PROXY</text>
+    <text x="640" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">BẠN DÙNG</text>
+    <g fill="var(--ink)">
+      <rect x="1" y="30" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="52" text-anchor="middle">Claude</text>
+      <rect x="1" y="74" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="96" text-anchor="middle">ChatGPT</text>
+      <rect x="1" y="118" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="140" text-anchor="middle">Gemini</text>
+      <rect x="1" y="162" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="184" text-anchor="middle">Kimi · Grok</text>
+    </g>
+    <g stroke="var(--line)" stroke-width="1.2" color="var(--line)" fill="none" opacity=".85">
+      <path d="M147,47 C210,47 240,113 296,113" marker-end="url(#ar)"/>
+      <path d="M147,91 C210,91 245,113 296,113" marker-end="url(#ar)"/>
+      <path d="M147,135 C210,135 245,113 296,113" marker-end="url(#ar)"/>
+      <path d="M147,179 C210,179 240,113 296,113" marker-end="url(#ar)"/>
+    </g>
+    <rect x="300" y="76" width="120" height="74" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.6"/>
+    <text x="360" y="108" text-anchor="middle" fill="var(--ink)" font-size="12.5">CLIProxyAPI</text>
+    <text x="360" y="126" text-anchor="middle" fill="var(--ink-3)" font-size="10.5">:8317 · trên máy bạn</text>
+    <g stroke="var(--accent)" stroke-width="1.2" color="var(--accent)" fill="none">
+      <path d="M424,113 C480,113 510,47 566,47" marker-end="url(#ar)"/>
+      <path d="M424,113 C475,113 515,91 566,91" marker-end="url(#ar)"/>
+      <path d="M424,113 C475,113 515,135 566,135" marker-end="url(#ar)"/>
+      <path d="M424,113 C480,113 510,179 566,179" marker-end="url(#ar)"/>
+    </g>
+    <g fill="var(--ink)">
+      <rect x="570" y="30" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="52" text-anchor="middle">Claude Code</text>
+      <rect x="570" y="74" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="96" text-anchor="middle">Codex CLI</text>
+      <rect x="570" y="118" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="140" text-anchor="middle">Gemini CLI</text>
+      <rect x="570" y="162" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="184" text-anchor="middle">Cline · OpenCode · Droid</text>
+    </g>
+    <text x="360" y="222" text-anchor="middle" fill="var(--ink-3)" font-size="11">bất kỳ ô trái nào × bất kỳ ô phải nào</text>
+  </g>
+</svg>
+</div>
+<p class="cap">Bên trái là thứ bạn đã có. Bên phải là thứ bạn muốn dùng. Proxy ở giữa
+nối mọi cặp lại với nhau.</p>
+
+<h3 id="nen-biet">Ba điều nên biết</h3>
+<div class="note">
+  <span class="tag">Trước khi bắt đầu</span>
+  <p><strong>Nó chạy trên máy bạn.</strong> Không phải dịch vụ trên mạng, không ai khác
+  truy cập được.</p>
+  <p><strong>Không phải cách dùng AI miễn phí.</strong> Bạn vẫn tiêu vào chính tài khoản
+  mình đang trả tiền — chỉ là dùng được ở nhiều công cụ hơn.</p>
+  <p><strong>Cài một lần.</strong> Xong rồi thì mở máy là nó tự chạy.</p>
+</div>
+
+<h3 id="chuan-bi">Bạn cần chuẩn bị</h3>
+<div class="tw"><table>
+  <tr><th>Thứ cần</th><th>Ghi chú</th></tr>
+  <tr><td>Một máy Mac hoặc Windows</td><td>Các bước gần như giống hệt nhau</td></tr>
+  <tr><td>Một tài khoản AI đang dùng được</td><td>ChatGPT Plus/Pro, Claude Pro/Max, Gemini, Kimi hoặc Grok</td></tr>
+  <tr><td>Khoảng 10 phút</td><td>Phần lâu nhất là chờ tải về</td></tr>
+</table></div>
+</section>
+
+<!-- ============ PHẦN 2 ============ -->
+<section class="part">
+<div class="parthead"><span class="pn">Phần 2</span><h2>Cài đặt</h2></div>
+
+<h3 id="tai-ve"><span class="num">01</span>Tải và cài ứng dụng</h3>
+<p class="sub">Ứng dụng tên là <strong>EasyCLIProxyAPI</strong>, miễn phí và mã nguồn mở.</p>
+
+<ol class="steps">
+  <li>Mở trang <a href="https://github.com/router-for-me/EasyCLIProxyAPI/releases">github.com/router-for-me/EasyCLIProxyAPI/releases</a></li>
+  <li>Kéo xuống mục <strong>Assets</strong> của bản mới nhất</li>
+  <li>Máy Mac tải file đuôi <code>.dmg</code> · máy Windows tải file đuôi <code>.zip</code></li>
+  <li><strong>Mac:</strong> mở file <code>.dmg</code> rồi kéo ứng dụng thả vào thư mục <strong>Applications</strong><br>
+      <strong>Windows:</strong> giải nén rồi chạy file bên trong</li>
+  <li>Mở ứng dụng lên</li>
+</ol>
+
+<div class="note">
+  <span class="tag">Yên tâm</span>
+  <p>Trên máy Mac, ứng dụng này <strong>đã được Apple kiểm duyệt</strong>, nên mở thẳng
+  được, không hiện cảnh báo “không rõ nhà phát triển”.</p>
+</div>
+
+<h3 id="cai-loi"><span class="num">02</span>Cài phần lõi</h3>
+<p class="sub">Ứng dụng bạn vừa cài là phần vỏ có giao diện. Phần lõi mới là thứ làm việc
+thật, và phải bấm cài thêm một lần.</p>
+
+<ol class="steps">
+  <li>Ở cột menu bên trái, bấm <span class="menu">Version Management</span></li>
+  <li>Bấm nút cài phiên bản lõi mới nhất</li>
+  <li>Chờ vài giây cho tới khi báo đã cài xong</li>
+</ol>
+
+<figure class="shot">
+  <img src="images/version-management.webp" width="1600" height="1080" loading="lazy"
+       alt="Màn hình Version Management trong ứng dụng EasyCLIProxyAPI, nơi bấm cài phiên bản lõi">
+  <figcaption>Màn hình <strong>Version Management</strong>. Chấm màu cam cạnh tên menu
+  nghĩa là đang có bản lõi mới hơn để cập nhật.</figcaption>
+</figure>
+
+<h3 id="bat-proxy"><span class="num">03</span>Bật proxy</h3>
+
+<ol class="steps">
+  <li>Bấm <span class="menu">Home</span> ở menu bên trái</li>
+  <li>Trong khung <strong>Runtime Control</strong>, bấm nút chạy</li>
+  <li>Khi <em>Runtime Status</em> hiện <strong>Running</strong> là đã xong</li>
+</ol>
+
+<figure class="shot">
+  <img src="images/home.webp" width="1600" height="1085" loading="lazy"
+       alt="Màn hình Home hiển thị trạng thái Running và ba địa chỉ proxy nội bộ">
+  <figcaption>Đang chạy. Bên phải là ba địa chỉ để lát nữa khai vào công cụ của bạn —
+  mỗi loại công cụ dùng một địa chỉ khác nhau.</figcaption>
+</figure>
+
+<div class="note">
+  <span class="tag">Từ giờ tự chạy</span>
+  <p>Bật một lần là xong. Những lần mở máy sau, ứng dụng tự khởi động cùng hệ thống,
+  bạn không phải làm lại bước này.</p>
+</div>
+
+<h3 id="dang-nhap"><span class="num">04</span>Đăng nhập tài khoản của bạn</h3>
+<p class="sub">Đây là bước nối tài khoản AI bạn đang có vào proxy.</p>
+
+<ol class="steps">
+  <li>Bấm <span class="menu">OAuth</span> ở menu bên trái</li>
+  <li>Ở tab <strong>OAuth Sign-In</strong>, tìm ô ứng với tài khoản của bạn</li>
+  <li>Bấm <strong>Start Sign-In</strong></li>
+  <li>Trình duyệt tự mở ra — đăng nhập như bình thường</li>
+  <li>Xong thì ô đó chuyển sang <strong>Completed</strong></li>
+</ol>
+
+<div class="note warn">
+  <span class="tag">Tên trên màn hình khác tên bạn quen</span>
+  <p>Đây là chỗ nhiều người khựng lại. Ứng dụng dùng tên kỹ thuật, không phải tên sản
+  phẩm bạn mua:</p>
+</div>
+
+<div class="tw"><table>
+  <tr><th>Bạn có tài khoản</th><th>Bấm vào ô tên là</th></tr>
+  <tr><td>ChatGPT</td><td><strong>Codex OAuth</strong></td></tr>
+  <tr><td>Claude</td><td><strong>Claude OAuth</strong></td></tr>
+  <tr><td>Gemini</td><td><strong>Antigravity OAuth</strong></td></tr>
+  <tr><td>Kimi</td><td><strong>Kimi OAuth</strong></td></tr>
+  <tr><td>Grok</td><td><strong>xAI OAuth</strong></td></tr>
+</table></div>
+
+<figure class="shot">
+  <img src="images/oauth-sign-in.webp" width="1600" height="897" loading="lazy"
+       alt="Màn hình OAuth Sign-In với năm ô đăng nhập: Codex, Claude, Antigravity, Kimi và xAI">
+  <figcaption>Ô <strong>Codex OAuth</strong> đã đăng nhập xong nên hiện
+  <em>Completed</em>. Ô <strong>Claude OAuth</strong> đang trong lúc đăng nhập dở —
+  phần link đã được làm mờ vì đó là thông tin riêng của từng máy.</figcaption>
+</figure>
+
+<p><strong>Đăng nhập được nhiều tài khoản thì tốt hơn một.</strong> Proxy tự xoay vòng
+giữa chúng, và khi một tài khoản hết lượt thì tự chuyển sang cái còn lại — bạn không bị
+đứng giữa chừng.</p>
+
+<h4>Kiểm tra tài khoản đã lưu</h4>
+<p>Sang tab <strong>Authentication Files</strong> để xem danh sách tài khoản proxy đang
+giữ. Mỗi dòng là một tài khoản; chữ <strong>active</strong> màu xanh nghĩa là dùng được.
+Nút <strong>Models</strong> trên mỗi dòng cho biết tài khoản đó có những model nào —
+lát nữa sẽ cần.</p>
+
+<figure class="shot">
+  <img src="images/oauth-files.webp" width="1600" height="1080" loading="lazy"
+       alt="Tab Authentication Files liệt kê các tài khoản đã đăng nhập cùng trạng thái active">
+  <figcaption>Có tài khoản trong danh sách và trạng thái <em>active</em> nghĩa là proxy
+  đã sẵn sàng phục vụ.</figcaption>
+</figure>
+
+<h3 id="doi-khoa"><span class="num">05</span>Đổi khoá bảo vệ</h3>
+<p class="sub">Bước này ngắn nhưng đừng bỏ qua.</p>
+
+<div class="note warn">
+  <span class="tag">Quan trọng</span>
+  <p>Khoá này giống mật khẩu bảo vệ toàn bộ tài khoản AI bạn vừa đăng nhập. Ứng dụng
+  đặt sẵn một khoá mặc định dễ đoán — <strong>hãy đổi ngay</strong>.</p>
+</div>
+
+<ol class="steps">
+  <li>Bấm <span class="menu">Advanced Settings</span> ở menu bên trái</li>
+  <li>Ở tab <strong>General Settings</strong>, tìm khung <strong>Authentication Keys</strong></li>
+  <li>Bấm nút <strong>+</strong> để tạo khoá mới, rồi xoá khoá cũ đi</li>
+  <li><strong>Chép khoá mới ra chỗ an toàn</strong> — phần 3 sẽ cần dùng</li>
+</ol>
+
+<figure class="shot">
+  <img src="images/advanced-settings.webp" width="1600" height="1084" loading="lazy"
+       alt="Màn hình Advanced Settings với khung Authentication Keys và khung WebUI Key">
+  <figcaption>Khung trên là khoá cho các công cụ dùng. Khung dưới —
+  <strong>WebUI Key</strong> — là mật khẩu vào trang quản trị, một thứ khác, cũng nên đổi.</figcaption>
+</figure>
+
+<div class="note">
+  <span class="tag">Đừng nhầm hai loại khoá</span>
+  <p><strong>Authentication Keys</strong> — khai vào công cụ lập trình của bạn.</p>
+  <p><strong>WebUI Key</strong> — chỉ để đăng nhập trang quản trị của chính proxy.</p>
+</div>
+
+<h3 id="theo-doi"><span class="num">06</span>Theo dõi mức đã dùng</h3>
+<p class="sub">Không bắt buộc, nhưng hữu ích để biết mình còn bao nhiêu.</p>
+
+<p>Bấm <span class="menu">Usage</span> để xem số lượt gọi, lượng chữ đã dùng và ước tính
+chi phí. Còn <span class="menu">OAuth</span> → tab <strong>Quota Lookup</strong> cho biết
+hạn mức còn lại của từng tài khoản.</p>
+
+<figure class="shot">
+  <img src="images/usage-overview.webp" width="1600" height="1081" loading="lazy"
+       alt="Màn hình Usage History với các số liệu tổng lượt gọi, tổng token và chi phí ước tính">
+  <figcaption>Toàn bộ số liệu này lưu trên máy bạn, không gửi đi đâu.</figcaption>
+</figure>
+
+<figure class="shot">
+  <img src="images/quota-lookup.webp" width="1600" height="1080" loading="lazy"
+       alt="Tab Quota Lookup với nút Fetch Quota để kiểm tra hạn mức còn lại của tài khoản">
+  <figcaption>Bấm <strong>Fetch Quota</strong> để hỏi nhà cung cấp xem tài khoản còn bao
+  nhiêu. Tên tài khoản trong ảnh đã được làm mờ.</figcaption>
+</figure>
+</section>
+
+<!-- ============ PHẦN 3 ============ -->
+<section class="part">
+<div class="parthead"><span class="pn">Phần 3</span><h2>Sử dụng</h2></div>
+
+<h3 id="quy-tac">Quy tắc chung</h3>
+<p class="sub">Mọi công cụ đều cần đúng ba thứ. Hiểu ba thứ này rồi thì công cụ nào bạn
+cũng tự khai được.</p>
+
+<div class="tw"><table>
+  <tr><th>Thứ cần khai</th><th>Là gì</th><th>Lấy ở đâu</th></tr>
+  <tr>
+    <td><strong>Địa chỉ</strong></td>
+    <td>Nơi công cụ gửi yêu cầu tới, thay vì gửi thẳng lên mạng</td>
+    <td>Luôn là <code>http://127.0.0.1:8317</code> — chỉ khác ở phần đuôi, xem bên dưới</td>
+  </tr>
+  <tr>
+    <td><strong>Khoá</strong></td>
+    <td>Mật khẩu để proxy biết đúng là bạn gọi</td>
+    <td>Khoá bạn tạo ở bước 05</td>
+  </tr>
+  <tr>
+    <td><strong>Tên model</strong></td>
+    <td>Chọn dùng “bộ não” nào trong số tài khoản đã đăng nhập</td>
+    <td><span class="menu">OAuth</span> → <em>Authentication Files</em> → nút <strong>Models</strong></td>
+  </tr>
+</table></div>
+
+<h4>Quy tắc <code>/v1</code> — chỗ sai nhiều nhất</h4>
+<p>Phần đuôi địa chỉ tuỳ theo công cụ nói “tiếng” nào. Nhớ một câu:
+<strong>Anthropic và Gemini thì không có <code>/v1</code>, còn lại thì có.</strong></p>
+
+<div class="tw"><table>
+  <tr><th>Công cụ</th><th>Địa chỉ đầy đủ</th></tr>
+  <tr><td>Claude Code</td><td><code>http://127.0.0.1:8317</code></td></tr>
+  <tr><td>Gemini CLI</td><td><code>http://127.0.0.1:8317</code></td></tr>
+  <tr><td>Codex CLI · OpenCode · Cline · Continue.dev · Droid</td><td><code>http://127.0.0.1:8317/v1</code></td></tr>
+</table></div>
+
+<h4>Khai một model không có nghĩa là bị khoá vào nó</h4>
+<p>Dòng <code>model</code> trong cấu hình chỉ là <strong>mặc định lúc mở</strong>. Mọi
+công cụ ở đây đều đổi được model sau đó, và phần lớn còn khai sẵn được nhiều model một lúc:</p>
+
+<div class="tw"><table>
+  <tr><th>Công cụ</th><th>Khai nhiều model sẵn</th><th>Đổi lúc đang dùng</th></tr>
+  <tr><td>Claude Code</td><td>Được — 4 tên <em>Opus / Sonnet / Haiku / Fable</em> trỏ sang 4 model khác nhau</td><td><code>/model</code></td></tr>
+  <tr><td>Codex CLI</td><td>Được — mỗi bộ một file <code>&lt;tên&gt;.config.toml</code></td><td><code>/models</code> · hoặc <code>codex -m &lt;tên&gt;</code></td></tr>
+  <tr><td>Continue.dev</td><td>Được — <code>models</code> là danh sách</td><td>Bấm tên model ở đáy khung chat</td></tr>
+  <tr><td>Droid</td><td>Được — <code>custom_models</code> là mảng</td><td>Chọn trong phần chuyển model</td></tr>
+  <tr><td>OpenCode</td><td>Không cần khai trước</td><td><code>/models</code></td></tr>
+  <tr><td>Cline / Roo Code</td><td>Một lúc một model</td><td>Sửa ô <em>Model ID</em> trong cài đặt</td></tr>
+  <tr><td>Gemini CLI</td><td>Một lúc một model</td><td>Sửa biến môi trường rồi mở cửa sổ mới</td></tr>
+</table></div>
+
+<p>Bộ tạo cấu hình bên dưới sẽ tự sinh sẵn nhiều model cho những công cụ hỗ trợ, và ghi rõ
+cách chuyển cho từng loại.</p>
+
+<h4>Bốn điều dễ vấp</h4>
+<ul class="plain">
+  <li><strong>Model có gì là do tài khoản bạn đăng nhập quyết định.</strong> Không đăng
+  nhập ChatGPT thì không gọi được model GPT, dù có gõ đúng tên. Mỗi gói cũng khác nhau —
+  gói Plus có model mà gói Free không có.</li>
+  <li><strong>Sửa cấu hình xong phải mở phiên mới.</strong> Cửa sổ công cụ đang mở vẫn
+  dùng cấu hình cũ cho tới khi bạn đóng và mở lại.</li>
+  <li><strong>Khoá là mật khẩu.</strong> Đừng đưa lên GitHub, đừng gửi qua chat nhóm.</li>
+  <li><strong>Proxy phải đang chạy.</strong> Công cụ báo <code>connection refused</code>
+  gần như luôn là do quên bật ứng dụng.</li>
+</ul>
+
+<h3 id="tao-cau-hinh">Tạo cấu hình cho tôi</h3>
+<p class="sub">Chọn tài khoản bạn đã đăng nhập và công cụ bạn muốn dùng. Cấu hình sẽ tự
+hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
+
+<div class="builder">
+  <fieldset class="fset">
+    <legend>Bước 1 · Tài khoản bạn đã đăng nhập</legend>
+    <p class="fhint">Chọn tất cả những loại bạn đã đăng nhập ở bước 04. Chọn nhiều cũng được.</p>
+    <div class="opts" id="acc-opts"></div>
+  </fieldset>
+
+  <fieldset class="fset" id="plan-wrap" hidden>
+    <legend>Bước 1b · Gói ChatGPT của bạn</legend>
+    <p class="fhint">Mỗi gói mở khoá một danh sách model khác nhau.</p>
+    <div class="opts" id="plan-opts"></div>
+  </fieldset>
+
+  <fieldset class="fset">
+    <legend>Bước 2 · Công cụ muốn dùng</legend>
+    <p class="fhint">Mỗi lần chọn một công cụ. Muốn cấu hình thêm công cụ khác thì chọn lại.</p>
+    <div class="opts" id="tool-opts"></div>
+  </fieldset>
+
+  <fieldset class="fset">
+    <legend>Bước 3 · Model và khoá</legend>
+    <p class="fhint">Danh sách model bên dưới lấy theo đúng tài khoản bạn vừa chọn.</p>
+    <div class="row">
+      <div class="field">
+        <label for="m-main">Model chính</label>
+        <select id="m-main"></select>
+        <p class="fh">Dùng cho phần lớn công việc.</p>
+      </div>
+      <div class="field">
+        <label for="m-light">Model nhẹ</label>
+        <select id="m-light"></select>
+        <p class="fh">Dùng cho việc vặt chạy ngầm. Chọn loại rẻ và nhanh.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field" style="flex-basis:100%">
+        <label for="k-in">Khoá của bạn</label>
+        <input id="k-in" type="text" spellcheck="false" autocomplete="off"
+               placeholder="dán khoá tạo ở bước 05 vào đây">
+        <p class="fh">Chỉ nằm trong trình duyệt của bạn, không gửi đi đâu. Để trống thì
+        cấu hình hiện chỗ điền tạm.</p>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<div id="out"></div>
+
+<h3 id="truc-trac">Gặp trục trặc</h3>
+<div class="tw"><table>
+  <tr><th>Hiện tượng</th><th>Cách xử lý</th></tr>
+  <tr><td>Bấm chạy nhưng không lên <em>Running</em></td>
+      <td>Nhiều khả năng chưa cài phần lõi. Quay lại bước 02.</td></tr>
+  <tr><td>Đăng nhập xong mà không thấy tài khoản</td>
+      <td>Trình duyệt có thể chặn cửa sổ bật lên. Thử lại và cho phép khi trình duyệt hỏi.
+      Kiểm tra ở tab <strong>Authentication Files</strong>.</td></tr>
+  <tr><td><code>401</code></td>
+      <td>Khoá điền vào công cụ không khớp khoá trong <strong>Authentication Keys</strong>.
+      Đối chiếu lại từng ký tự.</td></tr>
+  <tr><td><code>404</code></td>
+      <td>Sai phần <code>/v1</code> ở cuối địa chỉ. Xem lại bảng ở mục Quy tắc chung.</td></tr>
+  <tr><td><code>connection refused</code></td>
+      <td>Proxy chưa bật. Mở ứng dụng, vào <span class="menu">Home</span> và cho chạy lại.</td></tr>
+  <tr><td><code>unknown provider for model …</code></td>
+      <td>Tên model không thuộc tài khoản nào bạn đã đăng nhập. Xem lại danh sách ở nút
+      <strong>Models</strong>, hoặc đăng nhập thêm tài khoản tương ứng.</td></tr>
+  <tr><td>Báo hết lượt</td>
+      <td>Tài khoản đã dùng hết hạn mức. Chờ hồi, hoặc đăng nhập thêm một tài khoản nữa.</td></tr>
+</table></div>
+
+<h3 id="hoi-dap">Câu hỏi hay gặp</h3>
+
+<details>
+  <summary>Tôi không biết lập trình, dùng được không?</summary>
+  <p>Được. Phần cài đặt chỉ là bấm nút trong ứng dụng có giao diện. Phần cấu hình thì
+  trang này tự sinh ra cho bạn, việc của bạn là chép và dán vào đúng chỗ.</p>
+</details>
+
+<details>
+  <summary>Có tốn thêm tiền không?</summary>
+  <p>Ứng dụng miễn phí. Nhưng nó không tạo ra lượt dùng mới — bạn vẫn tiêu vào hạn mức
+  của tài khoản mình đang trả tiền.</p>
+</details>
+
+<details>
+  <summary>Nó có gửi dữ liệu của tôi đi đâu lạ không?</summary>
+  <p>Không. Ứng dụng chạy trên máy bạn và chỉ nghe ở địa chỉ nội bộ
+  <code>127.0.0.1</code>, máy khác không gọi vào được. Dữ liệu đi thẳng từ máy bạn tới
+  nhà cung cấp mà bạn đã đăng nhập, giống như khi dùng trực tiếp.</p>
+</details>
+
+<details>
+  <summary>Dùng ChatGPT để chạy Claude Code thì có giống hệt bản thật không?</summary>
+  <p>Không. Giao diện và thao tác thì y hệt, nhưng model khác nhau thì cách làm việc
+  khác nhau — chất lượng và cách trả lời đều lệch ít nhiều. Hãy xem đây là cách để dùng
+  được công cụ mình thích, không phải cách để có Claude miễn phí.</p>
+</details>
+
+<details>
+  <summary>Cài nhiều công cụ cùng lúc được không?</summary>
+  <p>Được, và đây là điểm hay. Một proxy phục vụ đồng thời mọi công cụ — Claude Code,
+  Codex CLI và OpenCode cùng trỏ vào <code>:8317</code>, cả ba chạy song song, dùng chung
+  tài khoản bạn đã đăng nhập.</p>
+</details>
+
+<details>
+  <summary>Muốn gỡ đi thì làm sao?</summary>
+  <p>Vào <span class="menu">Home</span> bấm <strong>stop</strong>, rồi xoá ứng dụng như
+  mọi phần mềm khác. Các công cụ bạn đã khai báo sẽ quay về như cũ sau khi bạn xoá phần
+  địa chỉ và khoá đã thêm.</p>
+</details>
+
+<details>
+  <summary>Tài khoản của tôi có bị khoá vì dùng cách này không?</summary>
+  <p>Nói thẳng: có rủi ro. Truy cập tài khoản thuê bao bằng công cụ tự động thường nằm
+  ngoài phạm vi điều khoản sử dụng của nhà cung cấp. Rủi ro thấp khi dùng cá nhân ở mức
+  bình thường, nhưng tăng lên rõ nếu nhiều người dùng chung một tài khoản hoặc gọi với
+  tần suất bất thường. Cân nhắc trước khi dùng cho tài khoản quan trọng.</p>
+</details>
+
+<footer>
+  Phần mềm dùng ở đây là <strong>CLIProxyAPI</strong> và bản có giao diện
+  <strong>EasyCLIProxyAPI</strong> — mã nguồn mở, giấy phép MIT,
+  <a href="https://github.com/router-for-me/CLIProxyAPI">github.com/router-for-me/CLIProxyAPI</a>.
+  Ảnh chụp màn hình trong trang đã được làm mờ các thông tin riêng.
+  Danh sách model lấy theo bản lõi v7.2 — tài khoản của bạn có thể khác, luôn đối chiếu
+  với nút <strong>Models</strong> trong ứng dụng.
+</footer>
+
+</div>
+</main>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---------- du lieu model, lay tu registry cua CLIProxyAPI v7.2 ---------- */
+  const ACCOUNTS = {
+    chatgpt: {
+      label: "ChatGPT", note: "nút Codex",
+      plans: {
+        free: { label: "Free", models: ["gpt-5.5","gpt-5.6-terra","gpt-5.6-luna","gpt-5.4-mini","codex-auto-review"] },
+        plus: { label: "Plus", models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","gpt-5.3-codex-spark","codex-auto-review"] },
+        pro:  { label: "Pro",  models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","gpt-5.3-codex-spark","codex-auto-review"] },
+        team: { label: "Team", models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","codex-auto-review"] }
+      }
+    },
+    claude: {
+      label: "Claude", note: "nút Claude",
+      models: ["claude-opus-5","claude-sonnet-5","claude-opus-4-8","claude-opus-4-7","claude-opus-4-6",
+               "claude-sonnet-4-6","claude-fable-5","claude-sonnet-4-5-20250929","claude-haiku-4-5-20251001",
+               "claude-3-5-haiku-20241022"]
+    },
+    gemini: {
+      label: "Gemini", note: "nút Antigravity",
+      models: ["gemini-pro-agent","gemini-3.1-pro-low","gemini-3-flash","gemini-3-flash-agent",
+               "gemini-3.6-flash-high","gemini-3.5-flash-low","gemini-3.1-flash-lite",
+               "claude-sonnet-4-6","claude-opus-4-6-thinking"]
+    },
+    kimi: {
+      label: "Kimi", note: "nút Kimi",
+      models: ["kimi-k3","kimi-k3-256k","kimi-k2.7-code","kimi-k2.7-code-highspeed","kimi-k2.6","kimi-k2.5","kimi-k2-thinking","kimi-k2"]
+    },
+    grok: {
+      label: "Grok", note: "nút xAI",
+      models: ["grok-4.6","grok-4.5","grok-4.3","grok-composer-2.5-fast","grok-3-mini","grok-3-mini-fast"]
+    }
+  };
+
+  /* model nhe: ten chua mot trong cac tu nay */
+  const LIGHT = /(mini|lite|haiku|spark|flash|fast|low|k2\b|k2\.5)/i;
+
+  const TOOLS = {
+    "claude-code": {
+      label: "Claude Code", proto: "Anthropic", slash: false,
+      file: "~/.claude/settings.json",
+      where: "Mở file này bằng trình soạn thảo bất kỳ. Nếu file đã có nội dung, chỉ thêm khối <code>env</code> vào trong dấu ngoặc nhọn ngoài cùng, đừng xoá phần cũ. Chưa có file thì tạo mới."
+    },
+    "codex-cli": {
+      label: "Codex CLI", proto: "OpenAI Responses", slash: true,
+      file: "~/.codex/config.toml",
+      where: "Dán vào cuối file. Nếu đã có dòng <code>model</code> hoặc <code>model_provider</code> thì sửa lại thay vì thêm dòng thứ hai."
+    },
+    "gemini-cli": {
+      label: "Gemini CLI", proto: "Gemini", slash: false,
+      file: "~/.zshrc  (macOS)  ·  ~/.bashrc  (Linux)",
+      where: "Dán vào cuối file, rồi mở cửa sổ dòng lệnh mới. Trên Windows thì đặt hai biến này trong phần biến môi trường của hệ thống."
+    },
+    "opencode": {
+      label: "OpenCode", proto: "OpenAI", slash: true,
+      file: "~/.config/opencode/opencode.json",
+      where: "Chưa có thì tạo mới cả thư mục lẫn file."
+    },
+    "cline": {
+      label: "Cline / Roo Code", proto: "OpenAI", slash: true, ui: true,
+      file: "Bảng cài đặt trong VS Code",
+      where: "Mở panel Cline trong VS Code, bấm biểu tượng bánh răng, rồi điền từng ô theo bảng."
+    },
+    "continue": {
+      label: "Continue.dev", proto: "OpenAI", slash: true,
+      file: "~/.continue/config.yaml",
+      where: "Thêm vào mục <code>models</code> đã có sẵn trong file."
+    },
+    "droid": {
+      label: "Droid", proto: "OpenAI", slash: true,
+      file: "~/.factory/config.json",
+      where: "Chưa có thì tạo mới. Đã có <code>custom_models</code> thì thêm một phần tử vào mảng đó."
+    }
+  };
+
+  const BASE = "http://127.0.0.1:8317";
+  const KEY_PLACEHOLDER = "sk-dan-khoa-cua-ban-vao-day";
+
+  const $ = s => document.querySelector(s);
+  const accOpts = $("#acc-opts"), planOpts = $("#plan-opts"), planWrap = $("#plan-wrap");
+  const toolOpts = $("#tool-opts"), mMain = $("#m-main"), mLight = $("#m-light");
+  const keyIn = $("#k-in"), out = $("#out");
+
+  const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+  /* ---------- dung cac o chon ---------- */
+  for (const [id, a] of Object.entries(ACCOUNTS)) {
+    accOpts.insertAdjacentHTML("beforeend",
+      `<label class="opt"><input type="checkbox" name="acc" value="${id}">
+       <span>${a.label}<small>${a.note}</small></span></label>`);
+  }
+  for (const [id, p] of Object.entries(ACCOUNTS.chatgpt.plans)) {
+    planOpts.insertAdjacentHTML("beforeend",
+      `<label class="opt"><input type="radio" name="plan" value="${id}"${id === "plus" ? " checked" : ""}>
+       <span>${p.label}</span></label>`);
+  }
+  for (const [id, t] of Object.entries(TOOLS)) {
+    toolOpts.insertAdjacentHTML("beforeend",
+      `<label class="opt"><input type="radio" name="tool" value="${id}"${id === "claude-code" ? " checked" : ""}>
+       <span>${t.label}<small>${t.proto}</small></span></label>`);
+  }
+
+  /* ---------- trang thai ---------- */
+  const pickedAccounts = () => [...document.querySelectorAll('input[name="acc"]:checked')].map(i => i.value);
+  const pickedPlan = () => (document.querySelector('input[name="plan"]:checked') || {}).value || "plus";
+  const pickedTool = () => (document.querySelector('input[name="tool"]:checked') || {}).value;
+
+  function availableModels() {
+    const list = [];
+    for (const id of pickedAccounts()) {
+      const a = ACCOUNTS[id];
+      const models = id === "chatgpt" ? a.plans[pickedPlan()].models : a.models;
+      for (const m of models) if (!list.includes(m)) list.push(m);
+    }
+    return list;
+  }
+
+  function fillSelects() {
+    const models = availableModels();
+    const keepMain = mMain.value, keepLight = mLight.value;
+    const opts = models.map(m => `<option value="${m}">${m}</option>`).join("");
+    mMain.innerHTML = opts; mLight.innerHTML = opts;
+    mMain.disabled = mLight.disabled = models.length === 0;
+    if (!models.length) return;
+    mMain.value  = models.includes(keepMain)  ? keepMain  : (models.find(m => !LIGHT.test(m)) || models[0]);
+    mLight.value = models.includes(keepLight) ? keepLight : (models.find(m =>  LIGHT.test(m)) || models[0]);
+  }
+
+  /* ---------- sinh cau hinh ---------- */
+  function build() {
+    const accounts = pickedAccounts();
+    if (!accounts.length) {
+      out.innerHTML = `<div class="empty">Chọn ít nhất một loại tài khoản ở bước 1 để xem cấu hình.</div>`;
+      return;
+    }
+    const toolId = pickedTool(), t = TOOLS[toolId];
+    const url = BASE + (t.slash ? "/v1" : "");
+    const key = keyIn.value.trim() || KEY_PLACEHOLDER;
+    const main = mMain.value, light = mLight.value;
+    const onlyClaude = accounts.length === 1 && accounts[0] === "claude";
+
+    let body, body2 = "", file2 = "", extra = "", swap = "";
+
+    if (toolId === "claude-code") {
+      if (onlyClaude) {
+        body =
+`{
+  "env": {
+    "ANTHROPIC_BASE_URL": "${url}",
+    "ANTHROPIC_AUTH_TOKEN": "${key}"
+  }
+}`;
+        extra = `<div class="note"><span class="tag">Vì sao ngắn thế</span>
+          <p>Bạn chỉ dùng tài khoản Claude, mà Claude Code vốn đã hiểu sẵn tên các model
+          Claude. Không cần khai model, lệnh <code>/model</code> trong Claude Code vẫn
+          hoạt động đúng như bình thường.</p></div>`;
+      } else {
+        body =
+`{
+  "env": {
+    "ANTHROPIC_BASE_URL": "${url}",
+    "ANTHROPIC_AUTH_TOKEN": "${key}",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "${main}",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "${main}",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "${light}",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "${main}"
+  }
+}`;
+        extra = `<div class="note"><span class="tag">Ba dòng model để làm gì</span>
+          <p>Claude Code luôn gọi theo tên model của Claude. Ba dòng đó dịch các tên
+          <em>Opus</em>, <em>Sonnet</em>, <em>Haiku</em> sang model thật của bạn — nên khi
+          bạn chọn <em>Opus</em> trong <code>/model</code> thì nó chạy
+          <code>${esc(main)}</code>.</p>
+          <p>Bạn có thể trỏ mỗi tên sang một model khác nhau để dùng
+          <code>/model</code> làm công tắc chuyển nhanh.</p></div>`;
+      }
+      swap = `<p>Gõ <code>/model</code> rồi chọn. Muốn mỗi tên chạy một model khác nhau
+        thì sửa ba dòng <code>..._MODEL</code> cho khác nhau — ví dụ để
+        <em>Opus</em> là model mạnh, <em>Sonnet</em> là model nhanh, rồi chuyển qua lại
+        bằng một lệnh.</p>
+        <p class="fh" style="max-width:60ch">Lưu ý: gõ thẳng <code>/model &lt;tên&gt;</code>
+        sẽ ghi đè mặc định vào file cấu hình. Muốn đổi tạm cho riêng phiên đang mở thì
+        chọn trong bảng hiện ra, ở mục ghi <em>this session only</em>.</p>`;
+    }
+
+    else if (toolId === "codex-cli") {
+      body =
+`model = "${main}"
+model_provider = "cliproxyapi"
+
+[model_providers.cliproxyapi]
+base_url = "${url}"
+experimental_bearer_token = "${key}"
+name = "OpenAI"
+wire_api = "responses"
+requires_openai_auth = true`;
+      file2 = "~/.codex/nhe.config.toml";
+      body2 =
+`model = "${light}"
+model_provider = "cliproxyapi"`;
+      swap =
+`<p><strong>Đổi ngay trong lúc đang chạy:</strong> gõ <code>/models</code> rồi chọn.</p>
+ <p><strong>Chạy một lần với model khác:</strong> <code>codex -m ${esc(light)}</code></p>
+ <p><strong>Lưu sẵn nhiều bộ:</strong> tạo thêm file thứ hai bên dưới, rồi gọi
+ <code>codex -p nhe</code>. Codex sẽ chồng file đó lên cấu hình chính, nên chỉ cần ghi
+ những dòng khác biệt.</p>`;
+    }
+
+    else if (toolId === "gemini-cli") {
+      body =
+`export GOOGLE_GEMINI_BASE_URL="${url}"
+export GEMINI_API_KEY="${key}"`;
+      extra = `<div class="note warn"><span class="tag">Có thể trục trặc</span>
+        <p>Gemini CLI hỗ trợ đổi địa chỉ chưa ổn định — đã có báo cáo nó bỏ qua hai biến
+        này và vẫn gọi thẳng lên Google. Nếu không ăn, dùng tạm OpenCode hoặc Claude Code,
+        cả hai đều gọi được model Gemini qua proxy.</p></div>`;
+    }
+
+    else if (toolId === "opencode") {
+      body =
+`{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openai": {
+      "options": {
+        "baseURL": "${url}",
+        "apiKey": "${key}"
+      }
+    }
+  },
+  "model": "${main}"
+}`;
+      swap = `<p>Dòng <code>model</code> chỉ là mặc định lúc mở. Trong OpenCode gõ
+        <code>/models</code> để chọn model khác — mọi model thuộc tài khoản bạn đã đăng
+        nhập đều hiện ra, không phải khai trước từng cái.</p>`;
+    }
+
+    else if (toolId === "continue") {
+      body =
+`models:
+  - name: Model chính
+    provider: openai
+    model: ${main}
+    apiBase: ${url}
+    apiKey: ${key}
+    roles: [chat, edit]
+  - name: Model nhẹ
+    provider: openai
+    model: ${light}
+    apiBase: ${url}
+    apiKey: ${key}
+    roles: [chat, edit, apply]`;
+      swap = `<p>Mục <code>models</code> là một danh sách, nên khai bao nhiêu cũng được —
+        cứ lặp lại khối bốn dòng và đổi <code>name</code> với <code>model</code>.
+        Trong VS Code, bấm vào tên model ở đáy khung chat để chuyển.</p>`;
+    }
+
+    else if (toolId === "droid") {
+      body =
+`{
+  "custom_models": [
+    {
+      "model": "${main}",
+      "base_url": "${url}",
+      "api_key": "${key}",
+      "provider": "openai"
+    },
+    {
+      "model": "${light}",
+      "base_url": "${url}",
+      "api_key": "${key}",
+      "provider": "openai"
+    }
+  ]
+}`;
+      swap = `<p><code>custom_models</code> là một mảng — thêm bao nhiêu khối cũng được,
+        mỗi khối một model. Trong Droid chọn model ở phần chuyển model.</p>`;
+      extra = `<div class="note"><span class="tag">Lưu ý</span>
+        <p>Nếu bạn đổi <code>"provider"</code> thành <code>"anthropic"</code> thì
+        <code>base_url</code> phải bỏ <code>/v1</code> đi.</p></div>`;
+    }
+
+    else if (toolId === "cline") {
+      out.innerHTML = `
+        <div class="outhead"><h4>Điền vào bảng cài đặt của ${esc(t.label)}</h4>
+          <span class="badge">${esc(t.proto)}</span></div>
+        <p>${t.where}</p>
+        <div class="tw"><table>
+          <tr><th>Ô</th><th>Điền</th></tr>
+          <tr><td>API Provider</td><td><strong>OpenAI Compatible</strong></td></tr>
+          <tr><td>Base URL</td><td><code>${esc(url)}</code></td></tr>
+          <tr><td>API Key</td><td><code>${esc(key)}</code></td></tr>
+          <tr><td>Model ID</td><td><code>${esc(main)}</code></td></tr>
+        </table></div>
+        <div class="note warn"><span class="tag">Ngốn nhiều lượt</span>
+          <p>Cline đọc cả dự án để lấy ngữ cảnh nên tiêu tốn nhanh hơn hẳn các công cụ
+          khác. Dùng nhiều thì nên để dành tài khoản thuê bao cho công cụ khác.</p></div>`;
+      return;
+    }
+
+    out.innerHTML = `
+      <div class="outhead"><h4>Cấu hình cho ${esc(t.label)}</h4>
+        <span class="badge">${esc(t.proto)}</span></div>
+      <p>${t.where}</p>
+      <div class="codebox">
+        <div class="codebar">
+          <span class="fp">${esc(t.file)}</span>
+          <button class="copy" type="button">Chép</button>
+        </div>
+        <pre><code>${esc(body)}</code></pre>
+      </div>
+      ${extra}
+      ${body2 ? `<h4>Bộ thứ hai, không bắt buộc</h4>
+        <div class="codebox">
+          <div class="codebar">
+            <span class="fp">${esc(file2)}</span>
+            <button class="copy" type="button">Chép</button>
+          </div>
+          <pre><code>${esc(body2)}</code></pre>
+        </div>` : ""}
+      ${swap ? `<div class="note"><span class="tag">Đổi model về sau</span>${swap}</div>` : ""}
+      <div class="note"><span class="tag">Sau khi dán xong</span>
+        <p>Đóng hẳn công cụ rồi mở lại. Cửa sổ đang mở vẫn dùng cấu hình cũ.</p></div>`;
+  }
+
+  /* ---------- nut chep ---------- */
+  out.addEventListener("click", async e => {
+    const btn = e.target.closest(".copy");
+    if (!btn) return;
+    const text = btn.closest(".codebox").querySelector("code").textContent;
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; }
+    catch {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand("copy"); } catch {}
+      ta.remove();
+    }
+    btn.textContent = ok ? "Đã chép" : "Hãy tự bôi đen";
+    btn.classList.toggle("done", ok);
+    setTimeout(() => { btn.textContent = "Chép"; btn.classList.remove("done"); }, 1800);
+  });
+
+  /* ---------- lang nghe ---------- */
+  document.addEventListener("change", e => {
+    if (!e.target.name) return;
+    if (["acc","plan"].includes(e.target.name)) {
+      planWrap.hidden = !pickedAccounts().includes("chatgpt");
+      fillSelects();
+    }
+    build();
+  });
+  keyIn.addEventListener("input", build);
+  mMain.addEventListener("change", build);
+  mLight.addEventListener("change", build);
+
+  fillSelects();
+  build();
+
+  /* ---------- sang muc dang xem trong menu ---------- */
+  const links = [...document.querySelectorAll('nav.side a')];
+  const targets = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  if ("IntersectionObserver" in window && targets.length) {
+    const seen = new Set();
+    const io = new IntersectionObserver(entries => {
+      for (const en of entries) en.isIntersecting ? seen.add(en.target.id) : seen.delete(en.target.id);
+      const first = targets.find(t => seen.has(t.id));
+      links.forEach(a => a.classList.toggle("on", !!first && a.getAttribute("href") === "#" + first.id));
+    }, { rootMargin: "-80px 0px -70% 0px" });
+    targets.forEach(t => io.observe(t));
+  }
+})();
+</script>
+</body>
+</html>
