@@ -1,6 +1,6 @@
 # Cli-Proxy-AI
 
-Hướng dẫn cài và sử dụng proxy AI, viết cho người không rành công nghệ.
+Hướng dẫn cài và sử dụng proxy AI, viết từ đầu nên ai cũng theo được.
 Trang tĩnh, không phụ thuộc thư viện ngoài, không cần build.
 
 **Xem trực tiếp:** https://onesubsdev.github.io/Cli-Proxy-AI/
