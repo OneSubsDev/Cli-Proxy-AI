@@ -7,9 +7,16 @@ Trang tĩnh, không phụ thuộc thư viện ngoài, không cần build.
 
 ```
 huong-dan-proxy/
-├── index.html          # toàn bộ nội dung + CSS inline
-└── images/             # 7 ảnh WebP, tổng ~380 KB
+├── index.html          # tiếng Việt (bản gốc)
+├── en.html             # English
+├── zh.html             # 简体中文
+├── ru.html             # Русский
+└── images/             # 7 ảnh WebP dùng chung, ~380 KB
 ```
+
+Bốn bản ngôn ngữ là bốn file độc lập, chuyển qua lại bằng ô chọn ở góc trên bên phải.
+Sửa nội dung thì phải sửa cả bốn — cấu trúc HTML, mọi `id`, `href="#…"` và đường dẫn ảnh
+được giữ giống hệt nhau giữa các bản, nên đừng đổi chúng ở một file mà quên các file kia.
 
 ## Xem thử tại máy
 

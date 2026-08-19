@@ -1,0 +1,1118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ИИ-прокси на вашем компьютере — установка и использование</title>
+<meta name="description" content="Руководство по установке и использованию локального ИИ-прокси с нуля, вместе с автоматическим генератором конфигурации для 7 инструментов.">
+<style>
+  :root{
+    --ground:#F2F5F6; --surface:#FFFFFF; --surface-2:#E7EDEE;
+    --ink:#132227; --ink-2:#40565C; --ink-3:#6C8288;
+    --line:#CBD8DA; --accent:#0B6E5F; --accent-soft:#DCEDE8;
+    --warn:#9A6412; --warn-soft:#F7ECD6;
+    --code-bg:#132227; --code-ink:#DDE8E6; --code-dim:#7B9498;
+    --shadow:0 1px 2px rgba(19,34,39,.06),0 8px 24px -16px rgba(19,34,39,.28);
+    --display:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1719;--surface:#162225;--surface-2:#1E2E32;--ink:#E4EDEC;--ink-2:#A9BFC1;
+      --ink-3:#7B9498;--line:#2A3D41;--accent:#4FBFA5;--accent-soft:#14322D;--warn:#D9A441;
+      --warn-soft:#2E2415;--code-bg:#0A1214;--code-ink:#CFE0DD;--code-dim:#6C8288;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1719;--surface:#162225;--surface-2:#1E2E32;--ink:#E4EDEC;--ink-2:#A9BFC1;
+    --ink-3:#7B9498;--line:#2A3D41;--accent:#4FBFA5;--accent-soft:#14322D;--warn:#D9A441;
+    --warn-soft:#2E2415;--code-bg:#0A1214;--code-ink:#CFE0DD;--code-dim:#6C8288;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0;background:var(--ground);color:var(--ink);
+    font-family:var(--body);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- khung trang ---------- */
+  .shell{display:grid;grid-template-columns:262px minmax(0,1fr);gap:0;max-width:1240px;margin:0 auto}
+
+  nav.side{
+    position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+    border-right:1px solid var(--line);padding:34px 22px 40px;
+  }
+  .brandmark{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25;margin:0 0 4px}
+  .brandsub{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 26px}
+  nav.side .grp{margin-bottom:22px}
+  nav.side .grp > span{
+    display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:8px;
+  }
+  nav.side a{
+    display:block;padding:5px 10px;margin-left:-10px;border-radius:6px;
+    color:var(--ink-2);text-decoration:none;font-size:14.5px;line-height:1.45;
+  }
+  nav.side a:hover{background:var(--surface-2);color:var(--ink)}
+  nav.side a.on{background:var(--accent-soft);color:var(--accent);font-weight:650}
+  nav.side a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+  main{padding:0 40px 110px;min-width:0}
+  .inner{max-width:820px}
+
+  /* ---------- chu ---------- */
+  header.top{padding:64px 0 34px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  h1{font-family:var(--display);font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+  .lede{font-size:19px;color:var(--ink-2);margin:0;max-width:58ch;text-wrap:pretty}
+
+  section.part{padding-top:16px}
+  .parthead{
+    display:flex;align-items:baseline;gap:14px;margin:64px 0 4px;
+    padding-top:26px;border-top:2px solid var(--accent);
+  }
+  .parthead .pn{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+  h2{font-family:var(--display);font-weight:600;font-size:31px;letter-spacing:-.015em;margin:0;text-wrap:balance}
+  h3{font-family:var(--display);font-weight:600;font-size:23px;letter-spacing:-.01em;margin:46px 0 6px;text-wrap:balance}
+  h3 .num{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.06em;margin-right:11px;vertical-align:.16em}
+  h4{font-family:var(--body);font-weight:650;font-size:16.5px;margin:26px 0 8px}
+  p{margin:0 0 14px;max-width:64ch;text-wrap:pretty}
+  .sub{color:var(--ink-2);margin:0 0 20px;max-width:64ch}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,summary:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  strong{font-weight:650}
+  ol.steps{margin:0 0 18px;padding-left:22px;line-height:1.9;max-width:64ch}
+  ol.steps li{margin-bottom:4px}
+  ul.plain{max-width:64ch;padding-left:20px}
+  ul.plain li{margin-bottom:7px}
+
+  .menu{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent);padding:.16em .5em;border-radius:4px;white-space:nowrap;font-weight:600}
+  code:not(pre code){font-family:var(--mono);font-size:.87em;background:var(--surface-2);padding:.14em .42em;border-radius:4px;color:var(--ink)}
+
+  /* ---------- khoi code ---------- */
+  .codebox{margin:0 0 16px;border-radius:9px;overflow:hidden;border:1px solid var(--line);background:var(--code-bg)}
+  .codebar{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:9px 12px 9px 14px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.09);
+  }
+  .codebar .fp{font-family:var(--mono);font-size:12px;color:var(--code-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .copy{
+    font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--code-ink);
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);
+    padding:4px 11px;border-radius:5px;cursor:pointer;white-space:nowrap;
+  }
+  .copy:hover{background:rgba(255,255,255,.18)}
+  .copy.done{background:var(--accent);border-color:var(--accent);color:#fff}
+  .codebox pre{margin:0;padding:15px 17px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--code-ink);background:none}
+  .codebox pre .c{color:var(--code-dim)}
+
+  /* ---------- anh ---------- */
+  figure.shot{margin:22px 0 28px}
+  figure.shot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);background:var(--surface)}
+  figure.shot figcaption{font-size:14.5px;color:var(--ink-3);margin:10px 2px 0;max-width:64ch}
+
+  .diagram{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:26px 22px 20px;margin:30px 0 10px;box-shadow:var(--shadow);overflow-x:auto}
+  .diagram svg{display:block;min-width:560px;width:100%;height:auto}
+  .cap{font-size:14.5px;color:var(--ink-3);margin:0 0 8px;max-width:64ch}
+
+  /* ---------- ghi chu ---------- */
+  .note{border-left:2.5px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 8px 8px 0;margin:20px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note p{margin:0;max-width:60ch;font-size:15.5px}
+  .note p + p{margin-top:9px}
+  .note .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px}
+  .note.warn .tag{color:var(--warn)}
+
+  .tw{overflow-x:auto;margin:0 0 16px}
+  table{border-collapse:collapse;width:100%;font-size:15px;min-width:420px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom-color:var(--ink-3)}
+  td code{white-space:nowrap}
+
+  details{border-bottom:1px solid var(--line);padding:14px 0}
+  summary{cursor:pointer;font-weight:600;font-size:15.5px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+";font-family:var(--mono);color:var(--accent);margin-right:11px;font-weight:400}
+  details[open] summary::before{content:"−"}
+  details p{margin:11px 0 2px;color:var(--ink-2);font-size:15.5px}
+
+  /* ---------- bo tao cau hinh ---------- */
+  .builder{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:4px 24px 26px;margin:24px 0 10px}
+  .fset{border:0;padding:22px 0 0;margin:0}
+  .fset + .fset{border-top:1px solid var(--line);margin-top:22px}
+  .fset legend{
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);padding:0;margin-bottom:4px;
+  }
+  .fhint{font-size:14px;color:var(--ink-3);margin:0 0 14px;max-width:56ch}
+  .opts{display:flex;flex-wrap:wrap;gap:9px}
+  .opt{position:relative}
+  .opt input{position:absolute;opacity:0;width:0;height:0}
+  .opt span{
+    display:block;cursor:pointer;user-select:none;
+    border:1px solid var(--line);background:var(--ground);border-radius:8px;
+    padding:9px 15px;font-size:15px;font-weight:600;color:var(--ink-2);
+  }
+  .opt span small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:1px}
+  .opt input:checked + span{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+  .opt input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+  .opt input:disabled + span{opacity:.4;cursor:not-allowed}
+
+  .row{display:flex;flex-wrap:wrap;gap:16px;margin-top:6px}
+  .field{flex:1 1 240px;min-width:0}
+  .field label{display:block;font-size:13.5px;font-weight:650;margin-bottom:5px;color:var(--ink-2)}
+  .field select,.field input{
+    width:100%;font-family:var(--mono);font-size:13.5px;color:var(--ink);
+    background:var(--ground);border:1px solid var(--line);border-radius:7px;padding:9px 11px;
+  }
+  .field .fh{font-size:12.5px;color:var(--ink-3);margin:5px 0 0}
+
+  #plan-wrap[hidden]{display:none}
+  .empty{
+    border:2px dashed var(--line);border-radius:9px;padding:30px 20px;text-align:center;
+    color:var(--ink-3);font-size:15px;background:var(--ground);
+  }
+  .outhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 10px}
+  .outhead h4{margin:0}
+  .badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:3px 9px;border-radius:4px}
+
+  footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-3);font-size:14px}
+
+  /* ---------- chon ngon ngu ---------- */
+  .langbar{display:flex;justify-content:flex-end;padding:18px 0 0}
+  .langbar select{
+    appearance:none;-webkit-appearance:none;
+    font-family:var(--body);font-size:13.5px;font-weight:600;color:var(--ink-2);
+    background:var(--surface);border:1px solid var(--line);border-radius:7px;
+    padding:6px 30px 6px 12px;cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4.5 L6 8.5 L10 4.5' fill='none' stroke='%236C8288' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat:no-repeat;background-position:right 10px center;
+  }
+  .langbar select:hover{border-color:var(--ink-3);color:var(--ink)}
+
+  @media (max-width:940px){
+    .shell{grid-template-columns:1fr}
+    nav.side{
+      position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);
+      padding:22px 24px 16px;
+    }
+    nav.side .grp{margin-bottom:14px}
+    nav.side .navwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 20px}
+    main{padding:0 24px 90px}
+    header.top{padding:36px 0 30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<nav class="side" aria-label="Содержание">
+  <p class="brandmark">ИИ-прокси<br>на вашем компьютере</p>
+  <p class="brandsub">Установка &amp; использование</p>
+  <div class="navwrap">
+    <div class="grp">
+      <span>Часть 1 · Знакомство</span>
+      <a href="#la-gi">Что такое ИИ-прокси</a>
+      <a href="#nen-biet">Три важные вещи</a>
+      <a href="#chuan-bi">Что понадобится</a>
+    </div>
+    <div class="grp">
+      <span>Часть 2 · Установка</span>
+      <a href="#tai-ve">01 · Скачать и установить</a>
+      <a href="#cai-loi">02 · Установить ядро</a>
+      <a href="#bat-proxy">03 · Запустить прокси</a>
+      <a href="#dang-nhap">04 · Войти в аккаунт</a>
+      <a href="#doi-khoa">05 · Сменить ключ защиты</a>
+      <a href="#theo-doi">06 · Следить за расходом</a>
+    </div>
+    <div class="grp">
+      <span>Часть 3 · Использование</span>
+      <a href="#quy-tac">Общие правила</a>
+      <a href="#tao-cau-hinh">Соберите конфигурацию</a>
+      <a href="#truc-trac">Если что-то пошло не так</a>
+      <a href="#hoi-dap">Частые вопросы</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="inner">
+
+<div class="langbar">
+  <select id="lang" aria-label="Выбор языка — Select language">
+    <option value="index.html">🌐 Tiếng Việt</option>
+    <option value="en.html">🌐 English</option>
+    <option value="zh.html">🌐 中文</option>
+    <option value="ru.html" selected>🌐 Русский</option>
+  </select>
+</div>
+
+<header class="top">
+  <p class="eyebrow">Руководство · около 10 минут · настраивается один раз</p>
+  <h1>ИИ-прокси на вашем компьютере</h1>
+  <p class="lede">У вас есть аккаунт ChatGPT, Claude или Gemini, и вы хотите пользоваться им
+  в инструментах для программирования — помощниках по написанию кода вроде Claude Code,
+  Codex CLI или Cline. Эта страница проведёт вас через установку с самого начала и сама
+  соберёт конфигурацию для выбранного инструмента — останется скопировать и вставить,
+  ни одной команды набирать не придётся.</p>
+</header>
+
+<!-- ============ ЧАСТЬ 1 ============ -->
+<section class="part">
+<div class="parthead"><span class="pn">Часть 1</span><h2>Знакомство</h2></div>
+
+<h3 id="la-gi">Что такое ИИ-прокси?</h3>
+<p class="sub">Разобраться за минуту — до того, как браться за установку.</p>
+
+<p>Каждая ИИ-компания говорит на своём «языке». Инструмент, написанный под Claude, не
+понимает аккаунт ChatGPT, и наоборот. Обычно какой у вас аккаунт — тем инструментом
+производителя и приходится пользоваться.</p>
+
+<p><strong>Прокси — это переводчик, который работает прямо на вашем компьютере.</strong>
+На каком языке говорит инструмент, на таком прокси его и слушает, а потом переводит на
+язык того поставщика, у которого у вас есть аккаунт. Друг о друге этим двум сторонам
+знать не нужно.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 720 232" role="img" aria-label="Схема: четыре типа аккаунтов слева соединяются с прокси в центре, прокси соединяется с четырьмя типами инструментов справа, работает любое сочетание">
+  <defs>
+    <marker id="ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="12">
+    <text x="72" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">У ВАС ЕСТЬ</text>
+    <text x="360" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">ПРОКСИ</text>
+    <text x="640" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">ВЫ ПОЛЬЗУЕТЕСЬ</text>
+    <g fill="var(--ink)">
+      <rect x="1" y="30" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="52" text-anchor="middle">Claude</text>
+      <rect x="1" y="74" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="96" text-anchor="middle">ChatGPT</text>
+      <rect x="1" y="118" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="140" text-anchor="middle">Gemini</text>
+      <rect x="1" y="162" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
+      <text x="72" y="184" text-anchor="middle">Kimi · Grok</text>
+    </g>
+    <g stroke="var(--line)" stroke-width="1.2" color="var(--line)" fill="none" opacity=".85">
+      <path d="M147,47 C210,47 240,113 296,113" marker-end="url(#ar)"/>
+      <path d="M147,91 C210,91 245,113 296,113" marker-end="url(#ar)"/>
+      <path d="M147,135 C210,135 245,113 296,113" marker-end="url(#ar)"/>
+      <path d="M147,179 C210,179 240,113 296,113" marker-end="url(#ar)"/>
+    </g>
+    <rect x="300" y="76" width="120" height="74" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.6"/>
+    <text x="360" y="108" text-anchor="middle" fill="var(--ink)" font-size="12.5">CLIProxyAPI</text>
+    <text x="360" y="126" text-anchor="middle" fill="var(--ink-3)" font-size="10.5">:8317 · на вашем компьютере</text>
+    <g stroke="var(--accent)" stroke-width="1.2" color="var(--accent)" fill="none">
+      <path d="M424,113 C480,113 510,47 566,47" marker-end="url(#ar)"/>
+      <path d="M424,113 C475,113 515,91 566,91" marker-end="url(#ar)"/>
+      <path d="M424,113 C475,113 515,135 566,135" marker-end="url(#ar)"/>
+      <path d="M424,113 C480,113 510,179 566,179" marker-end="url(#ar)"/>
+    </g>
+    <g fill="var(--ink)">
+      <rect x="570" y="30" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="52" text-anchor="middle">Claude Code</text>
+      <rect x="570" y="74" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="96" text-anchor="middle">Codex CLI</text>
+      <rect x="570" y="118" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="140" text-anchor="middle">Gemini CLI</text>
+      <rect x="570" y="162" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="644" y="184" text-anchor="middle">Cline · OpenCode · Droid</text>
+    </g>
+    <text x="360" y="222" text-anchor="middle" fill="var(--ink-3)" font-size="11">любая ячейка слева × любая ячейка справа</text>
+  </g>
+</svg>
+</div>
+<p class="cap">Слева — то, что у вас уже есть. Справа — то, чем вы хотите пользоваться.
+Прокси посередине соединяет любую пару.</p>
+
+<h3 id="nen-biet">Три важные вещи</h3>
+<div class="note">
+  <span class="tag">Перед началом</span>
+  <p><strong>Всё работает на вашем компьютере.</strong> Это не сетевой сервис, снаружи
+  к нему никто не доберётся.</p>
+  <p><strong>Это не способ пользоваться ИИ бесплатно.</strong> Вы по-прежнему расходуете
+  тот аккаунт, за который платите, — просто теперь он доступен в большем числе
+  инструментов.</p>
+  <p><strong>Настраивается один раз.</strong> Дальше при включении компьютера всё
+  запускается само.</p>
+</div>
+
+<h3 id="chuan-bi">Что понадобится</h3>
+<div class="tw"><table>
+  <tr><th>Что нужно</th><th>Примечание</th></tr>
+  <tr><td>Компьютер с Mac или Windows</td><td>Шаги почти не отличаются</td></tr>
+  <tr><td>Действующий ИИ-аккаунт</td><td>ChatGPT Plus/Pro, Claude Pro/Max, Gemini, Kimi или Grok</td></tr>
+  <tr><td>Около 10 минут</td><td>Дольше всего ждать загрузку</td></tr>
+</table></div>
+</section>
+
+<!-- ============ ЧАСТЬ 2 ============ -->
+<section class="part">
+<div class="parthead"><span class="pn">Часть 2</span><h2>Установка</h2></div>
+
+<h3 id="tai-ve"><span class="num">01</span>Скачайте и установите приложение</h3>
+<p class="sub">Приложение называется <strong>EasyCLIProxyAPI</strong>, оно бесплатное и с открытым исходным кодом.</p>
+
+<ol class="steps">
+  <li>Откройте страницу <a href="https://github.com/router-for-me/EasyCLIProxyAPI/releases">github.com/router-for-me/EasyCLIProxyAPI/releases</a></li>
+  <li>Пролистайте до раздела <strong>Assets</strong> у самого свежего выпуска</li>
+  <li>Для Mac скачайте файл с расширением <code>.dmg</code> · для Windows — файл <code>.zip</code></li>
+  <li><strong>Mac:</strong> откройте файл <code>.dmg</code> и перетащите приложение в папку <strong>Applications</strong><br>
+      <strong>Windows:</strong> распакуйте архив и запустите файл внутри</li>
+  <li>Откройте приложение</li>
+</ol>
+
+<div class="note">
+  <span class="tag">Можно не волноваться</span>
+  <p>На Mac это приложение <strong>заверено Apple</strong>, поэтому открывается сразу,
+  без предупреждения «неизвестный разработчик».</p>
+</div>
+
+<h3 id="cai-loi"><span class="num">02</span>Установите ядро</h3>
+<p class="sub">То, что вы только что установили, — это оболочка с интерфейсом. Настоящую
+работу делает ядро, и его нужно один раз доустановить кнопкой.</p>
+
+<ol class="steps">
+  <li>В меню слева нажмите <span class="menu">Version Management</span></li>
+  <li>Нажмите кнопку установки последней версии ядра</li>
+  <li>Подождите несколько секунд, пока не появится сообщение об успешной установке</li>
+</ol>
+
+<figure class="shot">
+  <img src="images/version-management.webp" width="1600" height="1080" loading="lazy"
+       alt="Экран Version Management в приложении EasyCLIProxyAPI, где нажимают установку версии ядра">
+  <figcaption>Экран <strong>Version Management</strong>. Оранжевая точка рядом с пунктом
+  меню означает, что вышла более новая версия ядра.</figcaption>
+</figure>
+
+<h3 id="bat-proxy"><span class="num">03</span>Запустите прокси</h3>
+
+<ol class="steps">
+  <li>Нажмите <span class="menu">Home</span> в меню слева</li>
+  <li>В блоке <strong>Runtime Control</strong> нажмите кнопку запуска</li>
+  <li>Когда в поле <em>Runtime Status</em> появится <strong>Running</strong> — готово</li>
+</ol>
+
+<figure class="shot">
+  <img src="images/home.webp" width="1600" height="1085" loading="lazy"
+       alt="Экран Home с состоянием Running и тремя локальными адресами прокси">
+  <figcaption>Работает. Справа — три адреса, которые чуть позже нужно будет прописать
+  в вашем инструменте: у каждого типа инструментов свой адрес.</figcaption>
+</figure>
+
+<div class="note">
+  <span class="tag">Дальше запускается само</span>
+  <p>Включить нужно один раз. При следующих запусках компьютера приложение стартует
+  вместе с системой, повторять этот шаг не придётся.</p>
+</div>
+
+<h3 id="dang-nhap"><span class="num">04</span>Войдите в свой аккаунт</h3>
+<p class="sub">На этом шаге вы подключаете к прокси ИИ-аккаунт, который у вас уже есть.</p>
+
+<ol class="steps">
+  <li>Нажмите <span class="menu">OAuth</span> в меню слева</li>
+  <li>На вкладке <strong>OAuth Sign-In</strong> найдите карточку, которая соответствует вашему аккаунту</li>
+  <li>Нажмите <strong>Start Sign-In</strong></li>
+  <li>Откроется браузер — войдите как обычно</li>
+  <li>После этого карточка переключится на <strong>Completed</strong></li>
+</ol>
+
+<div class="note warn">
+  <span class="tag">Названия на экране не те, к которым вы привыкли</span>
+  <p>Здесь многие спотыкаются. Приложение использует технические названия, а не названия
+  продуктов, которые вы покупали:</p>
+</div>
+
+<div class="tw"><table>
+  <tr><th>У вас аккаунт</th><th>Нажимайте карточку</th></tr>
+  <tr><td>ChatGPT</td><td><strong>Codex OAuth</strong></td></tr>
+  <tr><td>Claude</td><td><strong>Claude OAuth</strong></td></tr>
+  <tr><td>Gemini</td><td><strong>Antigravity OAuth</strong></td></tr>
+  <tr><td>Kimi</td><td><strong>Kimi OAuth</strong></td></tr>
+  <tr><td>Grok</td><td><strong>xAI OAuth</strong></td></tr>
+</table></div>
+
+<figure class="shot">
+  <img src="images/oauth-sign-in.webp" width="1600" height="897" loading="lazy"
+       alt="Экран OAuth Sign-In с пятью карточками входа: Codex, Claude, Antigravity, Kimi и xAI">
+  <figcaption>Карточка <strong>Codex OAuth</strong> уже прошла вход, поэтому показывает
+  <em>Completed</em>. Карточка <strong>Claude OAuth</strong> в процессе входа —
+  ссылка размыта, потому что она своя для каждого компьютера.</figcaption>
+</figure>
+
+<p><strong>Несколько аккаунтов лучше одного.</strong> Прокси сам чередует их, а когда
+у одного заканчивается лимит — переключается на следующий, и работа не встаёт
+на полпути.</p>
+
+<h4>Проверьте сохранённые аккаунты</h4>
+<p>Перейдите на вкладку <strong>Authentication Files</strong>, чтобы увидеть список
+аккаунтов, которые хранит прокси. Каждая строка — один аккаунт; зелёное слово
+<strong>active</strong> означает, что он рабочий. Кнопка <strong>Models</strong> в строке
+показывает, какие модели есть у этого аккаунта, — чуть позже это понадобится.</p>
+
+<figure class="shot">
+  <img src="images/oauth-files.webp" width="1600" height="1080" loading="lazy"
+       alt="Вкладка Authentication Files со списком аккаунтов, в которые выполнен вход, и статусом active">
+  <figcaption>Если аккаунт есть в списке и у него статус <em>active</em>, прокси готов
+  к работе.</figcaption>
+</figure>
+
+<h3 id="doi-khoa"><span class="num">05</span>Смените ключ защиты</h3>
+<p class="sub">Шаг короткий, но пропускать его не стоит.</p>
+
+<div class="note warn">
+  <span class="tag">Важно</span>
+  <p>Этот ключ — как пароль ко всем ИИ-аккаунтам, в которые вы только что вошли.
+  Приложение ставит стандартный, легко угадываемый ключ — <strong>смените его
+  сразу</strong>.</p>
+</div>
+
+<ol class="steps">
+  <li>Нажмите <span class="menu">Advanced Settings</span> в меню слева</li>
+  <li>На вкладке <strong>General Settings</strong> найдите блок <strong>Authentication Keys</strong></li>
+  <li>Нажмите <strong>+</strong>, чтобы создать новый ключ, а старый удалите</li>
+  <li><strong>Сохраните новый ключ в надёжном месте</strong> — он понадобится в части 3</li>
+</ol>
+
+<figure class="shot">
+  <img src="images/advanced-settings.webp" width="1600" height="1084" loading="lazy"
+       alt="Экран Advanced Settings с блоком Authentication Keys и блоком WebUI Key">
+  <figcaption>Верхний блок — ключ для ваших инструментов. Нижний,
+  <strong>WebUI Key</strong>, — пароль от панели управления, это другое, и его тоже стоит сменить.</figcaption>
+</figure>
+
+<div class="note">
+  <span class="tag">Не путайте два ключа</span>
+  <p><strong>Authentication Keys</strong> — прописываются в ваших инструментах для программирования.</p>
+  <p><strong>WebUI Key</strong> — только для входа в панель управления самого прокси.</p>
+</div>
+
+<h3 id="theo-doi"><span class="num">06</span>Следите за расходом</h3>
+<p class="sub">Не обязательно, но полезно понимать, сколько у вас осталось.</p>
+
+<p>Нажмите <span class="menu">Usage</span>, чтобы увидеть число запросов, объём
+обработанного текста и оценку расходов. А <span class="menu">OAuth</span> → вкладка
+<strong>Quota Lookup</strong> показывает остаток лимита по каждому аккаунту.</p>
+
+<figure class="shot">
+  <img src="images/usage-overview.webp" width="1600" height="1081" loading="lazy"
+       alt="Экран Usage History с общим числом запросов, суммой токенов и оценкой расходов">
+  <figcaption>Все эти данные хранятся на вашем компьютере и никуда не отправляются.</figcaption>
+</figure>
+
+<figure class="shot">
+  <img src="images/quota-lookup.webp" width="1600" height="1080" loading="lazy"
+       alt="Вкладка Quota Lookup с кнопкой Fetch Quota для проверки остатка лимита аккаунта">
+  <figcaption>Нажмите <strong>Fetch Quota</strong>, чтобы спросить у поставщика, сколько
+  осталось на аккаунте. Имя аккаунта на снимке размыто.</figcaption>
+</figure>
+</section>
+
+<!-- ============ ЧАСТЬ 3 ============ -->
+<section class="part">
+<div class="parthead"><span class="pn">Часть 3</span><h2>Использование</h2></div>
+
+<h3 id="quy-tac">Общие правила</h3>
+<p class="sub">Любому инструменту нужны ровно три вещи. Поняв их, вы настроите любой
+инструмент самостоятельно.</p>
+
+<div class="tw"><table>
+  <tr><th>Что указать</th><th>Что это</th><th>Где взять</th></tr>
+  <tr>
+    <td><strong>Адрес</strong></td>
+    <td>Куда инструмент отправляет запросы вместо того, чтобы слать их прямо в сеть</td>
+    <td>Всегда <code>http://127.0.0.1:8317</code> — отличается только окончание, смотрите ниже</td>
+  </tr>
+  <tr>
+    <td><strong>Ключ</strong></td>
+    <td>Пароль, по которому прокси понимает, что обращаетесь именно вы</td>
+    <td>Ключ, созданный вами на шаге 05</td>
+  </tr>
+  <tr>
+    <td><strong>Название модели</strong></td>
+    <td>Выбор, какой «мозг» из подключённых аккаунтов использовать</td>
+    <td><span class="menu">OAuth</span> → <em>Authentication Files</em> → кнопка <strong>Models</strong></td>
+  </tr>
+</table></div>
+
+<h4>Правило <code>/v1</code> — здесь ошибаются чаще всего</h4>
+<p>Окончание адреса зависит от того, на каком «языке» говорит инструмент. Запомните одну
+фразу: <strong>у Anthropic и Gemini <code>/v1</code> нет, у остальных есть.</strong></p>
+
+<div class="tw"><table>
+  <tr><th>Инструмент</th><th>Полный адрес</th></tr>
+  <tr><td>Claude Code</td><td><code>http://127.0.0.1:8317</code></td></tr>
+  <tr><td>Gemini CLI</td><td><code>http://127.0.0.1:8317</code></td></tr>
+  <tr><td>Codex CLI · OpenCode · Cline · Continue.dev · Droid</td><td><code>http://127.0.0.1:8317/v1</code></td></tr>
+</table></div>
+
+<h4>Указать модель не значит запереться в ней</h4>
+<p>Строка <code>model</code> в конфигурации — это всего лишь <strong>значение по умолчанию
+при запуске</strong>. Все инструменты отсюда позволяют сменить модель потом, а большинство
+ещё и прописать несколько моделей сразу:</p>
+
+<div class="tw"><table>
+  <tr><th>Инструмент</th><th>Несколько моделей сразу</th><th>Смена на ходу</th></tr>
+  <tr><td>Claude Code</td><td>Да — четыре имени <em>Opus / Sonnet / Haiku / Fable</em> указывают на четыре разные модели</td><td><code>/model</code></td></tr>
+  <tr><td>Codex CLI</td><td>Да — на каждый набор свой файл <code>&lt;имя&gt;.config.toml</code></td><td><code>/models</code> · или <code>codex -m &lt;имя&gt;</code></td></tr>
+  <tr><td>Continue.dev</td><td>Да — <code>models</code> это список</td><td>Нажать название модели внизу окна чата</td></tr>
+  <tr><td>Droid</td><td>Да — <code>custom_models</code> это массив</td><td>Выбрать в переключателе моделей</td></tr>
+  <tr><td>OpenCode</td><td>Заранее указывать не нужно</td><td><code>/models</code></td></tr>
+  <tr><td>Cline / Roo Code</td><td>По одной модели за раз</td><td>Изменить поле <em>Model ID</em> в настройках</td></tr>
+  <tr><td>Gemini CLI</td><td>По одной модели за раз</td><td>Изменить переменную окружения и открыть новое окно</td></tr>
+</table></div>
+
+<p>Генератор конфигурации ниже сам пропишет несколько моделей там, где это поддерживается,
+и для каждого случая укажет, как переключаться.</p>
+
+<h4>Четыре частые ошибки</h4>
+<ul class="plain">
+  <li><strong>Набор моделей зависит от того, в какие аккаунты вы вошли.</strong> Без входа
+  в ChatGPT модели GPT не вызвать, как бы правильно вы ни написали название. Тарифы тоже
+  различаются: у Plus есть модели, которых нет у Free.</li>
+  <li><strong>После правки конфигурации нужен новый сеанс.</strong> Уже открытое окно
+  инструмента работает со старой конфигурацией, пока вы его не закроете и не откроете снова.</li>
+  <li><strong>Ключ — это пароль.</strong> Не выкладывайте его на GitHub и не отправляйте
+  в групповые чаты.</li>
+  <li><strong>Прокси должен быть запущен.</strong> Сообщение <code>connection refused</code>
+  почти всегда означает, что приложение забыли включить.</li>
+</ul>
+
+<h3 id="tao-cau-hinh">Соберите конфигурацию за меня</h3>
+<p class="sub">Выберите аккаунты, в которые вы вошли, и инструмент, которым хотите
+пользоваться. Конфигурация появится ниже — вместе с указанием, куда её вставить,
+и кнопкой копирования.</p>
+
+<div class="builder">
+  <fieldset class="fset">
+    <legend>Шаг 1 · Аккаунты, в которые вы вошли</legend>
+    <p class="fhint">Отметьте все типы, в которые вы вошли на шаге 04. Можно выбрать несколько.</p>
+    <div class="opts" id="acc-opts"></div>
+  </fieldset>
+
+  <fieldset class="fset" id="plan-wrap" hidden>
+    <legend>Шаг 1b · Ваш тариф ChatGPT</legend>
+    <p class="fhint">У каждого тарифа свой список доступных моделей.</p>
+    <div class="opts" id="plan-opts"></div>
+  </fieldset>
+
+  <fieldset class="fset">
+    <legend>Шаг 2 · Нужный инструмент</legend>
+    <p class="fhint">По одному инструменту за раз. Чтобы настроить ещё один, выберите его заново.</p>
+    <div class="opts" id="tool-opts"></div>
+  </fieldset>
+
+  <fieldset class="fset">
+    <legend>Шаг 3 · Модели и ключ</legend>
+    <p class="fhint">Список моделей ниже собран по тем аккаунтам, которые вы выбрали.</p>
+    <div class="row">
+      <div class="field">
+        <label for="m-main">Основная модель</label>
+        <select id="m-main"></select>
+        <p class="fh">Для большей части работы.</p>
+      </div>
+      <div class="field">
+        <label for="m-light">Облегчённая модель</label>
+        <select id="m-light"></select>
+        <p class="fh">Для мелких фоновых задач. Выбирайте подешевле и побыстрее.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field" style="flex-basis:100%">
+        <label for="k-in">Ваш ключ</label>
+        <input id="k-in" type="text" spellcheck="false" autocomplete="off"
+               placeholder="вставьте сюда ключ, созданный на шаге 05">
+        <p class="fh">Он остаётся только в вашем браузере и никуда не отправляется. Если
+        оставить поле пустым, в конфигурации будет заглушка.</p>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<div id="out"></div>
+
+<h3 id="truc-trac">Если что-то пошло не так</h3>
+<div class="tw"><table>
+  <tr><th>Что происходит</th><th>Что делать</th></tr>
+  <tr><td>Нажали запуск, но <em>Running</em> не появляется</td>
+      <td>Скорее всего, не установлено ядро. Вернитесь к шагу 02.</td></tr>
+  <tr><td>Вход выполнен, но аккаунта не видно</td>
+      <td>Браузер мог заблокировать всплывающее окно. Попробуйте снова и разрешите, когда
+      браузер спросит. Проверьте на вкладке <strong>Authentication Files</strong>.</td></tr>
+  <tr><td><code>401</code></td>
+      <td>Ключ, вписанный в инструмент, не совпадает с ключом в <strong>Authentication Keys</strong>.
+      Сверьте посимвольно.</td></tr>
+  <tr><td><code>404</code></td>
+      <td>Ошибка в окончании <code>/v1</code> у адреса. Посмотрите таблицу в разделе «Общие правила».</td></tr>
+  <tr><td><code>connection refused</code></td>
+      <td>Прокси не запущен. Откройте приложение, зайдите в <span class="menu">Home</span> и запустите снова.</td></tr>
+  <tr><td><code>unknown provider for model …</code></td>
+      <td>Название модели не относится ни к одному из подключённых аккаунтов. Посмотрите
+      список по кнопке <strong>Models</strong> или войдите ещё и в нужный аккаунт.</td></tr>
+  <tr><td>Сообщение о том, что лимит исчерпан</td>
+      <td>У аккаунта закончился лимит. Подождите восстановления или войдите ещё в один аккаунт.</td></tr>
+</table></div>
+
+<h3 id="hoi-dap">Частые вопросы</h3>
+
+<details>
+  <summary>Нужно ли работать с командной строкой?</summary>
+  <p>Нет. Установка — это нажатие кнопок в приложении с обычным интерфейсом.
+  Конфигурацию эта страница собирает сама, вам остаётся скопировать её и вставить в нужное место.</p>
+</details>
+
+<details>
+  <summary>Придётся ли доплачивать?</summary>
+  <p>Приложение бесплатное. Но новых лимитов оно не создаёт — вы по-прежнему расходуете
+  лимит того аккаунта, за который платите.</p>
+</details>
+
+<details>
+  <summary>Не отправляет ли оно мои данные куда-то на сторону?</summary>
+  <p>Нет. Приложение работает на вашем компьютере и слушает только локальный адрес
+  <code>127.0.0.1</code>, с других машин к нему не обратиться. Данные идут напрямую
+  с вашего компьютера к тому поставщику, в аккаунт которого вы вошли, — так же,
+  как при обычной работе.</p>
+</details>
+
+<details>
+  <summary>Если запускать Claude Code через ChatGPT, будет ли это то же самое, что оригинал?</summary>
+  <p>Нет. Интерфейс и порядок работы те же, но разные модели ведут себя по-разному —
+  и качество, и манера ответов будут отличаться. Смотрите на это как на способ
+  пользоваться любимым инструментом, а не как на способ получить Claude бесплатно.</p>
+</details>
+
+<details>
+  <summary>Можно ли настроить несколько инструментов сразу?</summary>
+  <p>Можно, и в этом вся прелесть. Один прокси обслуживает все инструменты одновременно —
+  Claude Code, Codex CLI и OpenCode вместе смотрят на <code>:8317</code>, все три работают
+  параллельно и используют одни и те же аккаунты, в которые вы вошли.</p>
+</details>
+
+<details>
+  <summary>Как всё это удалить?</summary>
+  <p>Зайдите в <span class="menu">Home</span>, нажмите <strong>stop</strong>, а потом
+  удалите приложение как любую другую программу. Инструменты, которые вы настраивали,
+  вернутся к прежнему поведению, как только вы уберёте из них добавленные адрес и ключ.</p>
+</details>
+
+<details>
+  <summary>Могут ли из-за этого заблокировать мой аккаунт?</summary>
+  <p>Скажем прямо: риск есть. Доступ к подписочному аккаунту через сторонние
+  автоматизированные средства обычно выходит за рамки условий использования поставщика.
+  При обычном личном использовании риск невелик, но заметно растёт, если одним аккаунтом
+  пользуются несколько человек или запросы идут с необычной частотой. Подумайте, прежде
+  чем подключать важный для вас аккаунт.</p>
+</details>
+
+</section>
+
+<footer>
+  Здесь используются <strong>CLIProxyAPI</strong> и версия с интерфейсом
+  <strong>EasyCLIProxyAPI</strong> — открытый исходный код, лицензия MIT,
+  <a href="https://github.com/router-for-me/CLIProxyAPI">github.com/router-for-me/CLIProxyAPI</a>.
+  На снимках экрана личные данные размыты.
+  Список моделей приведён по версии ядра v7.2 — у вашего аккаунта он может отличаться,
+  всегда сверяйтесь с кнопкой <strong>Models</strong> в приложении.
+</footer>
+
+</div>
+</main>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---------- переключение языка ---------- */
+  const lang = document.getElementById("lang");
+  if (lang) lang.addEventListener("change", () => { location.href = lang.value; });
+
+  /* ---------- данные о моделях, взяты из реестра CLIProxyAPI v7.2 ---------- */
+  const ACCOUNTS = {
+    chatgpt: {
+      label: "ChatGPT", note: "кнопка Codex",
+      plans: {
+        free: { label: "Free", models: ["gpt-5.5","gpt-5.6-terra","gpt-5.6-luna","gpt-5.4-mini","codex-auto-review"] },
+        plus: { label: "Plus", models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","gpt-5.3-codex-spark","codex-auto-review"] },
+        pro:  { label: "Pro",  models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","gpt-5.3-codex-spark","codex-auto-review"] },
+        team: { label: "Team", models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","codex-auto-review"] }
+      }
+    },
+    claude: {
+      label: "Claude", note: "кнопка Claude",
+      models: ["claude-opus-5","claude-sonnet-5","claude-opus-4-8","claude-opus-4-7","claude-opus-4-6",
+               "claude-sonnet-4-6","claude-fable-5","claude-sonnet-4-5-20250929","claude-haiku-4-5-20251001",
+               "claude-3-5-haiku-20241022"]
+    },
+    gemini: {
+      label: "Gemini", note: "кнопка Antigravity",
+      models: ["gemini-pro-agent","gemini-3.1-pro-low","gemini-3-flash","gemini-3-flash-agent",
+               "gemini-3.6-flash-high","gemini-3.5-flash-low","gemini-3.1-flash-lite",
+               "claude-sonnet-4-6","claude-opus-4-6-thinking"]
+    },
+    kimi: {
+      label: "Kimi", note: "кнопка Kimi",
+      models: ["kimi-k3","kimi-k3-256k","kimi-k2.7-code","kimi-k2.7-code-highspeed","kimi-k2.6","kimi-k2.5","kimi-k2-thinking","kimi-k2"]
+    },
+    grok: {
+      label: "Grok", note: "кнопка xAI",
+      models: ["grok-4.6","grok-4.5","grok-4.3","grok-composer-2.5-fast","grok-3-mini","grok-3-mini-fast"]
+    }
+  };
+
+  /* облегчённые модели: в названии есть одно из этих слов */
+  const LIGHT = /(mini|lite|haiku|spark|flash|fast|low|k2\b|k2\.5)/i;
+
+  const TOOLS = {
+    "claude-code": {
+      label: "Claude Code", proto: "Anthropic", slash: false,
+      file: "~/.claude/settings.json",
+      where: "Откройте этот файл любым текстовым редактором. Если в файле уже что-то есть, просто добавьте блок <code>env</code> внутрь самых внешних фигурных скобок, ничего не удаляя. Если файла ещё нет — создайте его."
+    },
+    "codex-cli": {
+      label: "Codex CLI", proto: "OpenAI Responses", slash: true,
+      file: "~/.codex/config.toml",
+      where: "Вставьте в конец файла. Если строка <code>model</code> или <code>model_provider</code> уже есть, исправьте её, а не добавляйте вторую."
+    },
+    "gemini-cli": {
+      label: "Gemini CLI", proto: "Gemini", slash: false,
+      file: "~/.zshrc  (macOS)  ·  ~/.bashrc  (Linux)",
+      where: "Вставьте в конец файла, затем откройте новое окно командной строки. В Windows задайте эти две переменные в системных переменных окружения."
+    },
+    "opencode": {
+      label: "OpenCode", proto: "OpenAI", slash: true,
+      file: "~/.config/opencode/opencode.json",
+      where: "Если их ещё нет, создайте и папку, и файл."
+    },
+    "cline": {
+      label: "Cline / Roo Code", proto: "OpenAI", slash: true, ui: true,
+      file: "Панель настроек в VS Code",
+      where: "Откройте панель Cline в VS Code, нажмите значок шестерёнки и заполните поля по таблице."
+    },
+    "continue": {
+      label: "Continue.dev", proto: "OpenAI", slash: true,
+      file: "~/.continue/config.yaml",
+      where: "Добавьте в раздел <code>models</code>, который уже есть в файле."
+    },
+    "droid": {
+      label: "Droid", proto: "OpenAI", slash: true,
+      file: "~/.factory/config.json",
+      where: "Если файла ещё нет — создайте. Если <code>custom_models</code> уже есть, добавьте в этот массив ещё один элемент."
+    }
+  };
+
+  const BASE = "http://127.0.0.1:8317";
+  const KEY_PLACEHOLDER = "sk-paste-your-key-here";
+
+  const $ = s => document.querySelector(s);
+  const accOpts = $("#acc-opts"), planOpts = $("#plan-opts"), planWrap = $("#plan-wrap");
+  const toolOpts = $("#tool-opts"), mMain = $("#m-main"), mLight = $("#m-light");
+  const keyIn = $("#k-in"), out = $("#out");
+
+  const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+  /* ---------- строим поля выбора ---------- */
+  for (const [id, a] of Object.entries(ACCOUNTS)) {
+    accOpts.insertAdjacentHTML("beforeend",
+      `<label class="opt"><input type="checkbox" name="acc" value="${id}">
+       <span>${a.label}<small>${a.note}</small></span></label>`);
+  }
+  for (const [id, p] of Object.entries(ACCOUNTS.chatgpt.plans)) {
+    planOpts.insertAdjacentHTML("beforeend",
+      `<label class="opt"><input type="radio" name="plan" value="${id}"${id === "plus" ? " checked" : ""}>
+       <span>${p.label}</span></label>`);
+  }
+  for (const [id, t] of Object.entries(TOOLS)) {
+    toolOpts.insertAdjacentHTML("beforeend",
+      `<label class="opt"><input type="radio" name="tool" value="${id}"${id === "claude-code" ? " checked" : ""}>
+       <span>${t.label}<small>${t.proto}</small></span></label>`);
+  }
+
+  /* ---------- состояние ---------- */
+  const pickedAccounts = () => [...document.querySelectorAll('input[name="acc"]:checked')].map(i => i.value);
+  const pickedPlan = () => (document.querySelector('input[name="plan"]:checked') || {}).value || "plus";
+  const pickedTool = () => (document.querySelector('input[name="tool"]:checked') || {}).value;
+
+  function availableModels() {
+    const list = [];
+    for (const id of pickedAccounts()) {
+      const a = ACCOUNTS[id];
+      const models = id === "chatgpt" ? a.plans[pickedPlan()].models : a.models;
+      for (const m of models) if (!list.includes(m)) list.push(m);
+    }
+    return list;
+  }
+
+  function fillSelects() {
+    const models = availableModels();
+    const keepMain = mMain.value, keepLight = mLight.value;
+    const opts = models.map(m => `<option value="${m}">${m}</option>`).join("");
+    mMain.innerHTML = opts; mLight.innerHTML = opts;
+    mMain.disabled = mLight.disabled = models.length === 0;
+    if (!models.length) return;
+    mMain.value  = models.includes(keepMain)  ? keepMain  : (models.find(m => !LIGHT.test(m)) || models[0]);
+    mLight.value = models.includes(keepLight) ? keepLight : (models.find(m =>  LIGHT.test(m)) || models[0]);
+  }
+
+  /* ---------- сборка конфигурации ---------- */
+  function build() {
+    const accounts = pickedAccounts();
+    if (!accounts.length) {
+      out.innerHTML = `<div class="empty">Выберите хотя бы один тип аккаунта на шаге 1, чтобы увидеть конфигурацию.</div>`;
+      return;
+    }
+    const toolId = pickedTool(), t = TOOLS[toolId];
+    const url = BASE + (t.slash ? "/v1" : "");
+    const key = keyIn.value.trim() || KEY_PLACEHOLDER;
+    const main = mMain.value, light = mLight.value;
+    const onlyClaude = accounts.length === 1 && accounts[0] === "claude";
+
+    let body, body2 = "", file2 = "", extra = "", swap = "";
+
+    if (toolId === "claude-code") {
+      if (onlyClaude) {
+        body =
+`{
+  "env": {
+    "ANTHROPIC_BASE_URL": "${url}",
+    "ANTHROPIC_AUTH_TOKEN": "${key}"
+  }
+}`;
+        extra = `<div class="note"><span class="tag">Почему так коротко</span>
+          <p>Вы пользуетесь только аккаунтом Claude, а Claude Code и без того знает
+          названия моделей Claude. Указывать модели не нужно, команда <code>/model</code>
+          в Claude Code работает как обычно.</p></div>`;
+      } else {
+        body =
+`{
+  "env": {
+    "ANTHROPIC_BASE_URL": "${url}",
+    "ANTHROPIC_AUTH_TOKEN": "${key}",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "${main}",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "${main}",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "${light}",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "${main}"
+  }
+}`;
+        extra = `<div class="note"><span class="tag">Зачем три строки с моделями</span>
+          <p>Claude Code всегда обращается по названиям моделей Claude. Эти три строки
+          переводят имена <em>Opus</em>, <em>Sonnet</em>, <em>Haiku</em> в ваши настоящие
+          модели — поэтому, выбрав <em>Opus</em> в <code>/model</code>, вы запустите
+          <code>${esc(main)}</code>.</p>
+          <p>Можно направить каждое имя на свою модель и пользоваться
+          <code>/model</code> как быстрым переключателем.</p></div>`;
+      }
+      swap = `<p>Наберите <code>/model</code> и выберите. Если хотите, чтобы каждое имя
+        запускало свою модель, пропишите в трёх строках <code>..._MODEL</code> разные
+        значения — например, <em>Opus</em> пусть будет мощной моделью, <em>Sonnet</em> —
+        быстрой, и переключайтесь между ними одной командой.</p>
+        <p class="fh" style="max-width:60ch">Учтите: если набрать <code>/model &lt;имя&gt;</code>
+        напрямую, значение по умолчанию перезапишется в файле конфигурации. Чтобы сменить
+        модель только для текущего сеанса, выберите её в появившейся таблице,
+        в пункте с пометкой <em>this session only</em>.</p>`;
+    }
+
+    else if (toolId === "codex-cli") {
+      body =
+`model = "${main}"
+model_provider = "cliproxyapi"
+
+[model_providers.cliproxyapi]
+base_url = "${url}"
+experimental_bearer_token = "${key}"
+name = "OpenAI"
+wire_api = "responses"
+requires_openai_auth = true`;
+      file2 = "~/.codex/light.config.toml";
+      body2 =
+`model = "${light}"
+model_provider = "cliproxyapi"`;
+      swap =
+`<p><strong>Сменить прямо во время работы:</strong> наберите <code>/models</code> и выберите.</p>
+ <p><strong>Запустить один раз с другой моделью:</strong> <code>codex -m ${esc(light)}</code></p>
+ <p><strong>Держать наготове несколько наборов:</strong> создайте второй файл, показанный
+ ниже, и вызывайте <code>codex -p light</code>. Codex наложит его поверх основной
+ конфигурации, поэтому в нём достаточно только отличающихся строк.</p>`;
+    }
+
+    else if (toolId === "gemini-cli") {
+      body =
+`export GOOGLE_GEMINI_BASE_URL="${url}"
+export GEMINI_API_KEY="${key}"`;
+      extra = `<div class="note warn"><span class="tag">Возможны сбои</span>
+        <p>У Gemini CLI смена адреса работает нестабильно — сообщали, что он игнорирует
+        эти две переменные и всё равно обращается напрямую к Google. Если не заработает,
+        воспользуйтесь пока OpenCode или Claude Code: оба вызывают модели Gemini
+        через прокси.</p></div>`;
+    }
+
+    else if (toolId === "opencode") {
+      body =
+`{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openai": {
+      "options": {
+        "baseURL": "${url}",
+        "apiKey": "${key}"
+      }
+    }
+  },
+  "model": "${main}"
+}`;
+      swap = `<p>Строка <code>model</code> — только значение по умолчанию при запуске.
+        В OpenCode наберите <code>/models</code>, чтобы выбрать другую модель: там появятся
+        все модели тех аккаунтов, в которые вы вошли, перечислять их заранее
+        по одной не нужно.</p>`;
+    }
+
+    else if (toolId === "continue") {
+      body =
+`models:
+  - name: Основная модель
+    provider: openai
+    model: ${main}
+    apiBase: ${url}
+    apiKey: ${key}
+    roles: [chat, edit]
+  - name: Облегчённая модель
+    provider: openai
+    model: ${light}
+    apiBase: ${url}
+    apiKey: ${key}
+    roles: [chat, edit, apply]`;
+      swap = `<p>Раздел <code>models</code> — это список, так что моделей можно указать
+        сколько угодно: повторяйте блок из четырёх строк, меняя <code>name</code>
+        и <code>model</code>. В VS Code нажмите название модели внизу окна чата,
+        чтобы переключиться.</p>`;
+    }
+
+    else if (toolId === "droid") {
+      body =
+`{
+  "custom_models": [
+    {
+      "model": "${main}",
+      "base_url": "${url}",
+      "api_key": "${key}",
+      "provider": "openai"
+    },
+    {
+      "model": "${light}",
+      "base_url": "${url}",
+      "api_key": "${key}",
+      "provider": "openai"
+    }
+  ]
+}`;
+      swap = `<p><code>custom_models</code> — это массив, блоков можно добавить сколько
+        угодно, по одному на модель. В Droid модель выбирается в переключателе моделей.</p>`;
+      extra = `<div class="note"><span class="tag">Обратите внимание</span>
+        <p>Если поменять <code>"provider"</code> на <code>"anthropic"</code>, то из
+        <code>base_url</code> нужно убрать <code>/v1</code>.</p></div>`;
+    }
+
+    else if (toolId === "cline") {
+      out.innerHTML = `
+        <div class="outhead"><h4>Заполните панель настроек ${esc(t.label)}</h4>
+          <span class="badge">${esc(t.proto)}</span></div>
+        <p>${t.where}</p>
+        <div class="tw"><table>
+          <tr><th>Поле</th><th>Что вписать</th></tr>
+          <tr><td>API Provider</td><td><strong>OpenAI Compatible</strong></td></tr>
+          <tr><td>Base URL</td><td><code>${esc(url)}</code></td></tr>
+          <tr><td>API Key</td><td><code>${esc(key)}</code></td></tr>
+          <tr><td>Model ID</td><td><code>${esc(main)}</code></td></tr>
+        </table></div>
+        <div class="note warn"><span class="tag">Расходует много</span>
+          <p>Cline читает весь проект ради контекста, поэтому тратит лимит заметно быстрее
+          других инструментов. Если пользуетесь им много, подписочный аккаунт лучше
+          приберечь для других инструментов.</p></div>`;
+      return;
+    }
+
+    out.innerHTML = `
+      <div class="outhead"><h4>Конфигурация для ${esc(t.label)}</h4>
+        <span class="badge">${esc(t.proto)}</span></div>
+      <p>${t.where}</p>
+      <div class="codebox">
+        <div class="codebar">
+          <span class="fp">${esc(t.file)}</span>
+          <button class="copy" type="button">Копировать</button>
+        </div>
+        <pre><code>${esc(body)}</code></pre>
+      </div>
+      ${extra}
+      ${body2 ? `<h4>Второй набор, по желанию</h4>
+        <div class="codebox">
+          <div class="codebar">
+            <span class="fp">${esc(file2)}</span>
+            <button class="copy" type="button">Копировать</button>
+          </div>
+          <pre><code>${esc(body2)}</code></pre>
+        </div>` : ""}
+      ${swap ? `<div class="note"><span class="tag">Смена модели потом</span>${swap}</div>` : ""}
+      <div class="note"><span class="tag">После того как вставили</span>
+        <p>Полностью закройте инструмент и откройте заново. Уже открытое окно продолжит
+        работать со старой конфигурацией.</p></div>`;
+  }
+
+  /* ---------- кнопка копирования ---------- */
+  out.addEventListener("click", async e => {
+    const btn = e.target.closest(".copy");
+    if (!btn) return;
+    const text = btn.closest(".codebox").querySelector("code").textContent;
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; }
+    catch {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand("copy"); } catch {}
+      ta.remove();
+    }
+    btn.textContent = ok ? "Скопировано" : "Выделите вручную";
+    btn.classList.toggle("done", ok);
+    setTimeout(() => { btn.textContent = "Копировать"; btn.classList.remove("done"); }, 1800);
+  });
+
+  /* ---------- слушаем изменения ---------- */
+  document.addEventListener("change", e => {
+    if (!e.target.name) return;
+    if (["acc","plan"].includes(e.target.name)) {
+      planWrap.hidden = !pickedAccounts().includes("chatgpt");
+      fillSelects();
+    }
+    build();
+  });
+  keyIn.addEventListener("input", build);
+  mMain.addEventListener("change", build);
+  mLight.addEventListener("change", build);
+
+  fillSelects();
+  build();
+
+  /* ---------- подсветка текущего раздела в меню ---------- */
+  const links = [...document.querySelectorAll('nav.side a')];
+  const targets = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  if ("IntersectionObserver" in window && targets.length) {
+    const seen = new Set();
+    const io = new IntersectionObserver(entries => {
+      for (const en of entries) en.isIntersecting ? seen.add(en.target.id) : seen.delete(en.target.id);
+      const first = targets.find(t => seen.has(t.id));
+      links.forEach(a => a.classList.toggle("on", !!first && a.getAttribute("href") === "#" + first.id));
+    }, { rootMargin: "-80px 0px -70% 0px" });
+    targets.forEach(t => io.observe(t));
+  }
+})();
+</script>
+</body>
+</html>

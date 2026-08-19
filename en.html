@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Proxy AI trên máy bạn — cài đặt và sử dụng</title>
-<meta name="description" content="Hướng dẫn cài và dùng proxy AI từ đầu, kèm bộ tạo cấu hình tự động cho 7 công cụ.">
+<title>An AI proxy on your machine — install and use</title>
+<meta name="description" content="A from-scratch guide to installing and using a local AI proxy, with an automatic config generator for 7 tools.">
 <style>
   :root{
     --ground:#F2F5F6; --surface:#FFFFFF; --surface-2:#E7EDEE;
@@ -212,31 +212,31 @@
 
 <div class="shell">
 
-<nav class="side" aria-label="Mục lục">
-  <p class="brandmark">Proxy AI<br>trên máy bạn</p>
-  <p class="brandsub">Cài đặt &amp; sử dụng</p>
+<nav class="side" aria-label="Contents">
+  <p class="brandmark">An AI proxy<br>on your machine</p>
+  <p class="brandsub">Install &amp; use</p>
   <div class="navwrap">
     <div class="grp">
-      <span>Phần 1 · Giới thiệu</span>
-      <a href="#la-gi">Proxy AI là gì</a>
-      <a href="#nen-biet">Ba điều nên biết</a>
-      <a href="#chuan-bi">Bạn cần chuẩn bị</a>
+      <span>Part 1 · Introduction</span>
+      <a href="#la-gi">What an AI proxy is</a>
+      <a href="#nen-biet">Three things worth knowing</a>
+      <a href="#chuan-bi">What you need</a>
     </div>
     <div class="grp">
-      <span>Phần 2 · Cài đặt</span>
-      <a href="#tai-ve">01 · Tải và cài</a>
-      <a href="#cai-loi">02 · Cài phần lõi</a>
-      <a href="#bat-proxy">03 · Bật proxy</a>
-      <a href="#dang-nhap">04 · Đăng nhập tài khoản</a>
-      <a href="#doi-khoa">05 · Đổi khoá bảo vệ</a>
-      <a href="#theo-doi">06 · Theo dõi mức dùng</a>
+      <span>Part 2 · Installation</span>
+      <a href="#tai-ve">01 · Download and install</a>
+      <a href="#cai-loi">02 · Install the core</a>
+      <a href="#bat-proxy">03 · Start the proxy</a>
+      <a href="#dang-nhap">04 · Sign in to your account</a>
+      <a href="#doi-khoa">05 · Change the access key</a>
+      <a href="#theo-doi">06 · Track your usage</a>
     </div>
     <div class="grp">
-      <span>Phần 3 · Sử dụng</span>
-      <a href="#quy-tac">Quy tắc chung</a>
-      <a href="#tao-cau-hinh">Tạo cấu hình cho tôi</a>
-      <a href="#truc-trac">Gặp trục trặc</a>
-      <a href="#hoi-dap">Câu hỏi hay gặp</a>
+      <span>Part 3 · Using it</span>
+      <a href="#quy-tac">The general rules</a>
+      <a href="#tao-cau-hinh">Generate my config</a>
+      <a href="#truc-trac">When something goes wrong</a>
+      <a href="#hoi-dap">Common questions</a>
     </div>
   </div>
 </nav>
@@ -245,49 +245,49 @@
 <div class="inner">
 
 <div class="langbar">
-  <select id="lang" aria-label="Chọn ngôn ngữ — Select language">
-    <option value="index.html" selected>🌐 Tiếng Việt</option>
-    <option value="en.html">🌐 English</option>
+  <select id="lang" aria-label="Select language">
+    <option value="index.html">🌐 Tiếng Việt</option>
+    <option value="en.html" selected>🌐 English</option>
     <option value="zh.html">🌐 中文</option>
     <option value="ru.html">🌐 Русский</option>
   </select>
 </div>
 
 <header class="top">
-  <p class="eyebrow">Hướng dẫn · khoảng 10 phút · làm một lần</p>
-  <h1>Proxy AI trên máy bạn</h1>
-  <p class="lede">Bạn có tài khoản ChatGPT, Claude hoặc Gemini và muốn dùng nó trong các
-  công cụ lập trình — những trợ lý viết code như Claude Code, Codex CLI hay Cline.
-  Trang này hướng dẫn cài từ đầu, và tự tạo sẵn cấu hình cho công cụ bạn chọn —
-  chỉ cần chép và dán, không phải gõ lệnh nào.</p>
+  <p class="eyebrow">Guide · about 10 minutes · one time only</p>
+  <h1>An AI proxy on your machine</h1>
+  <p class="lede">You have a ChatGPT, Claude or Gemini account, and you want to use it inside
+  coding tools — the assistants that write code with you, like Claude Code, Codex CLI or Cline.
+  This page walks you through the setup from scratch, then builds the configuration for the tool
+  you pick — copy, paste, no commands to type.</p>
 </header>
 
 <!-- ============ PHẦN 1 ============ -->
 <section class="part">
-<div class="parthead"><span class="pn">Phần 1</span><h2>Giới thiệu</h2></div>
+<div class="parthead"><span class="pn">Part 1</span><h2>Introduction</h2></div>
 
-<h3 id="la-gi">Proxy AI là gì?</h3>
-<p class="sub">Hiểu trong một phút, trước khi bắt tay vào cài.</p>
+<h3 id="la-gi">What is an AI proxy?</h3>
+<p class="sub">One minute of background before you start installing.</p>
 
-<p>Mỗi công ty AI nói một “thứ tiếng” riêng. Công cụ viết cho Claude thì không hiểu tài
-khoản ChatGPT, và ngược lại. Bình thường bạn có tài khoản nào thì buộc phải dùng đúng
-công cụ của hãng đó.</p>
+<p>Every AI company speaks its own “language”. A tool built for Claude does not understand a
+ChatGPT account, and the other way round. Normally, whichever account you hold decides which
+company's tool you are stuck with.</p>
 
-<p><strong>Proxy là một người phiên dịch chạy ngay trên máy bạn.</strong> Công cụ nói
-tiếng nào, nó nghe tiếng đó, rồi dịch sang tiếng của nhà cung cấp mà bạn có tài khoản.
-Hai bên không cần biết đến nhau.</p>
+<p><strong>A proxy is a translator running right on your machine.</strong> Whatever language a
+tool speaks, the proxy listens in that language, then translates it into the language of the
+provider you actually have an account with. Neither side needs to know about the other.</p>
 
 <div class="diagram">
-<svg viewBox="0 0 720 232" role="img" aria-label="Sơ đồ: bốn loại tài khoản bên trái nối vào proxy ở giữa, proxy nối ra bốn loại công cụ bên phải, mọi tổ hợp đều được">
+<svg viewBox="0 0 720 232" role="img" aria-label="Diagram: four kinds of account on the left connect into the proxy in the middle, the proxy connects out to four kinds of tool on the right, every combination works">
   <defs>
     <marker id="ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3.5" orient="auto">
       <path d="M0,0 L7,3.5 L0,7 z" fill="currentColor"/>
     </marker>
   </defs>
   <g font-family="ui-monospace,Menlo,monospace" font-size="12">
-    <text x="72" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">BẠN CÓ</text>
+    <text x="72" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">YOU HAVE</text>
     <text x="360" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">PROXY</text>
-    <text x="640" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">BẠN DÙNG</text>
+    <text x="640" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">YOU USE</text>
     <g fill="var(--ink)">
       <rect x="1" y="30" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
       <text x="72" y="52" text-anchor="middle">Claude</text>
@@ -306,7 +306,7 @@ Hai bên không cần biết đến nhau.</p>
     </g>
     <rect x="300" y="76" width="120" height="74" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.6"/>
     <text x="360" y="108" text-anchor="middle" fill="var(--ink)" font-size="12.5">CLIProxyAPI</text>
-    <text x="360" y="126" text-anchor="middle" fill="var(--ink-3)" font-size="10.5">:8317 · trên máy bạn</text>
+    <text x="360" y="126" text-anchor="middle" fill="var(--ink-3)" font-size="10.5">:8317 · on your machine</text>
     <g stroke="var(--accent)" stroke-width="1.2" color="var(--accent)" fill="none">
       <path d="M424,113 C480,113 510,47 566,47" marker-end="url(#ar)"/>
       <path d="M424,113 C475,113 515,91 566,91" marker-end="url(#ar)"/>
@@ -323,111 +323,111 @@ Hai bên không cần biết đến nhau.</p>
       <rect x="570" y="162" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
       <text x="644" y="184" text-anchor="middle">Cline · OpenCode · Droid</text>
     </g>
-    <text x="360" y="222" text-anchor="middle" fill="var(--ink-3)" font-size="11">bất kỳ ô trái nào × bất kỳ ô phải nào</text>
+    <text x="360" y="222" text-anchor="middle" fill="var(--ink-3)" font-size="11">any box on the left × any box on the right</text>
   </g>
 </svg>
 </div>
-<p class="cap">Bên trái là thứ bạn đã có. Bên phải là thứ bạn muốn dùng. Proxy ở giữa
-nối mọi cặp lại với nhau.</p>
+<p class="cap">On the left is what you already have. On the right is what you want to use. The
+proxy in the middle connects every pair.</p>
 
-<h3 id="nen-biet">Ba điều nên biết</h3>
+<h3 id="nen-biet">Three things worth knowing</h3>
 <div class="note">
-  <span class="tag">Trước khi bắt đầu</span>
-  <p><strong>Nó chạy trên máy bạn.</strong> Không phải dịch vụ trên mạng, không ai khác
-  truy cập được.</p>
-  <p><strong>Không phải cách dùng AI miễn phí.</strong> Bạn vẫn tiêu vào chính tài khoản
-  mình đang trả tiền — chỉ là dùng được ở nhiều công cụ hơn.</p>
-  <p><strong>Cài một lần.</strong> Xong rồi thì mở máy là nó tự chạy.</p>
+  <span class="tag">Before you start</span>
+  <p><strong>It runs on your machine.</strong> It is not an online service, and nobody else can
+  reach it.</p>
+  <p><strong>It is not a way to get AI for free.</strong> You still spend the account you are
+  already paying for — you can just spend it in more tools.</p>
+  <p><strong>You set it up once.</strong> After that it starts on its own every time you boot.</p>
 </div>
 
-<h3 id="chuan-bi">Bạn cần chuẩn bị</h3>
+<h3 id="chuan-bi">What you need</h3>
 <div class="tw"><table>
-  <tr><th>Thứ cần</th><th>Ghi chú</th></tr>
-  <tr><td>Một máy Mac hoặc Windows</td><td>Các bước gần như giống hệt nhau</td></tr>
-  <tr><td>Một tài khoản AI đang dùng được</td><td>ChatGPT Plus/Pro, Claude Pro/Max, Gemini, Kimi hoặc Grok</td></tr>
-  <tr><td>Khoảng 10 phút</td><td>Phần lâu nhất là chờ tải về</td></tr>
+  <tr><th>What</th><th>Notes</th></tr>
+  <tr><td>A Mac or a Windows machine</td><td>The steps are almost identical</td></tr>
+  <tr><td>One working AI account</td><td>ChatGPT Plus/Pro, Claude Pro/Max, Gemini, Kimi or Grok</td></tr>
+  <tr><td>About 10 minutes</td><td>Most of it is waiting for the download</td></tr>
 </table></div>
 </section>
 
 <!-- ============ PHẦN 2 ============ -->
 <section class="part">
-<div class="parthead"><span class="pn">Phần 2</span><h2>Cài đặt</h2></div>
+<div class="parthead"><span class="pn">Part 2</span><h2>Installation</h2></div>
 
-<h3 id="tai-ve"><span class="num">01</span>Tải và cài ứng dụng</h3>
-<p class="sub">Ứng dụng tên là <strong>EasyCLIProxyAPI</strong>, miễn phí và mã nguồn mở.</p>
+<h3 id="tai-ve"><span class="num">01</span>Download and install the app</h3>
+<p class="sub">The app is called <strong>EasyCLIProxyAPI</strong>. It is free and open source.</p>
 
 <ol class="steps">
-  <li>Mở trang <a href="https://github.com/router-for-me/EasyCLIProxyAPI/releases">github.com/router-for-me/EasyCLIProxyAPI/releases</a></li>
-  <li>Kéo xuống mục <strong>Assets</strong> của bản mới nhất</li>
-  <li>Máy Mac tải file đuôi <code>.dmg</code> · máy Windows tải file đuôi <code>.zip</code></li>
-  <li><strong>Mac:</strong> mở file <code>.dmg</code> rồi kéo ứng dụng thả vào thư mục <strong>Applications</strong><br>
-      <strong>Windows:</strong> giải nén rồi chạy file bên trong</li>
-  <li>Mở ứng dụng lên</li>
+  <li>Open <a href="https://github.com/router-for-me/EasyCLIProxyAPI/releases">github.com/router-for-me/EasyCLIProxyAPI/releases</a></li>
+  <li>Scroll down to <strong>Assets</strong> under the newest release</li>
+  <li>On a Mac download the <code>.dmg</code> file · on Windows download the <code>.zip</code> file</li>
+  <li><strong>Mac:</strong> open the <code>.dmg</code> and drag the app into your <strong>Applications</strong> folder<br>
+      <strong>Windows:</strong> unzip it and run the file inside</li>
+  <li>Open the app</li>
 </ol>
 
 <div class="note">
-  <span class="tag">Yên tâm</span>
-  <p>Trên máy Mac, ứng dụng này <strong>đã được Apple kiểm duyệt</strong>, nên mở thẳng
-  được, không hiện cảnh báo “không rõ nhà phát triển”.</p>
+  <span class="tag">Nothing to worry about</span>
+  <p>On a Mac this app is <strong>notarised by Apple</strong>, so it opens straight away, with no
+  “unidentified developer” warning.</p>
 </div>
 
-<h3 id="cai-loi"><span class="num">02</span>Cài phần lõi</h3>
-<p class="sub">Ứng dụng bạn vừa cài là phần vỏ có giao diện. Phần lõi mới là thứ làm việc
-thật, và phải bấm cài thêm một lần.</p>
+<h3 id="cai-loi"><span class="num">02</span>Install the core</h3>
+<p class="sub">The app you just installed is the shell with the interface. The core is the part
+that does the real work, and you install it with one more click.</p>
 
 <ol class="steps">
-  <li>Ở cột menu bên trái, bấm <span class="menu">Version Management</span></li>
-  <li>Bấm nút cài phiên bản lõi mới nhất</li>
-  <li>Chờ vài giây cho tới khi báo đã cài xong</li>
+  <li>In the left-hand menu, click <span class="menu">Version Management</span></li>
+  <li>Click the button that installs the newest core version</li>
+  <li>Wait a few seconds until it reports that the install is finished</li>
 </ol>
 
 <figure class="shot">
   <img src="images/version-management.webp" width="1600" height="1080" loading="lazy"
-       alt="Màn hình Version Management trong ứng dụng EasyCLIProxyAPI, nơi bấm cài phiên bản lõi">
-  <figcaption>Màn hình <strong>Version Management</strong>. Chấm màu cam cạnh tên menu
-  nghĩa là đang có bản lõi mới hơn để cập nhật.</figcaption>
+       alt="The Version Management screen in the EasyCLIProxyAPI app, where you click to install the core version">
+  <figcaption>The <strong>Version Management</strong> screen. An orange dot next to the menu name
+  means a newer core version is available.</figcaption>
 </figure>
 
-<h3 id="bat-proxy"><span class="num">03</span>Bật proxy</h3>
+<h3 id="bat-proxy"><span class="num">03</span>Start the proxy</h3>
 
 <ol class="steps">
-  <li>Bấm <span class="menu">Home</span> ở menu bên trái</li>
-  <li>Trong khung <strong>Runtime Control</strong>, bấm nút chạy</li>
-  <li>Khi <em>Runtime Status</em> hiện <strong>Running</strong> là đã xong</li>
+  <li>Click <span class="menu">Home</span> in the left-hand menu</li>
+  <li>In the <strong>Runtime Control</strong> panel, click the run button</li>
+  <li>When <em>Runtime Status</em> shows <strong>Running</strong>, you are done</li>
 </ol>
 
 <figure class="shot">
   <img src="images/home.webp" width="1600" height="1085" loading="lazy"
-       alt="Màn hình Home hiển thị trạng thái Running và ba địa chỉ proxy nội bộ">
-  <figcaption>Đang chạy. Bên phải là ba địa chỉ để lát nữa khai vào công cụ của bạn —
-  mỗi loại công cụ dùng một địa chỉ khác nhau.</figcaption>
+       alt="The Home screen showing Running status and three local proxy addresses">
+  <figcaption>Up and running. On the right are the three addresses you will give your tools in a
+  moment — each kind of tool uses a different one.</figcaption>
 </figure>
 
 <div class="note">
-  <span class="tag">Từ giờ tự chạy</span>
-  <p>Bật một lần là xong. Những lần mở máy sau, ứng dụng tự khởi động cùng hệ thống,
-  bạn không phải làm lại bước này.</p>
+  <span class="tag">It starts itself from now on</span>
+  <p>You only do this once. The next time you turn the machine on, the app starts with the system
+  and you can skip this step.</p>
 </div>
 
-<h3 id="dang-nhap"><span class="num">04</span>Đăng nhập tài khoản của bạn</h3>
-<p class="sub">Đây là bước nối tài khoản AI bạn đang có vào proxy.</p>
+<h3 id="dang-nhap"><span class="num">04</span>Sign in to your account</h3>
+<p class="sub">This is the step that connects the AI account you already have to the proxy.</p>
 
 <ol class="steps">
-  <li>Bấm <span class="menu">OAuth</span> ở menu bên trái</li>
-  <li>Ở tab <strong>OAuth Sign-In</strong>, tìm ô ứng với tài khoản của bạn</li>
-  <li>Bấm <strong>Start Sign-In</strong></li>
-  <li>Trình duyệt tự mở ra — đăng nhập như bình thường</li>
-  <li>Xong thì ô đó chuyển sang <strong>Completed</strong></li>
+  <li>Click <span class="menu">OAuth</span> in the left-hand menu</li>
+  <li>On the <strong>OAuth Sign-In</strong> tab, find the card for your account</li>
+  <li>Click <strong>Start Sign-In</strong></li>
+  <li>Your browser opens by itself — sign in the way you normally would</li>
+  <li>When it finishes, that card switches to <strong>Completed</strong></li>
 </ol>
 
 <div class="note warn">
-  <span class="tag">Tên trên màn hình khác tên bạn quen</span>
-  <p>Đây là chỗ nhiều người khựng lại. Ứng dụng dùng tên kỹ thuật, không phải tên sản
-  phẩm bạn mua:</p>
+  <span class="tag">The names on screen are not the names you know</span>
+  <p>This is where a lot of people pause. The app uses technical names, not the product names you
+  bought:</p>
 </div>
 
 <div class="tw"><table>
-  <tr><th>Bạn có tài khoản</th><th>Bấm vào ô tên là</th></tr>
+  <tr><th>Your account</th><th>Card to click</th></tr>
   <tr><td>ChatGPT</td><td><strong>Codex OAuth</strong></td></tr>
   <tr><td>Claude</td><td><strong>Claude OAuth</strong></td></tr>
   <tr><td>Gemini</td><td><strong>Antigravity OAuth</strong></td></tr>
@@ -437,192 +437,193 @@ thật, và phải bấm cài thêm một lần.</p>
 
 <figure class="shot">
   <img src="images/oauth-sign-in.webp" width="1600" height="897" loading="lazy"
-       alt="Màn hình OAuth Sign-In với năm ô đăng nhập: Codex, Claude, Antigravity, Kimi và xAI">
-  <figcaption>Ô <strong>Codex OAuth</strong> đã đăng nhập xong nên hiện
-  <em>Completed</em>. Ô <strong>Claude OAuth</strong> đang trong lúc đăng nhập dở —
-  phần link đã được làm mờ vì đó là thông tin riêng của từng máy.</figcaption>
+       alt="The OAuth Sign-In screen with five sign-in cards: Codex, Claude, Antigravity, Kimi and xAI">
+  <figcaption>The <strong>Codex OAuth</strong> card has finished signing in, so it shows
+  <em>Completed</em>. The <strong>Claude OAuth</strong> card is part-way through — the link is
+  blurred because it is specific to each machine.</figcaption>
 </figure>
 
-<p><strong>Đăng nhập được nhiều tài khoản thì tốt hơn một.</strong> Proxy tự xoay vòng
-giữa chúng, và khi một tài khoản hết lượt thì tự chuyển sang cái còn lại — bạn không bị
-đứng giữa chừng.</p>
+<p><strong>Signing in with several accounts beats signing in with one.</strong> The proxy rotates
+between them, and when one account runs out of quota it moves to the next — so you are not left
+stranded half-way through something.</p>
 
-<h4>Kiểm tra tài khoản đã lưu</h4>
-<p>Sang tab <strong>Authentication Files</strong> để xem danh sách tài khoản proxy đang
-giữ. Mỗi dòng là một tài khoản; chữ <strong>active</strong> màu xanh nghĩa là dùng được.
-Nút <strong>Models</strong> trên mỗi dòng cho biết tài khoản đó có những model nào —
-lát nữa sẽ cần.</p>
+<h4>Check the accounts it has saved</h4>
+<p>Go to the <strong>Authentication Files</strong> tab to see the accounts the proxy is holding.
+Each row is one account; a green <strong>active</strong> means it is ready to use. The
+<strong>Models</strong> button on each row lists the models that account can reach — you will
+need that in a moment.</p>
 
 <figure class="shot">
   <img src="images/oauth-files.webp" width="1600" height="1080" loading="lazy"
-       alt="Tab Authentication Files liệt kê các tài khoản đã đăng nhập cùng trạng thái active">
-  <figcaption>Có tài khoản trong danh sách và trạng thái <em>active</em> nghĩa là proxy
-  đã sẵn sàng phục vụ.</figcaption>
+       alt="The Authentication Files tab listing the signed-in accounts with their active status">
+  <figcaption>An account in the list with <em>active</em> status means the proxy is ready to
+  serve.</figcaption>
 </figure>
 
-<h3 id="doi-khoa"><span class="num">05</span>Đổi khoá bảo vệ</h3>
-<p class="sub">Bước này ngắn nhưng đừng bỏ qua.</p>
+<h3 id="doi-khoa"><span class="num">05</span>Change the access key</h3>
+<p class="sub">A short step, but do not skip it.</p>
 
 <div class="note warn">
-  <span class="tag">Quan trọng</span>
-  <p>Khoá này giống mật khẩu bảo vệ toàn bộ tài khoản AI bạn vừa đăng nhập. Ứng dụng
-  đặt sẵn một khoá mặc định dễ đoán — <strong>hãy đổi ngay</strong>.</p>
+  <span class="tag">Important</span>
+  <p>This key is the password guarding every AI account you just signed in with. The app ships
+  with an easy-to-guess default — <strong>change it now</strong>.</p>
 </div>
 
 <ol class="steps">
-  <li>Bấm <span class="menu">Advanced Settings</span> ở menu bên trái</li>
-  <li>Ở tab <strong>General Settings</strong>, tìm khung <strong>Authentication Keys</strong></li>
-  <li>Bấm nút <strong>+</strong> để tạo khoá mới, rồi xoá khoá cũ đi</li>
-  <li><strong>Chép khoá mới ra chỗ an toàn</strong> — phần 3 sẽ cần dùng</li>
+  <li>Click <span class="menu">Advanced Settings</span> in the left-hand menu</li>
+  <li>On the <strong>General Settings</strong> tab, find the <strong>Authentication Keys</strong> panel</li>
+  <li>Click <strong>+</strong> to create a new key, then delete the old one</li>
+  <li><strong>Copy the new key somewhere safe</strong> — part 3 needs it</li>
 </ol>
 
 <figure class="shot">
   <img src="images/advanced-settings.webp" width="1600" height="1084" loading="lazy"
-       alt="Màn hình Advanced Settings với khung Authentication Keys và khung WebUI Key">
-  <figcaption>Khung trên là khoá cho các công cụ dùng. Khung dưới —
-  <strong>WebUI Key</strong> — là mật khẩu vào trang quản trị, một thứ khác, cũng nên đổi.</figcaption>
+       alt="The Advanced Settings screen with the Authentication Keys panel and the WebUI Key panel">
+  <figcaption>The upper panel holds the key your tools use. The lower one —
+  <strong>WebUI Key</strong> — is the password for the admin page, a separate thing, also worth changing.</figcaption>
 </figure>
 
 <div class="note">
-  <span class="tag">Đừng nhầm hai loại khoá</span>
-  <p><strong>Authentication Keys</strong> — khai vào công cụ lập trình của bạn.</p>
-  <p><strong>WebUI Key</strong> — chỉ để đăng nhập trang quản trị của chính proxy.</p>
+  <span class="tag">Do not mix up the two keys</span>
+  <p><strong>Authentication Keys</strong> — what you put into your coding tools.</p>
+  <p><strong>WebUI Key</strong> — only for signing in to the proxy's own admin page.</p>
 </div>
 
-<h3 id="theo-doi"><span class="num">06</span>Theo dõi mức đã dùng</h3>
-<p class="sub">Không bắt buộc, nhưng hữu ích để biết mình còn bao nhiêu.</p>
+<h3 id="theo-doi"><span class="num">06</span>Track your usage</h3>
+<p class="sub">Not required, but handy for knowing how much you have left.</p>
 
-<p>Bấm <span class="menu">Usage</span> để xem số lượt gọi, lượng chữ đã dùng và ước tính
-chi phí. Còn <span class="menu">OAuth</span> → tab <strong>Quota Lookup</strong> cho biết
-hạn mức còn lại của từng tài khoản.</p>
+<p>Click <span class="menu">Usage</span> to see call counts, tokens used and an estimated cost.
+And <span class="menu">OAuth</span> → the <strong>Quota Lookup</strong> tab shows how much
+allowance each account has left.</p>
 
 <figure class="shot">
   <img src="images/usage-overview.webp" width="1600" height="1081" loading="lazy"
-       alt="Màn hình Usage History với các số liệu tổng lượt gọi, tổng token và chi phí ước tính">
-  <figcaption>Toàn bộ số liệu này lưu trên máy bạn, không gửi đi đâu.</figcaption>
+       alt="The Usage History screen with totals for calls, tokens and estimated cost">
+  <figcaption>All of these numbers stay on your machine; none of it is sent anywhere.</figcaption>
 </figure>
 
 <figure class="shot">
   <img src="images/quota-lookup.webp" width="1600" height="1080" loading="lazy"
-       alt="Tab Quota Lookup với nút Fetch Quota để kiểm tra hạn mức còn lại của tài khoản">
-  <figcaption>Bấm <strong>Fetch Quota</strong> để hỏi nhà cung cấp xem tài khoản còn bao
-  nhiêu. Tên tài khoản trong ảnh đã được làm mờ.</figcaption>
+       alt="The Quota Lookup tab with the Fetch Quota button for checking an account's remaining allowance">
+  <figcaption>Click <strong>Fetch Quota</strong> to ask the provider how much the account has
+  left. The account names in the screenshot are blurred.</figcaption>
 </figure>
 </section>
 
 <!-- ============ PHẦN 3 ============ -->
 <section class="part">
-<div class="parthead"><span class="pn">Phần 3</span><h2>Sử dụng</h2></div>
+<div class="parthead"><span class="pn">Part 3</span><h2>Using it</h2></div>
 
-<h3 id="quy-tac">Quy tắc chung</h3>
-<p class="sub">Mọi công cụ đều cần đúng ba thứ. Hiểu ba thứ này rồi thì công cụ nào bạn
-cũng tự khai được.</p>
+<h3 id="quy-tac">The general rules</h3>
+<p class="sub">Every tool needs exactly three things. Once you understand those three, you can
+set up any tool yourself.</p>
 
 <div class="tw"><table>
-  <tr><th>Thứ cần khai</th><th>Là gì</th><th>Lấy ở đâu</th></tr>
+  <tr><th>What to fill in</th><th>What it is</th><th>Where to get it</th></tr>
   <tr>
-    <td><strong>Địa chỉ</strong></td>
-    <td>Nơi công cụ gửi yêu cầu tới, thay vì gửi thẳng lên mạng</td>
-    <td>Luôn là <code>http://127.0.0.1:8317</code> — chỉ khác ở phần đuôi, xem bên dưới</td>
+    <td><strong>Address</strong></td>
+    <td>Where the tool sends its requests, instead of straight out to the internet</td>
+    <td>Always <code>http://127.0.0.1:8317</code> — only the ending differs, see below</td>
   </tr>
   <tr>
-    <td><strong>Khoá</strong></td>
-    <td>Mật khẩu để proxy biết đúng là bạn gọi</td>
-    <td>Khoá bạn tạo ở bước 05</td>
+    <td><strong>Key</strong></td>
+    <td>The password that tells the proxy the call really is from you</td>
+    <td>The key you created in step 05</td>
   </tr>
   <tr>
-    <td><strong>Tên model</strong></td>
-    <td>Chọn dùng “bộ não” nào trong số tài khoản đã đăng nhập</td>
-    <td><span class="menu">OAuth</span> → <em>Authentication Files</em> → nút <strong>Models</strong></td>
+    <td><strong>Model name</strong></td>
+    <td>Which “brain” to use out of the accounts you signed in with</td>
+    <td><span class="menu">OAuth</span> → <em>Authentication Files</em> → the <strong>Models</strong> button</td>
   </tr>
 </table></div>
 
-<h4>Quy tắc <code>/v1</code> — chỗ sai nhiều nhất</h4>
-<p>Phần đuôi địa chỉ tuỳ theo công cụ nói “tiếng” nào. Nhớ một câu:
-<strong>Anthropic và Gemini thì không có <code>/v1</code>, còn lại thì có.</strong></p>
+<h4>The <code>/v1</code> rule — the most common mistake</h4>
+<p>The ending of the address depends on which “language” the tool speaks. Remember one sentence:
+<strong>Anthropic and Gemini take no <code>/v1</code>, everything else does.</strong></p>
 
 <div class="tw"><table>
-  <tr><th>Công cụ</th><th>Địa chỉ đầy đủ</th></tr>
+  <tr><th>Tool</th><th>Full address</th></tr>
   <tr><td>Claude Code</td><td><code>http://127.0.0.1:8317</code></td></tr>
   <tr><td>Gemini CLI</td><td><code>http://127.0.0.1:8317</code></td></tr>
   <tr><td>Codex CLI · OpenCode · Cline · Continue.dev · Droid</td><td><code>http://127.0.0.1:8317/v1</code></td></tr>
 </table></div>
 
-<h4>Khai một model không có nghĩa là bị khoá vào nó</h4>
-<p>Dòng <code>model</code> trong cấu hình chỉ là <strong>mặc định lúc mở</strong>. Mọi
-công cụ ở đây đều đổi được model sau đó, và phần lớn còn khai sẵn được nhiều model một lúc:</p>
+<h4>Naming a model does not lock you into it</h4>
+<p>The <code>model</code> line in a config is only the <strong>default at startup</strong>. Every
+tool here can change model afterwards, and most can hold several models at once:</p>
 
 <div class="tw"><table>
-  <tr><th>Công cụ</th><th>Khai nhiều model sẵn</th><th>Đổi lúc đang dùng</th></tr>
-  <tr><td>Claude Code</td><td>Được — 4 tên <em>Opus / Sonnet / Haiku / Fable</em> trỏ sang 4 model khác nhau</td><td><code>/model</code></td></tr>
-  <tr><td>Codex CLI</td><td>Được — mỗi bộ một file <code>&lt;tên&gt;.config.toml</code></td><td><code>/models</code> · hoặc <code>codex -m &lt;tên&gt;</code></td></tr>
-  <tr><td>Continue.dev</td><td>Được — <code>models</code> là danh sách</td><td>Bấm tên model ở đáy khung chat</td></tr>
-  <tr><td>Droid</td><td>Được — <code>custom_models</code> là mảng</td><td>Chọn trong phần chuyển model</td></tr>
-  <tr><td>OpenCode</td><td>Không cần khai trước</td><td><code>/models</code></td></tr>
-  <tr><td>Cline / Roo Code</td><td>Một lúc một model</td><td>Sửa ô <em>Model ID</em> trong cài đặt</td></tr>
-  <tr><td>Gemini CLI</td><td>Một lúc một model</td><td>Sửa biến môi trường rồi mở cửa sổ mới</td></tr>
+  <tr><th>Tool</th><th>Several models at once</th><th>Switch while working</th></tr>
+  <tr><td>Claude Code</td><td>Yes — the 4 names <em>Opus / Sonnet / Haiku / Fable</em> point at 4 different models</td><td><code>/model</code></td></tr>
+  <tr><td>Codex CLI</td><td>Yes — one <code>&lt;name&gt;.config.toml</code> file per set</td><td><code>/models</code> · or <code>codex -m &lt;name&gt;</code></td></tr>
+  <tr><td>Continue.dev</td><td>Yes — <code>models</code> is a list</td><td>Click the model name at the bottom of the chat panel</td></tr>
+  <tr><td>Droid</td><td>Yes — <code>custom_models</code> is an array</td><td>Pick one in the model switcher</td></tr>
+  <tr><td>OpenCode</td><td>Nothing to declare in advance</td><td><code>/models</code></td></tr>
+  <tr><td>Cline / Roo Code</td><td>One model at a time</td><td>Edit the <em>Model ID</em> field in settings</td></tr>
+  <tr><td>Gemini CLI</td><td>One model at a time</td><td>Edit the environment variable, then open a new window</td></tr>
 </table></div>
 
-<p>Bộ tạo cấu hình bên dưới sẽ tự sinh sẵn nhiều model cho những công cụ hỗ trợ, và ghi rõ
-cách chuyển cho từng loại.</p>
+<p>The generator below fills in several models for the tools that support it, and spells out how
+to switch for each one.</p>
 
-<h4>Bốn điều dễ vấp</h4>
+<h4>Four things that trip people up</h4>
 <ul class="plain">
-  <li><strong>Model có gì là do tài khoản bạn đăng nhập quyết định.</strong> Không đăng
-  nhập ChatGPT thì không gọi được model GPT, dù có gõ đúng tên. Mỗi gói cũng khác nhau —
-  gói Plus có model mà gói Free không có.</li>
-  <li><strong>Sửa cấu hình xong phải mở phiên mới.</strong> Cửa sổ công cụ đang mở vẫn
-  dùng cấu hình cũ cho tới khi bạn đóng và mở lại.</li>
-  <li><strong>Khoá là mật khẩu.</strong> Đừng đưa lên GitHub, đừng gửi qua chat nhóm.</li>
-  <li><strong>Proxy phải đang chạy.</strong> Công cụ báo <code>connection refused</code>
-  gần như luôn là do quên bật ứng dụng.</li>
+  <li><strong>The models you get are decided by the accounts you signed in with.</strong> Without a
+  ChatGPT sign-in you cannot call a GPT model, however correctly you spell the name. Plans differ
+  too — a Plus plan has models a Free plan does not.</li>
+  <li><strong>After editing a config, start a new session.</strong> A tool window that is already
+  open keeps using the old config until you close it and open it again.</li>
+  <li><strong>The key is a password.</strong> Do not put it on GitHub, do not paste it into a
+  group chat.</li>
+  <li><strong>The proxy has to be running.</strong> A tool reporting <code>connection refused</code>
+  is almost always the app not being started.</li>
 </ul>
 
-<h3 id="tao-cau-hinh">Tạo cấu hình cho tôi</h3>
-<p class="sub">Chọn tài khoản bạn đã đăng nhập và công cụ bạn muốn dùng. Cấu hình sẽ tự
-hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
+<h3 id="tao-cau-hinh">Generate my configuration</h3>
+<p class="sub">Pick the accounts you signed in with and the tool you want to use. The
+configuration appears below, along with where to paste it and a copy button.</p>
 
 <div class="builder">
   <fieldset class="fset">
-    <legend>Bước 1 · Tài khoản bạn đã đăng nhập</legend>
-    <p class="fhint">Chọn tất cả những loại bạn đã đăng nhập ở bước 04. Chọn nhiều cũng được.</p>
+    <legend>Step 1 · Accounts you signed in with</legend>
+    <p class="fhint">Tick every kind you signed in with back in step 04. Several is fine.</p>
     <div class="opts" id="acc-opts"></div>
   </fieldset>
 
   <fieldset class="fset" id="plan-wrap" hidden>
-    <legend>Bước 1b · Gói ChatGPT của bạn</legend>
-    <p class="fhint">Mỗi gói mở khoá một danh sách model khác nhau.</p>
+    <legend>Step 1b · Your ChatGPT plan</legend>
+    <p class="fhint">Each plan unlocks a different list of models.</p>
     <div class="opts" id="plan-opts"></div>
   </fieldset>
 
   <fieldset class="fset">
-    <legend>Bước 2 · Công cụ muốn dùng</legend>
-    <p class="fhint">Mỗi lần chọn một công cụ. Muốn cấu hình thêm công cụ khác thì chọn lại.</p>
+    <legend>Step 2 · The tool you want to use</legend>
+    <p class="fhint">One tool at a time. To set up another tool, come back and pick it.</p>
     <div class="opts" id="tool-opts"></div>
   </fieldset>
 
   <fieldset class="fset">
-    <legend>Bước 3 · Model và khoá</legend>
-    <p class="fhint">Danh sách model bên dưới lấy theo đúng tài khoản bạn vừa chọn.</p>
+    <legend>Step 3 · Models and key</legend>
+    <p class="fhint">The model list below follows the accounts you just picked.</p>
     <div class="row">
       <div class="field">
-        <label for="m-main">Model chính</label>
+        <label for="m-main">Main model</label>
         <select id="m-main"></select>
-        <p class="fh">Dùng cho phần lớn công việc.</p>
+        <p class="fh">Used for most of the work.</p>
       </div>
       <div class="field">
-        <label for="m-light">Model nhẹ</label>
+        <label for="m-light">Light model</label>
         <select id="m-light"></select>
-        <p class="fh">Dùng cho việc vặt chạy ngầm. Chọn loại rẻ và nhanh.</p>
+        <p class="fh">Used for small background jobs. Pick something cheap and fast.</p>
       </div>
     </div>
     <div class="row">
       <div class="field" style="flex-basis:100%">
-        <label for="k-in">Khoá của bạn</label>
+        <label for="k-in">Your key</label>
         <input id="k-in" type="text" spellcheck="false" autocomplete="off"
-               placeholder="dán khoá tạo ở bước 05 vào đây">
-        <p class="fh">Chỉ nằm trong trình duyệt của bạn, không gửi đi đâu. Để trống thì
-        cấu hình hiện chỗ điền tạm.</p>
+               placeholder="paste the key you made in step 05 here">
+        <p class="fh">It stays in your browser and is not sent anywhere. Leave it empty and the
+        configuration shows a placeholder instead.</p>
       </div>
     </div>
   </fieldset>
@@ -630,86 +631,87 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
 
 <div id="out"></div>
 
-<h3 id="truc-trac">Gặp trục trặc</h3>
+<h3 id="truc-trac">When something goes wrong</h3>
 <div class="tw"><table>
-  <tr><th>Hiện tượng</th><th>Cách xử lý</th></tr>
-  <tr><td>Bấm chạy nhưng không lên <em>Running</em></td>
-      <td>Nhiều khả năng chưa cài phần lõi. Quay lại bước 02.</td></tr>
-  <tr><td>Đăng nhập xong mà không thấy tài khoản</td>
-      <td>Trình duyệt có thể chặn cửa sổ bật lên. Thử lại và cho phép khi trình duyệt hỏi.
-      Kiểm tra ở tab <strong>Authentication Files</strong>.</td></tr>
+  <tr><th>What you see</th><th>What to do</th></tr>
+  <tr><td>You click run but it never reaches <em>Running</em></td>
+      <td>Most likely the core is not installed. Go back to step 02.</td></tr>
+  <tr><td>You signed in but no account appears</td>
+      <td>Your browser may be blocking the pop-up. Try again and allow it when the browser asks.
+      Check on the <strong>Authentication Files</strong> tab.</td></tr>
   <tr><td><code>401</code></td>
-      <td>Khoá điền vào công cụ không khớp khoá trong <strong>Authentication Keys</strong>.
-      Đối chiếu lại từng ký tự.</td></tr>
+      <td>The key in the tool does not match the one in <strong>Authentication Keys</strong>.
+      Compare them character by character.</td></tr>
   <tr><td><code>404</code></td>
-      <td>Sai phần <code>/v1</code> ở cuối địa chỉ. Xem lại bảng ở mục Quy tắc chung.</td></tr>
+      <td>The <code>/v1</code> ending on the address is wrong. See the table under The general rules.</td></tr>
   <tr><td><code>connection refused</code></td>
-      <td>Proxy chưa bật. Mở ứng dụng, vào <span class="menu">Home</span> và cho chạy lại.</td></tr>
+      <td>The proxy is not running. Open the app, go to <span class="menu">Home</span> and start it again.</td></tr>
   <tr><td><code>unknown provider for model …</code></td>
-      <td>Tên model không thuộc tài khoản nào bạn đã đăng nhập. Xem lại danh sách ở nút
-      <strong>Models</strong>, hoặc đăng nhập thêm tài khoản tương ứng.</td></tr>
-  <tr><td>Báo hết lượt</td>
-      <td>Tài khoản đã dùng hết hạn mức. Chờ hồi, hoặc đăng nhập thêm một tài khoản nữa.</td></tr>
+      <td>The model name does not belong to any account you signed in with. Check the list behind the
+      <strong>Models</strong> button, or sign in with the matching account.</td></tr>
+  <tr><td>It says you are out of quota</td>
+      <td>The account has used up its allowance. Wait for it to reset, or sign in with one more account.</td></tr>
 </table></div>
 
-<h3 id="hoi-dap">Câu hỏi hay gặp</h3>
+<h3 id="hoi-dap">Common questions</h3>
 
 <details>
-  <summary>Có cần dùng dòng lệnh không?</summary>
-  <p>Không. Phần cài đặt chỉ là bấm nút trong ứng dụng có giao diện. Phần cấu hình thì
-  trang này tự sinh ra sẵn, việc còn lại là chép và dán vào đúng chỗ.</p>
+  <summary>Do I have to use the command line?</summary>
+  <p>No. Installing is a matter of clicking buttons in an app with a real interface. The
+  configuration is generated for you on this page; the rest is copy and paste into the right place.</p>
 </details>
 
 <details>
-  <summary>Có tốn thêm tiền không?</summary>
-  <p>Ứng dụng miễn phí. Nhưng nó không tạo ra lượt dùng mới — bạn vẫn tiêu vào hạn mức
-  của tài khoản mình đang trả tiền.</p>
+  <summary>Does it cost extra?</summary>
+  <p>The app is free. But it does not create new usage — you are still spending the allowance of
+  the account you already pay for.</p>
 </details>
 
 <details>
-  <summary>Nó có gửi dữ liệu của tôi đi đâu lạ không?</summary>
-  <p>Không. Ứng dụng chạy trên máy bạn và chỉ nghe ở địa chỉ nội bộ
-  <code>127.0.0.1</code>, máy khác không gọi vào được. Dữ liệu đi thẳng từ máy bạn tới
-  nhà cung cấp mà bạn đã đăng nhập, giống như khi dùng trực tiếp.</p>
+  <summary>Does it send my data somewhere strange?</summary>
+  <p>No. The app runs on your machine and only listens on the local address
+  <code>127.0.0.1</code>, which no other machine can reach. Your data goes straight from your
+  machine to the provider you signed in with, just as it would without the proxy.</p>
 </details>
 
 <details>
-  <summary>Dùng ChatGPT để chạy Claude Code thì có giống hệt bản thật không?</summary>
-  <p>Không. Giao diện và thao tác thì y hệt, nhưng model khác nhau thì cách làm việc
-  khác nhau — chất lượng và cách trả lời đều lệch ít nhiều. Hãy xem đây là cách để dùng
-  được công cụ mình thích, không phải cách để có Claude miễn phí.</p>
+  <summary>Is running Claude Code on a ChatGPT account the same as the real thing?</summary>
+  <p>No. The interface and the workflow are identical, but different models work differently —
+  quality and phrasing both drift a little. Treat this as a way to use the tool you like, not a
+  way to get Claude for free.</p>
 </details>
 
 <details>
-  <summary>Cài nhiều công cụ cùng lúc được không?</summary>
-  <p>Được, và đây là điểm hay. Một proxy phục vụ đồng thời mọi công cụ — Claude Code,
-  Codex CLI và OpenCode cùng trỏ vào <code>:8317</code>, cả ba chạy song song, dùng chung
-  tài khoản bạn đã đăng nhập.</p>
+  <summary>Can I set up several tools at once?</summary>
+  <p>Yes, and that is the good part. One proxy serves every tool at the same time — Claude Code,
+  Codex CLI and OpenCode can all point at <code>:8317</code>, run side by side, and share the
+  accounts you signed in with.</p>
 </details>
 
 <details>
-  <summary>Muốn gỡ đi thì làm sao?</summary>
-  <p>Vào <span class="menu">Home</span> bấm <strong>stop</strong>, rồi xoá ứng dụng như
-  mọi phần mềm khác. Các công cụ bạn đã khai báo sẽ quay về như cũ sau khi bạn xoá phần
-  địa chỉ và khoá đã thêm.</p>
+  <summary>How do I uninstall it?</summary>
+  <p>Go to <span class="menu">Home</span>, click <strong>stop</strong>, then delete the app like
+  any other software. The tools you configured go back to normal once you remove the address and
+  key you added to them.</p>
 </details>
 
 <details>
-  <summary>Tài khoản của tôi có bị khoá vì dùng cách này không?</summary>
-  <p>Nói thẳng: có rủi ro. Truy cập tài khoản thuê bao bằng công cụ tự động thường nằm
-  ngoài phạm vi điều khoản sử dụng của nhà cung cấp. Rủi ro thấp khi dùng cá nhân ở mức
-  bình thường, nhưng tăng lên rõ nếu nhiều người dùng chung một tài khoản hoặc gọi với
-  tần suất bất thường. Cân nhắc trước khi dùng cho tài khoản quan trọng.</p>
+  <summary>Could my account be banned for doing this?</summary>
+  <p>Straight answer: there is a risk. Reaching a subscription account through automated tooling
+  usually falls outside a provider's terms of use. The risk is low for ordinary personal use, but
+  it climbs noticeably if several people share one account or if calls come at an unusual rate.
+  Think it over before using an account you care about.</p>
 </details>
+
 </section>
 
 <footer>
-  Phần mềm dùng ở đây là <strong>CLIProxyAPI</strong> và bản có giao diện
-  <strong>EasyCLIProxyAPI</strong> — mã nguồn mở, giấy phép MIT,
+  The software behind this page is <strong>CLIProxyAPI</strong> and its interface build
+  <strong>EasyCLIProxyAPI</strong> — open source, MIT licence,
   <a href="https://github.com/router-for-me/CLIProxyAPI">github.com/router-for-me/CLIProxyAPI</a>.
-  Ảnh chụp màn hình trong trang đã được làm mờ các thông tin riêng.
-  Danh sách model lấy theo bản lõi v7.2 — tài khoản của bạn có thể khác, luôn đối chiếu
-  với nút <strong>Models</strong> trong ứng dụng.
+  Private details in the screenshots on this page have been blurred.
+  The model lists come from core v7.2 — your account may differ, so always check against the
+  <strong>Models</strong> button in the app.
 </footer>
 
 </div>
@@ -720,14 +722,14 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
 (() => {
   "use strict";
 
-  /* ---------- chuyen ngon ngu ---------- */
+  /* ---------- language switch ---------- */
   const lang = document.getElementById("lang");
   if (lang) lang.addEventListener("change", () => { location.href = lang.value; });
 
-  /* ---------- du lieu model, lay tu registry cua CLIProxyAPI v7.2 ---------- */
+  /* ---------- model data, taken from the CLIProxyAPI v7.2 registry ---------- */
   const ACCOUNTS = {
     chatgpt: {
-      label: "ChatGPT", note: "nút Codex",
+      label: "ChatGPT", note: "Codex button",
       plans: {
         free: { label: "Free", models: ["gpt-5.5","gpt-5.6-terra","gpt-5.6-luna","gpt-5.4-mini","codex-auto-review"] },
         plus: { label: "Plus", models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","gpt-5.3-codex-spark","codex-auto-review"] },
@@ -736,70 +738,70 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
       }
     },
     claude: {
-      label: "Claude", note: "nút Claude",
+      label: "Claude", note: "Claude button",
       models: ["claude-opus-5","claude-sonnet-5","claude-opus-4-8","claude-opus-4-7","claude-opus-4-6",
                "claude-sonnet-4-6","claude-fable-5","claude-sonnet-4-5-20250929","claude-haiku-4-5-20251001",
                "claude-3-5-haiku-20241022"]
     },
     gemini: {
-      label: "Gemini", note: "nút Antigravity",
+      label: "Gemini", note: "Antigravity button",
       models: ["gemini-pro-agent","gemini-3.1-pro-low","gemini-3-flash","gemini-3-flash-agent",
                "gemini-3.6-flash-high","gemini-3.5-flash-low","gemini-3.1-flash-lite",
                "claude-sonnet-4-6","claude-opus-4-6-thinking"]
     },
     kimi: {
-      label: "Kimi", note: "nút Kimi",
+      label: "Kimi", note: "Kimi button",
       models: ["kimi-k3","kimi-k3-256k","kimi-k2.7-code","kimi-k2.7-code-highspeed","kimi-k2.6","kimi-k2.5","kimi-k2-thinking","kimi-k2"]
     },
     grok: {
-      label: "Grok", note: "nút xAI",
+      label: "Grok", note: "xAI button",
       models: ["grok-4.6","grok-4.5","grok-4.3","grok-composer-2.5-fast","grok-3-mini","grok-3-mini-fast"]
     }
   };
 
-  /* model nhe: ten chua mot trong cac tu nay */
+  /* light model: the name contains one of these words */
   const LIGHT = /(mini|lite|haiku|spark|flash|fast|low|k2\b|k2\.5)/i;
 
   const TOOLS = {
     "claude-code": {
       label: "Claude Code", proto: "Anthropic", slash: false,
       file: "~/.claude/settings.json",
-      where: "Mở file này bằng trình soạn thảo bất kỳ. Nếu file đã có nội dung, chỉ thêm khối <code>env</code> vào trong dấu ngoặc nhọn ngoài cùng, đừng xoá phần cũ. Chưa có file thì tạo mới."
+      where: "Open this file in any text editor. If the file already has content, add only the <code>env</code> block inside the outermost braces — do not delete what is already there. If the file does not exist yet, create it."
     },
     "codex-cli": {
       label: "Codex CLI", proto: "OpenAI Responses", slash: true,
       file: "~/.codex/config.toml",
-      where: "Dán vào cuối file. Nếu đã có dòng <code>model</code> hoặc <code>model_provider</code> thì sửa lại thay vì thêm dòng thứ hai."
+      where: "Paste this at the end of the file. If a <code>model</code> or <code>model_provider</code> line already exists, edit that one instead of adding a second."
     },
     "gemini-cli": {
       label: "Gemini CLI", proto: "Gemini", slash: false,
       file: "~/.zshrc  (macOS)  ·  ~/.bashrc  (Linux)",
-      where: "Dán vào cuối file, rồi mở cửa sổ dòng lệnh mới. Trên Windows thì đặt hai biến này trong phần biến môi trường của hệ thống."
+      where: "Paste this at the end of the file, then open a new terminal window. On Windows, set these two variables in the system environment variables instead."
     },
     "opencode": {
       label: "OpenCode", proto: "OpenAI", slash: true,
       file: "~/.config/opencode/opencode.json",
-      where: "Chưa có thì tạo mới cả thư mục lẫn file."
+      where: "If they do not exist yet, create both the folder and the file."
     },
     "cline": {
       label: "Cline / Roo Code", proto: "OpenAI", slash: true, ui: true,
-      file: "Bảng cài đặt trong VS Code",
-      where: "Mở panel Cline trong VS Code, bấm biểu tượng bánh răng, rồi điền từng ô theo bảng."
+      file: "The settings panel in VS Code",
+      where: "Open the Cline panel in VS Code, click the gear icon, then fill in each field from the table."
     },
     "continue": {
       label: "Continue.dev", proto: "OpenAI", slash: true,
       file: "~/.continue/config.yaml",
-      where: "Thêm vào mục <code>models</code> đã có sẵn trong file."
+      where: "Add this to the <code>models</code> section already in the file."
     },
     "droid": {
       label: "Droid", proto: "OpenAI", slash: true,
       file: "~/.factory/config.json",
-      where: "Chưa có thì tạo mới. Đã có <code>custom_models</code> thì thêm một phần tử vào mảng đó."
+      where: "If it does not exist yet, create it. If you already have <code>custom_models</code>, add one more entry to that array."
     }
   };
 
   const BASE = "http://127.0.0.1:8317";
-  const KEY_PLACEHOLDER = "sk-dan-khoa-cua-ban-vao-day";
+  const KEY_PLACEHOLDER = "sk-paste-your-key-here";
 
   const $ = s => document.querySelector(s);
   const accOpts = $("#acc-opts"), planOpts = $("#plan-opts"), planWrap = $("#plan-wrap");
@@ -808,7 +810,7 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
 
   const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 
-  /* ---------- dung cac o chon ---------- */
+  /* ---------- build the option boxes ---------- */
   for (const [id, a] of Object.entries(ACCOUNTS)) {
     accOpts.insertAdjacentHTML("beforeend",
       `<label class="opt"><input type="checkbox" name="acc" value="${id}">
@@ -825,7 +827,7 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
        <span>${t.label}<small>${t.proto}</small></span></label>`);
   }
 
-  /* ---------- trang thai ---------- */
+  /* ---------- state ---------- */
   const pickedAccounts = () => [...document.querySelectorAll('input[name="acc"]:checked')].map(i => i.value);
   const pickedPlan = () => (document.querySelector('input[name="plan"]:checked') || {}).value || "plus";
   const pickedTool = () => (document.querySelector('input[name="tool"]:checked') || {}).value;
@@ -851,11 +853,11 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
     mLight.value = models.includes(keepLight) ? keepLight : (models.find(m =>  LIGHT.test(m)) || models[0]);
   }
 
-  /* ---------- sinh cau hinh ---------- */
+  /* ---------- generate the configuration ---------- */
   function build() {
     const accounts = pickedAccounts();
     if (!accounts.length) {
-      out.innerHTML = `<div class="empty">Chọn ít nhất một loại tài khoản ở bước 1 để xem cấu hình.</div>`;
+      out.innerHTML = `<div class="empty">Pick at least one kind of account in step 1 to see a configuration.</div>`;
       return;
     }
     const toolId = pickedTool(), t = TOOLS[toolId];
@@ -875,10 +877,10 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
     "ANTHROPIC_AUTH_TOKEN": "${key}"
   }
 }`;
-        extra = `<div class="note"><span class="tag">Vì sao ngắn thế</span>
-          <p>Bạn chỉ dùng tài khoản Claude, mà Claude Code vốn đã hiểu sẵn tên các model
-          Claude. Không cần khai model, lệnh <code>/model</code> trong Claude Code vẫn
-          hoạt động đúng như bình thường.</p></div>`;
+        extra = `<div class="note"><span class="tag">Why so short</span>
+          <p>You are only using a Claude account, and Claude Code already knows the Claude model
+          names. There is no model to declare, and the <code>/model</code> command in Claude Code
+          keeps working exactly as usual.</p></div>`;
       } else {
         body =
 `{
@@ -891,21 +893,21 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
     "CLAUDE_CODE_SUBAGENT_MODEL": "${main}"
   }
 }`;
-        extra = `<div class="note"><span class="tag">Ba dòng model để làm gì</span>
-          <p>Claude Code luôn gọi theo tên model của Claude. Ba dòng đó dịch các tên
-          <em>Opus</em>, <em>Sonnet</em>, <em>Haiku</em> sang model thật của bạn — nên khi
-          bạn chọn <em>Opus</em> trong <code>/model</code> thì nó chạy
+        extra = `<div class="note"><span class="tag">What those model lines are for</span>
+          <p>Claude Code always asks for models by their Claude names. Those three lines translate
+          <em>Opus</em>, <em>Sonnet</em> and <em>Haiku</em> into your real models — so when you
+          pick <em>Opus</em> in <code>/model</code>, it runs
           <code>${esc(main)}</code>.</p>
-          <p>Bạn có thể trỏ mỗi tên sang một model khác nhau để dùng
-          <code>/model</code> làm công tắc chuyển nhanh.</p></div>`;
+          <p>You can point each name at a different model and use
+          <code>/model</code> as a quick switch.</p></div>`;
       }
-      swap = `<p>Gõ <code>/model</code> rồi chọn. Muốn mỗi tên chạy một model khác nhau
-        thì sửa ba dòng <code>..._MODEL</code> cho khác nhau — ví dụ để
-        <em>Opus</em> là model mạnh, <em>Sonnet</em> là model nhanh, rồi chuyển qua lại
-        bằng một lệnh.</p>
-        <p class="fh" style="max-width:60ch">Lưu ý: gõ thẳng <code>/model &lt;tên&gt;</code>
-        sẽ ghi đè mặc định vào file cấu hình. Muốn đổi tạm cho riêng phiên đang mở thì
-        chọn trong bảng hiện ra, ở mục ghi <em>this session only</em>.</p>`;
+      swap = `<p>Type <code>/model</code> and pick. To make each name run a different model,
+        set the three <code>..._MODEL</code> lines to different values — for example
+        <em>Opus</em> as the strong model and <em>Sonnet</em> as the fast one, then flip between
+        them with a single command.</p>
+        <p class="fh" style="max-width:60ch">Note: typing <code>/model &lt;name&gt;</code>
+        directly writes the default into the config file. To change it only for the session you
+        have open, pick from the menu that appears, under the entry marked <em>this session only</em>.</p>`;
     }
 
     else if (toolId === "codex-cli") {
@@ -924,21 +926,21 @@ requires_openai_auth = true`;
 `model = "${light}"
 model_provider = "cliproxyapi"`;
       swap =
-`<p><strong>Đổi ngay trong lúc đang chạy:</strong> gõ <code>/models</code> rồi chọn.</p>
- <p><strong>Chạy một lần với model khác:</strong> <code>codex -m ${esc(light)}</code></p>
- <p><strong>Lưu sẵn nhiều bộ:</strong> tạo thêm file thứ hai bên dưới, rồi gọi
- <code>codex -p light</code>. Codex sẽ chồng file đó lên cấu hình chính, nên chỉ cần ghi
- những dòng khác biệt.</p>`;
+`<p><strong>Switch while it is running:</strong> type <code>/models</code> and pick.</p>
+ <p><strong>Run once with a different model:</strong> <code>codex -m ${esc(light)}</code></p>
+ <p><strong>Keep several sets ready:</strong> create the second file below, then run
+ <code>codex -p light</code>. Codex layers that file over the main config, so it only needs
+ the lines that differ.</p>`;
     }
 
     else if (toolId === "gemini-cli") {
       body =
 `export GOOGLE_GEMINI_BASE_URL="${url}"
 export GEMINI_API_KEY="${key}"`;
-      extra = `<div class="note warn"><span class="tag">Có thể trục trặc</span>
-        <p>Gemini CLI hỗ trợ đổi địa chỉ chưa ổn định — đã có báo cáo nó bỏ qua hai biến
-        này và vẫn gọi thẳng lên Google. Nếu không ăn, dùng tạm OpenCode hoặc Claude Code,
-        cả hai đều gọi được model Gemini qua proxy.</p></div>`;
+      extra = `<div class="note warn"><span class="tag">This one can misbehave</span>
+        <p>Gemini CLI's support for changing the address is not solid — there are reports of it
+        ignoring these two variables and calling Google directly. If it does not work, use
+        OpenCode or Claude Code instead; both can reach Gemini models through the proxy.</p></div>`;
     }
 
     else if (toolId === "opencode") {
@@ -955,29 +957,29 @@ export GEMINI_API_KEY="${key}"`;
   },
   "model": "${main}"
 }`;
-      swap = `<p>Dòng <code>model</code> chỉ là mặc định lúc mở. Trong OpenCode gõ
-        <code>/models</code> để chọn model khác — mọi model thuộc tài khoản bạn đã đăng
-        nhập đều hiện ra, không phải khai trước từng cái.</p>`;
+      swap = `<p>The <code>model</code> line is only the default at startup. Inside OpenCode, type
+        <code>/models</code> to pick another one — every model belonging to the accounts you
+        signed in with shows up, with nothing to declare in advance.</p>`;
     }
 
     else if (toolId === "continue") {
       body =
 `models:
-  - name: Model chính
+  - name: Main model
     provider: openai
     model: ${main}
     apiBase: ${url}
     apiKey: ${key}
     roles: [chat, edit]
-  - name: Model nhẹ
+  - name: Light model
     provider: openai
     model: ${light}
     apiBase: ${url}
     apiKey: ${key}
     roles: [chat, edit, apply]`;
-      swap = `<p>Mục <code>models</code> là một danh sách, nên khai bao nhiêu cũng được —
-        cứ lặp lại khối bốn dòng và đổi <code>name</code> với <code>model</code>.
-        Trong VS Code, bấm vào tên model ở đáy khung chat để chuyển.</p>`;
+      swap = `<p>The <code>models</code> section is a list, so you can declare as many as you like —
+        repeat the block of four lines and change <code>name</code> and <code>model</code>.
+        In VS Code, click the model name at the bottom of the chat panel to switch.</p>`;
     }
 
     else if (toolId === "droid") {
@@ -998,57 +1000,57 @@ export GEMINI_API_KEY="${key}"`;
     }
   ]
 }`;
-      swap = `<p><code>custom_models</code> là một mảng — thêm bao nhiêu khối cũng được,
-        mỗi khối một model. Trong Droid chọn model ở phần chuyển model.</p>`;
-      extra = `<div class="note"><span class="tag">Lưu ý</span>
-        <p>Nếu bạn đổi <code>"provider"</code> thành <code>"anthropic"</code> thì
-        <code>base_url</code> phải bỏ <code>/v1</code> đi.</p></div>`;
+      swap = `<p><code>custom_models</code> is an array — add as many blocks as you like,
+        one model per block. In Droid, pick your model in the model switcher.</p>`;
+      extra = `<div class="note"><span class="tag">Note</span>
+        <p>If you change <code>"provider"</code> to <code>"anthropic"</code>, then
+        <code>base_url</code> has to drop the <code>/v1</code>.</p></div>`;
     }
 
     else if (toolId === "cline") {
       out.innerHTML = `
-        <div class="outhead"><h4>Điền vào bảng cài đặt của ${esc(t.label)}</h4>
+        <div class="outhead"><h4>Fill in the ${esc(t.label)} settings panel</h4>
           <span class="badge">${esc(t.proto)}</span></div>
         <p>${t.where}</p>
         <div class="tw"><table>
-          <tr><th>Ô</th><th>Điền</th></tr>
+          <tr><th>Field</th><th>Value</th></tr>
           <tr><td>API Provider</td><td><strong>OpenAI Compatible</strong></td></tr>
           <tr><td>Base URL</td><td><code>${esc(url)}</code></td></tr>
           <tr><td>API Key</td><td><code>${esc(key)}</code></td></tr>
           <tr><td>Model ID</td><td><code>${esc(main)}</code></td></tr>
         </table></div>
-        <div class="note warn"><span class="tag">Ngốn nhiều lượt</span>
-          <p>Cline đọc cả dự án để lấy ngữ cảnh nên tiêu tốn nhanh hơn hẳn các công cụ
-          khác. Dùng nhiều thì nên để dành tài khoản thuê bao cho công cụ khác.</p></div>`;
+        <div class="note warn"><span class="tag">Heavy on quota</span>
+          <p>Cline reads through the whole project for context, so it burns through an allowance
+          much faster than the other tools. If you use it a lot, keep your subscription account for other tools.</p></div>`;
       return;
     }
 
     out.innerHTML = `
-      <div class="outhead"><h4>Cấu hình cho ${esc(t.label)}</h4>
+      <div class="outhead"><h4>Configuration for ${esc(t.label)}</h4>
         <span class="badge">${esc(t.proto)}</span></div>
       <p>${t.where}</p>
       <div class="codebox">
         <div class="codebar">
           <span class="fp">${esc(t.file)}</span>
-          <button class="copy" type="button">Chép</button>
+          <button class="copy" type="button">Copy</button>
         </div>
         <pre><code>${esc(body)}</code></pre>
       </div>
       ${extra}
-      ${body2 ? `<h4>Bộ thứ hai, không bắt buộc</h4>
+      ${body2 ? `<h4>A second set, optional</h4>
         <div class="codebox">
           <div class="codebar">
             <span class="fp">${esc(file2)}</span>
-            <button class="copy" type="button">Chép</button>
+            <button class="copy" type="button">Copy</button>
           </div>
           <pre><code>${esc(body2)}</code></pre>
         </div>` : ""}
-      ${swap ? `<div class="note"><span class="tag">Đổi model về sau</span>${swap}</div>` : ""}
-      <div class="note"><span class="tag">Sau khi dán xong</span>
-        <p>Đóng hẳn công cụ rồi mở lại. Cửa sổ đang mở vẫn dùng cấu hình cũ.</p></div>`;
+      ${swap ? `<div class="note"><span class="tag">Changing model later</span>${swap}</div>` : ""}
+      <div class="note"><span class="tag">Once you have pasted it</span>
+        <p>Quit the tool completely, then open it again. A window that is already open keeps using the old config.</p></div>`;
   }
 
-  /* ---------- nut chep ---------- */
+  /* ---------- copy button ---------- */
   out.addEventListener("click", async e => {
     const btn = e.target.closest(".copy");
     if (!btn) return;
@@ -1062,12 +1064,12 @@ export GEMINI_API_KEY="${key}"`;
       try { ok = document.execCommand("copy"); } catch {}
       ta.remove();
     }
-    btn.textContent = ok ? "Đã chép" : "Hãy tự bôi đen";
+    btn.textContent = ok ? "Copied" : "Select it manually";
     btn.classList.toggle("done", ok);
-    setTimeout(() => { btn.textContent = "Chép"; btn.classList.remove("done"); }, 1800);
+    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1800);
   });
 
-  /* ---------- lang nghe ---------- */
+  /* ---------- listeners ---------- */
   document.addEventListener("change", e => {
     if (!e.target.name) return;
     if (["acc","plan"].includes(e.target.name)) {
@@ -1083,7 +1085,7 @@ export GEMINI_API_KEY="${key}"`;
   fillSelects();
   build();
 
-  /* ---------- sang muc dang xem trong menu ---------- */
+  /* ---------- highlight the section currently in view ---------- */
   const links = [...document.querySelectorAll('nav.side a')];
   const targets = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
   if ("IntersectionObserver" in window && targets.length) {

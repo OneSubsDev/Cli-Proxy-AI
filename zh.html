@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="vi">
+<html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Proxy AI trên máy bạn — cài đặt và sử dụng</title>
-<meta name="description" content="Hướng dẫn cài và dùng proxy AI từ đầu, kèm bộ tạo cấu hình tự động cho 7 công cụ.">
+<title>在你电脑上运行的 AI 代理 —— 安装与使用</title>
+<meta name="description" content="从零开始安装并使用本地 AI 代理的完整指南，附带 7 款工具的配置自动生成器。">
 <style>
   :root{
     --ground:#F2F5F6; --surface:#FFFFFF; --surface-2:#E7EDEE;
@@ -14,7 +14,7 @@
     --code-bg:#132227; --code-ink:#DDE8E6; --code-dim:#7B9498;
     --shadow:0 1px 2px rgba(19,34,39,.06),0 8px 24px -16px rgba(19,34,39,.28);
     --display:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --body:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
   }
   @media (prefers-color-scheme:dark){
@@ -212,31 +212,31 @@
 
 <div class="shell">
 
-<nav class="side" aria-label="Mục lục">
-  <p class="brandmark">Proxy AI<br>trên máy bạn</p>
-  <p class="brandsub">Cài đặt &amp; sử dụng</p>
+<nav class="side" aria-label="目录">
+  <p class="brandmark">AI 代理<br>就在你电脑上</p>
+  <p class="brandsub">安装 &amp; 使用</p>
   <div class="navwrap">
     <div class="grp">
-      <span>Phần 1 · Giới thiệu</span>
-      <a href="#la-gi">Proxy AI là gì</a>
-      <a href="#nen-biet">Ba điều nên biết</a>
-      <a href="#chuan-bi">Bạn cần chuẩn bị</a>
+      <span>第 1 部分 · 认识它</span>
+      <a href="#la-gi">什么是 AI 代理</a>
+      <a href="#nen-biet">三件要先知道的事</a>
+      <a href="#chuan-bi">你需要准备什么</a>
     </div>
     <div class="grp">
-      <span>Phần 2 · Cài đặt</span>
-      <a href="#tai-ve">01 · Tải và cài</a>
-      <a href="#cai-loi">02 · Cài phần lõi</a>
-      <a href="#bat-proxy">03 · Bật proxy</a>
-      <a href="#dang-nhap">04 · Đăng nhập tài khoản</a>
-      <a href="#doi-khoa">05 · Đổi khoá bảo vệ</a>
-      <a href="#theo-doi">06 · Theo dõi mức dùng</a>
+      <span>第 2 部分 · 安装</span>
+      <a href="#tai-ve">01 · 下载并安装</a>
+      <a href="#cai-loi">02 · 安装核心</a>
+      <a href="#bat-proxy">03 · 启动代理</a>
+      <a href="#dang-nhap">04 · 登录你的账号</a>
+      <a href="#doi-khoa">05 · 换掉保护密钥</a>
+      <a href="#theo-doi">06 · 查看用量</a>
     </div>
     <div class="grp">
-      <span>Phần 3 · Sử dụng</span>
-      <a href="#quy-tac">Quy tắc chung</a>
-      <a href="#tao-cau-hinh">Tạo cấu hình cho tôi</a>
-      <a href="#truc-trac">Gặp trục trặc</a>
-      <a href="#hoi-dap">Câu hỏi hay gặp</a>
+      <span>第 3 部分 · 使用</span>
+      <a href="#quy-tac">通用规则</a>
+      <a href="#tao-cau-hinh">帮我生成配置</a>
+      <a href="#truc-trac">遇到问题</a>
+      <a href="#hoi-dap">常见问题</a>
     </div>
   </div>
 </nav>
@@ -245,49 +245,47 @@
 <div class="inner">
 
 <div class="langbar">
-  <select id="lang" aria-label="Chọn ngôn ngữ — Select language">
-    <option value="index.html" selected>🌐 Tiếng Việt</option>
+  <select id="lang" aria-label="选择语言 — Select language">
+    <option value="index.html">🌐 Tiếng Việt</option>
     <option value="en.html">🌐 English</option>
-    <option value="zh.html">🌐 中文</option>
+    <option value="zh.html" selected>🌐 中文</option>
     <option value="ru.html">🌐 Русский</option>
   </select>
 </div>
 
 <header class="top">
-  <p class="eyebrow">Hướng dẫn · khoảng 10 phút · làm một lần</p>
-  <h1>Proxy AI trên máy bạn</h1>
-  <p class="lede">Bạn có tài khoản ChatGPT, Claude hoặc Gemini và muốn dùng nó trong các
-  công cụ lập trình — những trợ lý viết code như Claude Code, Codex CLI hay Cline.
-  Trang này hướng dẫn cài từ đầu, và tự tạo sẵn cấu hình cho công cụ bạn chọn —
-  chỉ cần chép và dán, không phải gõ lệnh nào.</p>
+  <p class="eyebrow">指南 · 约 10 分钟 · 一次搞定</p>
+  <h1>在你电脑上运行的 AI 代理</h1>
+  <p class="lede">你有 ChatGPT、Claude 或 Gemini 的账号，想把它用在编程工具里 ——
+  也就是 Claude Code、Codex CLI、Cline 这类帮你写代码的助手。
+  这个页面带你从头装好，还会照着你选的工具直接把配置生成出来 ——
+  复制粘贴即可，一条命令都不用敲。</p>
 </header>
 
 <!-- ============ PHẦN 1 ============ -->
 <section class="part">
-<div class="parthead"><span class="pn">Phần 1</span><h2>Giới thiệu</h2></div>
+<div class="parthead"><span class="pn">第 1 部分</span><h2>认识它</h2></div>
 
-<h3 id="la-gi">Proxy AI là gì?</h3>
-<p class="sub">Hiểu trong một phút, trước khi bắt tay vào cài.</p>
+<h3 id="la-gi">什么是 AI 代理？</h3>
+<p class="sub">动手安装之前，先花一分钟弄明白。</p>
 
-<p>Mỗi công ty AI nói một “thứ tiếng” riêng. Công cụ viết cho Claude thì không hiểu tài
-khoản ChatGPT, và ngược lại. Bình thường bạn có tài khoản nào thì buộc phải dùng đúng
-công cụ của hãng đó.</p>
+<p>每家 AI 公司都讲自己的一套“语言”。为 Claude 写的工具看不懂 ChatGPT 账号，反过来也一样。
+平时你有哪家的账号，就只能用哪家的工具。</p>
 
-<p><strong>Proxy là một người phiên dịch chạy ngay trên máy bạn.</strong> Công cụ nói
-tiếng nào, nó nghe tiếng đó, rồi dịch sang tiếng của nhà cung cấp mà bạn có tài khoản.
-Hai bên không cần biết đến nhau.</p>
+<p><strong>代理就是一个跑在你电脑上的翻译。</strong>工具讲什么语言，它就听什么语言，
+再翻译成你手上有账号的那家服务商的语言。两边谁也不用知道对方的存在。</p>
 
 <div class="diagram">
-<svg viewBox="0 0 720 232" role="img" aria-label="Sơ đồ: bốn loại tài khoản bên trái nối vào proxy ở giữa, proxy nối ra bốn loại công cụ bên phải, mọi tổ hợp đều được">
+<svg viewBox="0 0 720 232" role="img" aria-label="示意图：左边四类账号连到中间的代理，代理再连到右边四类工具，任意组合都能打通">
   <defs>
     <marker id="ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3.5" orient="auto">
       <path d="M0,0 L7,3.5 L0,7 z" fill="currentColor"/>
     </marker>
   </defs>
   <g font-family="ui-monospace,Menlo,monospace" font-size="12">
-    <text x="72" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">BẠN CÓ</text>
-    <text x="360" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">PROXY</text>
-    <text x="640" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">BẠN DÙNG</text>
+    <text x="72" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">你已有</text>
+    <text x="360" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">代理</text>
+    <text x="640" y="14" text-anchor="middle" fill="var(--ink-3)" font-size="10.5" letter-spacing="1.2">你想用</text>
     <g fill="var(--ink)">
       <rect x="1" y="30" width="142" height="34" rx="6" fill="var(--surface-2)" stroke="var(--line)"/>
       <text x="72" y="52" text-anchor="middle">Claude</text>
@@ -306,7 +304,7 @@ Hai bên không cần biết đến nhau.</p>
     </g>
     <rect x="300" y="76" width="120" height="74" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.6"/>
     <text x="360" y="108" text-anchor="middle" fill="var(--ink)" font-size="12.5">CLIProxyAPI</text>
-    <text x="360" y="126" text-anchor="middle" fill="var(--ink-3)" font-size="10.5">:8317 · trên máy bạn</text>
+    <text x="360" y="126" text-anchor="middle" fill="var(--ink-3)" font-size="10.5">:8317 · 在你电脑上</text>
     <g stroke="var(--accent)" stroke-width="1.2" color="var(--accent)" fill="none">
       <path d="M424,113 C480,113 510,47 566,47" marker-end="url(#ar)"/>
       <path d="M424,113 C475,113 515,91 566,91" marker-end="url(#ar)"/>
@@ -323,111 +321,106 @@ Hai bên không cần biết đến nhau.</p>
       <rect x="570" y="162" width="148" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
       <text x="644" y="184" text-anchor="middle">Cline · OpenCode · Droid</text>
     </g>
-    <text x="360" y="222" text-anchor="middle" fill="var(--ink-3)" font-size="11">bất kỳ ô trái nào × bất kỳ ô phải nào</text>
+    <text x="360" y="222" text-anchor="middle" fill="var(--ink-3)" font-size="11">左边任意一个 × 右边任意一个</text>
   </g>
 </svg>
 </div>
-<p class="cap">Bên trái là thứ bạn đã có. Bên phải là thứ bạn muốn dùng. Proxy ở giữa
-nối mọi cặp lại với nhau.</p>
+<p class="cap">左边是你已经有的东西，右边是你想用的东西。中间的代理把每一对都接起来。</p>
 
-<h3 id="nen-biet">Ba điều nên biết</h3>
+<h3 id="nen-biet">三件要先知道的事</h3>
 <div class="note">
-  <span class="tag">Trước khi bắt đầu</span>
-  <p><strong>Nó chạy trên máy bạn.</strong> Không phải dịch vụ trên mạng, không ai khác
-  truy cập được.</p>
-  <p><strong>Không phải cách dùng AI miễn phí.</strong> Bạn vẫn tiêu vào chính tài khoản
-  mình đang trả tiền — chỉ là dùng được ở nhiều công cụ hơn.</p>
-  <p><strong>Cài một lần.</strong> Xong rồi thì mở máy là nó tự chạy.</p>
+  <span class="tag">开始之前</span>
+  <p><strong>它跑在你自己的电脑上。</strong>不是网上的服务，别人访问不到。</p>
+  <p><strong>这不是白嫖 AI 的办法。</strong>花的还是你自己在付费的那个账号的额度 ——
+  只是能在更多工具里用了。</p>
+  <p><strong>装一次就好。</strong>装完之后，开机它就自动跑起来。</p>
 </div>
 
-<h3 id="chuan-bi">Bạn cần chuẩn bị</h3>
+<h3 id="chuan-bi">你需要准备什么</h3>
 <div class="tw"><table>
-  <tr><th>Thứ cần</th><th>Ghi chú</th></tr>
-  <tr><td>Một máy Mac hoặc Windows</td><td>Các bước gần như giống hệt nhau</td></tr>
-  <tr><td>Một tài khoản AI đang dùng được</td><td>ChatGPT Plus/Pro, Claude Pro/Max, Gemini, Kimi hoặc Grok</td></tr>
-  <tr><td>Khoảng 10 phút</td><td>Phần lâu nhất là chờ tải về</td></tr>
+  <tr><th>需要什么</th><th>说明</th></tr>
+  <tr><td>一台 Mac 或 Windows 电脑</td><td>两边的步骤几乎一模一样</td></tr>
+  <tr><td>一个还能用的 AI 账号</td><td>ChatGPT Plus/Pro、Claude Pro/Max、Gemini、Kimi 或 Grok</td></tr>
+  <tr><td>大约 10 分钟</td><td>最花时间的是等下载</td></tr>
 </table></div>
 </section>
 
 <!-- ============ PHẦN 2 ============ -->
 <section class="part">
-<div class="parthead"><span class="pn">Phần 2</span><h2>Cài đặt</h2></div>
+<div class="parthead"><span class="pn">第 2 部分</span><h2>安装</h2></div>
 
-<h3 id="tai-ve"><span class="num">01</span>Tải và cài ứng dụng</h3>
-<p class="sub">Ứng dụng tên là <strong>EasyCLIProxyAPI</strong>, miễn phí và mã nguồn mở.</p>
+<h3 id="tai-ve"><span class="num">01</span>下载并安装应用</h3>
+<p class="sub">这个应用叫 <strong>EasyCLIProxyAPI</strong>，免费、开源。</p>
 
 <ol class="steps">
-  <li>Mở trang <a href="https://github.com/router-for-me/EasyCLIProxyAPI/releases">github.com/router-for-me/EasyCLIProxyAPI/releases</a></li>
-  <li>Kéo xuống mục <strong>Assets</strong> của bản mới nhất</li>
-  <li>Máy Mac tải file đuôi <code>.dmg</code> · máy Windows tải file đuôi <code>.zip</code></li>
-  <li><strong>Mac:</strong> mở file <code>.dmg</code> rồi kéo ứng dụng thả vào thư mục <strong>Applications</strong><br>
-      <strong>Windows:</strong> giải nén rồi chạy file bên trong</li>
-  <li>Mở ứng dụng lên</li>
+  <li>打开 <a href="https://github.com/router-for-me/EasyCLIProxyAPI/releases">github.com/router-for-me/EasyCLIProxyAPI/releases</a></li>
+  <li>往下翻到最新版本的 <strong>Assets</strong> 一栏</li>
+  <li>Mac 下载后缀是 <code>.dmg</code> 的文件 · Windows 下载后缀是 <code>.zip</code> 的文件</li>
+  <li><strong>Mac：</strong>打开 <code>.dmg</code> 文件，把应用拖进 <strong>Applications</strong> 文件夹<br>
+      <strong>Windows：</strong>解压后运行里面的程序</li>
+  <li>把应用打开</li>
 </ol>
 
 <div class="note">
-  <span class="tag">Yên tâm</span>
-  <p>Trên máy Mac, ứng dụng này <strong>đã được Apple kiểm duyệt</strong>, nên mở thẳng
-  được, không hiện cảnh báo “không rõ nhà phát triển”.</p>
+  <span class="tag">可以放心</span>
+  <p>在 Mac 上，这个应用<strong>已经通过了 Apple 的公证</strong>，可以直接打开，
+  不会弹出“开发者身份不明”的警告。</p>
 </div>
 
-<h3 id="cai-loi"><span class="num">02</span>Cài phần lõi</h3>
-<p class="sub">Ứng dụng bạn vừa cài là phần vỏ có giao diện. Phần lõi mới là thứ làm việc
-thật, và phải bấm cài thêm một lần.</p>
+<h3 id="cai-loi"><span class="num">02</span>安装核心</h3>
+<p class="sub">你刚装好的应用只是带界面的外壳。真正干活的是核心，需要再点一次把它装上。</p>
 
 <ol class="steps">
-  <li>Ở cột menu bên trái, bấm <span class="menu">Version Management</span></li>
-  <li>Bấm nút cài phiên bản lõi mới nhất</li>
-  <li>Chờ vài giây cho tới khi báo đã cài xong</li>
+  <li>在左边的菜单栏里，点 <span class="menu">Version Management</span></li>
+  <li>点安装最新核心版本的按钮</li>
+  <li>等几秒钟，直到提示安装完成</li>
 </ol>
 
 <figure class="shot">
   <img src="images/version-management.webp" width="1600" height="1080" loading="lazy"
-       alt="Màn hình Version Management trong ứng dụng EasyCLIProxyAPI, nơi bấm cài phiên bản lõi">
-  <figcaption>Màn hình <strong>Version Management</strong>. Chấm màu cam cạnh tên menu
-  nghĩa là đang có bản lõi mới hơn để cập nhật.</figcaption>
+       alt="EasyCLIProxyAPI 应用中的 Version Management 界面，在这里点击安装核心版本">
+  <figcaption><strong>Version Management</strong> 界面。菜单名旁边的橙色小点，
+  表示有更新的核心版本可以升级。</figcaption>
 </figure>
 
-<h3 id="bat-proxy"><span class="num">03</span>Bật proxy</h3>
+<h3 id="bat-proxy"><span class="num">03</span>启动代理</h3>
 
 <ol class="steps">
-  <li>Bấm <span class="menu">Home</span> ở menu bên trái</li>
-  <li>Trong khung <strong>Runtime Control</strong>, bấm nút chạy</li>
-  <li>Khi <em>Runtime Status</em> hiện <strong>Running</strong> là đã xong</li>
+  <li>点左边菜单里的 <span class="menu">Home</span></li>
+  <li>在 <strong>Runtime Control</strong> 区域里，点运行按钮</li>
+  <li>当 <em>Runtime Status</em> 显示 <strong>Running</strong>，就成了</li>
 </ol>
 
 <figure class="shot">
   <img src="images/home.webp" width="1600" height="1085" loading="lazy"
-       alt="Màn hình Home hiển thị trạng thái Running và ba địa chỉ proxy nội bộ">
-  <figcaption>Đang chạy. Bên phải là ba địa chỉ để lát nữa khai vào công cụ của bạn —
-  mỗi loại công cụ dùng một địa chỉ khác nhau.</figcaption>
+       alt="Home 界面显示 Running 状态和三个本地代理地址">
+  <figcaption>正在运行。右边那三个地址，等下要填进你的工具里 ——
+  不同类型的工具用的地址不一样。</figcaption>
 </figure>
 
 <div class="note">
-  <span class="tag">Từ giờ tự chạy</span>
-  <p>Bật một lần là xong. Những lần mở máy sau, ứng dụng tự khởi động cùng hệ thống,
-  bạn không phải làm lại bước này.</p>
+  <span class="tag">以后自动运行</span>
+  <p>启动一次就够了。以后每次开机，应用都会跟着系统自动启动，你不用再做这一步。</p>
 </div>
 
-<h3 id="dang-nhap"><span class="num">04</span>Đăng nhập tài khoản của bạn</h3>
-<p class="sub">Đây là bước nối tài khoản AI bạn đang có vào proxy.</p>
+<h3 id="dang-nhap"><span class="num">04</span>登录你的账号</h3>
+<p class="sub">这一步是把你手上的 AI 账号接到代理上。</p>
 
 <ol class="steps">
-  <li>Bấm <span class="menu">OAuth</span> ở menu bên trái</li>
-  <li>Ở tab <strong>OAuth Sign-In</strong>, tìm ô ứng với tài khoản của bạn</li>
-  <li>Bấm <strong>Start Sign-In</strong></li>
-  <li>Trình duyệt tự mở ra — đăng nhập như bình thường</li>
-  <li>Xong thì ô đó chuyển sang <strong>Completed</strong></li>
+  <li>点左边菜单里的 <span class="menu">OAuth</span></li>
+  <li>在 <strong>OAuth Sign-In</strong> 标签页里，找到对应你账号的那一格</li>
+  <li>点 <strong>Start Sign-In</strong></li>
+  <li>浏览器会自动打开 —— 照平时那样登录就行</li>
+  <li>登录成功后，那一格会变成 <strong>Completed</strong></li>
 </ol>
 
 <div class="note warn">
-  <span class="tag">Tên trên màn hình khác tên bạn quen</span>
-  <p>Đây là chỗ nhiều người khựng lại. Ứng dụng dùng tên kỹ thuật, không phải tên sản
-  phẩm bạn mua:</p>
+  <span class="tag">屏幕上的名字和你熟悉的不一样</span>
+  <p>很多人卡在这里。应用里用的是技术上的名字，不是你买的那个产品名：</p>
 </div>
 
 <div class="tw"><table>
-  <tr><th>Bạn có tài khoản</th><th>Bấm vào ô tên là</th></tr>
+  <tr><th>你有的账号</th><th>要点的那一格叫</th></tr>
   <tr><td>ChatGPT</td><td><strong>Codex OAuth</strong></td></tr>
   <tr><td>Claude</td><td><strong>Claude OAuth</strong></td></tr>
   <tr><td>Gemini</td><td><strong>Antigravity OAuth</strong></td></tr>
@@ -437,192 +430,187 @@ thật, và phải bấm cài thêm một lần.</p>
 
 <figure class="shot">
   <img src="images/oauth-sign-in.webp" width="1600" height="897" loading="lazy"
-       alt="Màn hình OAuth Sign-In với năm ô đăng nhập: Codex, Claude, Antigravity, Kimi và xAI">
-  <figcaption>Ô <strong>Codex OAuth</strong> đã đăng nhập xong nên hiện
-  <em>Completed</em>. Ô <strong>Claude OAuth</strong> đang trong lúc đăng nhập dở —
-  phần link đã được làm mờ vì đó là thông tin riêng của từng máy.</figcaption>
+       alt="OAuth Sign-In 界面，有 Codex、Claude、Antigravity、Kimi 和 xAI 五个登录格子">
+  <figcaption><strong>Codex OAuth</strong> 这一格已经登录完成，所以显示
+  <em>Completed</em>。<strong>Claude OAuth</strong> 这一格正在登录中 ——
+  链接部分做了模糊处理，因为那是每台机器各自的私有信息。</figcaption>
 </figure>
 
-<p><strong>Đăng nhập được nhiều tài khoản thì tốt hơn một.</strong> Proxy tự xoay vòng
-giữa chúng, và khi một tài khoản hết lượt thì tự chuyển sang cái còn lại — bạn không bị
-đứng giữa chừng.</p>
+<p><strong>登录多个账号比只登一个好。</strong>代理会在它们之间自动轮换，
+某个账号用完额度时会自动切到另一个 —— 你不会做到一半被卡住。</p>
 
-<h4>Kiểm tra tài khoản đã lưu</h4>
-<p>Sang tab <strong>Authentication Files</strong> để xem danh sách tài khoản proxy đang
-giữ. Mỗi dòng là một tài khoản; chữ <strong>active</strong> màu xanh nghĩa là dùng được.
-Nút <strong>Models</strong> trên mỗi dòng cho biết tài khoản đó có những model nào —
-lát nữa sẽ cần.</p>
+<h4>查看已保存的账号</h4>
+<p>切到 <strong>Authentication Files</strong> 标签页，就能看到代理正在保管的账号列表。
+每一行是一个账号；绿色的 <strong>active</strong> 字样表示可以用。
+每行上的 <strong>Models</strong> 按钮会列出该账号有哪些模型 —— 等下就要用到。</p>
 
 <figure class="shot">
   <img src="images/oauth-files.webp" width="1600" height="1080" loading="lazy"
-       alt="Tab Authentication Files liệt kê các tài khoản đã đăng nhập cùng trạng thái active">
-  <figcaption>Có tài khoản trong danh sách và trạng thái <em>active</em> nghĩa là proxy
-  đã sẵn sàng phục vụ.</figcaption>
+       alt="Authentication Files 标签页列出已登录的账号及其 active 状态">
+  <figcaption>列表里有账号，状态是 <em>active</em>，就说明代理已经准备好干活了。</figcaption>
 </figure>
 
-<h3 id="doi-khoa"><span class="num">05</span>Đổi khoá bảo vệ</h3>
-<p class="sub">Bước này ngắn nhưng đừng bỏ qua.</p>
+<h3 id="doi-khoa"><span class="num">05</span>换掉保护密钥</h3>
+<p class="sub">这一步很短，但别跳过。</p>
 
 <div class="note warn">
-  <span class="tag">Quan trọng</span>
-  <p>Khoá này giống mật khẩu bảo vệ toàn bộ tài khoản AI bạn vừa đăng nhập. Ứng dụng
-  đặt sẵn một khoá mặc định dễ đoán — <strong>hãy đổi ngay</strong>.</p>
+  <span class="tag">重要</span>
+  <p>这个密钥相当于保护你刚登录的全部 AI 账号的密码。应用预设了一个很好猜的默认密钥 ——
+  <strong>请立刻换掉</strong>。</p>
 </div>
 
 <ol class="steps">
-  <li>Bấm <span class="menu">Advanced Settings</span> ở menu bên trái</li>
-  <li>Ở tab <strong>General Settings</strong>, tìm khung <strong>Authentication Keys</strong></li>
-  <li>Bấm nút <strong>+</strong> để tạo khoá mới, rồi xoá khoá cũ đi</li>
-  <li><strong>Chép khoá mới ra chỗ an toàn</strong> — phần 3 sẽ cần dùng</li>
+  <li>点左边菜单里的 <span class="menu">Advanced Settings</span></li>
+  <li>在 <strong>General Settings</strong> 标签页里，找到 <strong>Authentication Keys</strong> 区域</li>
+  <li>点 <strong>+</strong> 按钮生成新密钥，然后把旧的删掉</li>
+  <li><strong>把新密钥复制到安全的地方</strong> —— 第 3 部分会用到</li>
 </ol>
 
 <figure class="shot">
   <img src="images/advanced-settings.webp" width="1600" height="1084" loading="lazy"
-       alt="Màn hình Advanced Settings với khung Authentication Keys và khung WebUI Key">
-  <figcaption>Khung trên là khoá cho các công cụ dùng. Khung dưới —
-  <strong>WebUI Key</strong> — là mật khẩu vào trang quản trị, một thứ khác, cũng nên đổi.</figcaption>
+       alt="Advanced Settings 界面，包含 Authentication Keys 区域和 WebUI Key 区域">
+  <figcaption>上面那个区域是给各个工具用的密钥。下面那个 ——
+  <strong>WebUI Key</strong> —— 是登录管理后台的密码，是另一回事，也建议换掉。</figcaption>
 </figure>
 
 <div class="note">
-  <span class="tag">Đừng nhầm hai loại khoá</span>
-  <p><strong>Authentication Keys</strong> — khai vào công cụ lập trình của bạn.</p>
-  <p><strong>WebUI Key</strong> — chỉ để đăng nhập trang quản trị của chính proxy.</p>
+  <span class="tag">别把两种密钥搞混</span>
+  <p><strong>Authentication Keys</strong> —— 填进你的编程工具里。</p>
+  <p><strong>WebUI Key</strong> —— 只用来登录代理自己的管理后台。</p>
 </div>
 
-<h3 id="theo-doi"><span class="num">06</span>Theo dõi mức đã dùng</h3>
-<p class="sub">Không bắt buộc, nhưng hữu ích để biết mình còn bao nhiêu.</p>
+<h3 id="theo-doi"><span class="num">06</span>查看用量</h3>
+<p class="sub">不是必须的，但知道自己还剩多少挺有用。</p>
 
-<p>Bấm <span class="menu">Usage</span> để xem số lượt gọi, lượng chữ đã dùng và ước tính
-chi phí. Còn <span class="menu">OAuth</span> → tab <strong>Quota Lookup</strong> cho biết
-hạn mức còn lại của từng tài khoản.</p>
+<p>点 <span class="menu">Usage</span> 可以看调用次数、用掉的字数和费用估算。
+而 <span class="menu">OAuth</span> → <strong>Quota Lookup</strong> 标签页
+则会告诉你每个账号还剩多少额度。</p>
 
 <figure class="shot">
   <img src="images/usage-overview.webp" width="1600" height="1081" loading="lazy"
-       alt="Màn hình Usage History với các số liệu tổng lượt gọi, tổng token và chi phí ước tính">
-  <figcaption>Toàn bộ số liệu này lưu trên máy bạn, không gửi đi đâu.</figcaption>
+       alt="Usage History 界面，显示总调用次数、总 token 数和费用估算">
+  <figcaption>这些数据全都存在你自己的电脑上，不会发到任何地方。</figcaption>
 </figure>
 
 <figure class="shot">
   <img src="images/quota-lookup.webp" width="1600" height="1080" loading="lazy"
-       alt="Tab Quota Lookup với nút Fetch Quota để kiểm tra hạn mức còn lại của tài khoản">
-  <figcaption>Bấm <strong>Fetch Quota</strong> để hỏi nhà cung cấp xem tài khoản còn bao
-  nhiêu. Tên tài khoản trong ảnh đã được làm mờ.</figcaption>
+       alt="Quota Lookup 标签页，用 Fetch Quota 按钮查询账号剩余额度">
+  <figcaption>点 <strong>Fetch Quota</strong>，向服务商查询这个账号还剩多少。
+  图中的账号名已做模糊处理。</figcaption>
 </figure>
 </section>
 
 <!-- ============ PHẦN 3 ============ -->
 <section class="part">
-<div class="parthead"><span class="pn">Phần 3</span><h2>Sử dụng</h2></div>
+<div class="parthead"><span class="pn">第 3 部分</span><h2>使用</h2></div>
 
-<h3 id="quy-tac">Quy tắc chung</h3>
-<p class="sub">Mọi công cụ đều cần đúng ba thứ. Hiểu ba thứ này rồi thì công cụ nào bạn
-cũng tự khai được.</p>
+<h3 id="quy-tac">通用规则</h3>
+<p class="sub">所有工具都只要三样东西填对。搞懂这三样，任何工具你都能自己配好。</p>
 
 <div class="tw"><table>
-  <tr><th>Thứ cần khai</th><th>Là gì</th><th>Lấy ở đâu</th></tr>
+  <tr><th>要填什么</th><th>它是什么</th><th>去哪里拿</th></tr>
   <tr>
-    <td><strong>Địa chỉ</strong></td>
-    <td>Nơi công cụ gửi yêu cầu tới, thay vì gửi thẳng lên mạng</td>
-    <td>Luôn là <code>http://127.0.0.1:8317</code> — chỉ khác ở phần đuôi, xem bên dưới</td>
+    <td><strong>地址</strong></td>
+    <td>工具把请求发到这里，而不是直接发到网上</td>
+    <td>永远是 <code>http://127.0.0.1:8317</code> —— 只有结尾部分有区别，见下文</td>
   </tr>
   <tr>
-    <td><strong>Khoá</strong></td>
-    <td>Mật khẩu để proxy biết đúng là bạn gọi</td>
-    <td>Khoá bạn tạo ở bước 05</td>
+    <td><strong>密钥</strong></td>
+    <td>让代理确认来找它的确实是你的那串密码</td>
+    <td>你在第 05 步生成的密钥</td>
   </tr>
   <tr>
-    <td><strong>Tên model</strong></td>
-    <td>Chọn dùng “bộ não” nào trong số tài khoản đã đăng nhập</td>
-    <td><span class="menu">OAuth</span> → <em>Authentication Files</em> → nút <strong>Models</strong></td>
+    <td><strong>模型名</strong></td>
+    <td>在已登录的账号里挑用哪个“大脑”</td>
+    <td><span class="menu">OAuth</span> → <em>Authentication Files</em> → <strong>Models</strong> 按钮</td>
   </tr>
 </table></div>
 
-<h4>Quy tắc <code>/v1</code> — chỗ sai nhiều nhất</h4>
-<p>Phần đuôi địa chỉ tuỳ theo công cụ nói “tiếng” nào. Nhớ một câu:
-<strong>Anthropic và Gemini thì không có <code>/v1</code>, còn lại thì có.</strong></p>
+<h4><code>/v1</code> 规则 —— 最容易出错的地方</h4>
+<p>地址的结尾取决于工具讲哪种“语言”。记住一句话：
+<strong>Anthropic 和 Gemini 不带 <code>/v1</code>，其余都要带。</strong></p>
 
 <div class="tw"><table>
-  <tr><th>Công cụ</th><th>Địa chỉ đầy đủ</th></tr>
+  <tr><th>工具</th><th>完整地址</th></tr>
   <tr><td>Claude Code</td><td><code>http://127.0.0.1:8317</code></td></tr>
   <tr><td>Gemini CLI</td><td><code>http://127.0.0.1:8317</code></td></tr>
   <tr><td>Codex CLI · OpenCode · Cline · Continue.dev · Droid</td><td><code>http://127.0.0.1:8317/v1</code></td></tr>
 </table></div>
 
-<h4>Khai một model không có nghĩa là bị khoá vào nó</h4>
-<p>Dòng <code>model</code> trong cấu hình chỉ là <strong>mặc định lúc mở</strong>. Mọi
-công cụ ở đây đều đổi được model sau đó, và phần lớn còn khai sẵn được nhiều model một lúc:</p>
+<h4>写了一个模型，不等于被锁死在它上面</h4>
+<p>配置里的 <code>model</code> 那一行只是<strong>启动时的默认值</strong>。
+这里所有工具事后都能换模型，大部分还能一次性预先写好多个模型：</p>
 
 <div class="tw"><table>
-  <tr><th>Công cụ</th><th>Khai nhiều model sẵn</th><th>Đổi lúc đang dùng</th></tr>
-  <tr><td>Claude Code</td><td>Được — 4 tên <em>Opus / Sonnet / Haiku / Fable</em> trỏ sang 4 model khác nhau</td><td><code>/model</code></td></tr>
-  <tr><td>Codex CLI</td><td>Được — mỗi bộ một file <code>&lt;tên&gt;.config.toml</code></td><td><code>/models</code> · hoặc <code>codex -m &lt;tên&gt;</code></td></tr>
-  <tr><td>Continue.dev</td><td>Được — <code>models</code> là danh sách</td><td>Bấm tên model ở đáy khung chat</td></tr>
-  <tr><td>Droid</td><td>Được — <code>custom_models</code> là mảng</td><td>Chọn trong phần chuyển model</td></tr>
-  <tr><td>OpenCode</td><td>Không cần khai trước</td><td><code>/models</code></td></tr>
-  <tr><td>Cline / Roo Code</td><td>Một lúc một model</td><td>Sửa ô <em>Model ID</em> trong cài đặt</td></tr>
-  <tr><td>Gemini CLI</td><td>Một lúc một model</td><td>Sửa biến môi trường rồi mở cửa sổ mới</td></tr>
+  <tr><th>工具</th><th>能否预写多个模型</th><th>使用中切换</th></tr>
+  <tr><td>Claude Code</td><td>能 —— <em>Opus / Sonnet / Haiku / Fable</em> 四个名字可以分别指向四个不同模型</td><td><code>/model</code></td></tr>
+  <tr><td>Codex CLI</td><td>能 —— 每套一个 <code>&lt;名字&gt;.config.toml</code> 文件</td><td><code>/models</code> · 或 <code>codex -m &lt;名字&gt;</code></td></tr>
+  <tr><td>Continue.dev</td><td>能 —— <code>models</code> 本身是个列表</td><td>点聊天框底部的模型名</td></tr>
+  <tr><td>Droid</td><td>能 —— <code>custom_models</code> 是个数组</td><td>在切换模型的地方选</td></tr>
+  <tr><td>OpenCode</td><td>不需要提前写</td><td><code>/models</code></td></tr>
+  <tr><td>Cline / Roo Code</td><td>一次只能一个模型</td><td>改设置里的 <em>Model ID</em> 那一栏</td></tr>
+  <tr><td>Gemini CLI</td><td>一次只能一个模型</td><td>改环境变量，然后开个新窗口</td></tr>
 </table></div>
 
-<p>Bộ tạo cấu hình bên dưới sẽ tự sinh sẵn nhiều model cho những công cụ hỗ trợ, và ghi rõ
-cách chuyển cho từng loại.</p>
+<p>下面的配置生成器会为支持多模型的工具自动写好多个模型，并说明每种工具怎么切换。</p>
 
-<h4>Bốn điều dễ vấp</h4>
+<h4>四个容易绊倒人的地方</h4>
 <ul class="plain">
-  <li><strong>Model có gì là do tài khoản bạn đăng nhập quyết định.</strong> Không đăng
-  nhập ChatGPT thì không gọi được model GPT, dù có gõ đúng tên. Mỗi gói cũng khác nhau —
-  gói Plus có model mà gói Free không có.</li>
-  <li><strong>Sửa cấu hình xong phải mở phiên mới.</strong> Cửa sổ công cụ đang mở vẫn
-  dùng cấu hình cũ cho tới khi bạn đóng và mở lại.</li>
-  <li><strong>Khoá là mật khẩu.</strong> Đừng đưa lên GitHub, đừng gửi qua chat nhóm.</li>
-  <li><strong>Proxy phải đang chạy.</strong> Công cụ báo <code>connection refused</code>
-  gần như luôn là do quên bật ứng dụng.</li>
+  <li><strong>有哪些模型可用，取决于你登录了哪些账号。</strong>没登录 ChatGPT 就调不到
+  GPT 模型，名字打得再对也没用。每种套餐也不一样 ——
+  Plus 套餐有的模型，Free 套餐不一定有。</li>
+  <li><strong>改完配置必须开一个新会话。</strong>已经开着的工具窗口，
+  在你关掉重开之前用的还是旧配置。</li>
+  <li><strong>密钥就是密码。</strong>别传到 GitHub 上，也别发到群聊里。</li>
+  <li><strong>代理必须处于运行状态。</strong>工具报 <code>connection refused</code>，
+  几乎总是因为忘了把应用打开。</li>
 </ul>
 
-<h3 id="tao-cau-hinh">Tạo cấu hình cho tôi</h3>
-<p class="sub">Chọn tài khoản bạn đã đăng nhập và công cụ bạn muốn dùng. Cấu hình sẽ tự
-hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
+<h3 id="tao-cau-hinh">帮我生成配置</h3>
+<p class="sub">选好你已登录的账号和你想用的工具。配置会自动出现在下面，
+连同该粘贴到哪里的说明和一键复制按钮。</p>
 
 <div class="builder">
   <fieldset class="fset">
-    <legend>Bước 1 · Tài khoản bạn đã đăng nhập</legend>
-    <p class="fhint">Chọn tất cả những loại bạn đã đăng nhập ở bước 04. Chọn nhiều cũng được.</p>
+    <legend>第 1 步 · 你已登录的账号</legend>
+    <p class="fhint">把你在第 04 步登录过的类型都选上。多选也可以。</p>
     <div class="opts" id="acc-opts"></div>
   </fieldset>
 
   <fieldset class="fset" id="plan-wrap" hidden>
-    <legend>Bước 1b · Gói ChatGPT của bạn</legend>
-    <p class="fhint">Mỗi gói mở khoá một danh sách model khác nhau.</p>
+    <legend>第 1b 步 · 你的 ChatGPT 套餐</legend>
+    <p class="fhint">每种套餐解锁的模型列表不一样。</p>
     <div class="opts" id="plan-opts"></div>
   </fieldset>
 
   <fieldset class="fset">
-    <legend>Bước 2 · Công cụ muốn dùng</legend>
-    <p class="fhint">Mỗi lần chọn một công cụ. Muốn cấu hình thêm công cụ khác thì chọn lại.</p>
+    <legend>第 2 步 · 想用的工具</legend>
+    <p class="fhint">一次选一个工具。想再配另一个，重新选一次就行。</p>
     <div class="opts" id="tool-opts"></div>
   </fieldset>
 
   <fieldset class="fset">
-    <legend>Bước 3 · Model và khoá</legend>
-    <p class="fhint">Danh sách model bên dưới lấy theo đúng tài khoản bạn vừa chọn.</p>
+    <legend>第 3 步 · 模型和密钥</legend>
+    <p class="fhint">下面的模型列表，是按你刚选的账号来的。</p>
     <div class="row">
       <div class="field">
-        <label for="m-main">Model chính</label>
+        <label for="m-main">主力模型</label>
         <select id="m-main"></select>
-        <p class="fh">Dùng cho phần lớn công việc.</p>
+        <p class="fh">大部分工作用它。</p>
       </div>
       <div class="field">
-        <label for="m-light">Model nhẹ</label>
+        <label for="m-light">轻量模型</label>
         <select id="m-light"></select>
-        <p class="fh">Dùng cho việc vặt chạy ngầm. Chọn loại rẻ và nhanh.</p>
+        <p class="fh">用于后台跑的琐碎小活。挑便宜又快的。</p>
       </div>
     </div>
     <div class="row">
       <div class="field" style="flex-basis:100%">
-        <label for="k-in">Khoá của bạn</label>
+        <label for="k-in">你的密钥</label>
         <input id="k-in" type="text" spellcheck="false" autocomplete="off"
-               placeholder="dán khoá tạo ở bước 05 vào đây">
-        <p class="fh">Chỉ nằm trong trình duyệt của bạn, không gửi đi đâu. Để trống thì
-        cấu hình hiện chỗ điền tạm.</p>
+               placeholder="把第 05 步生成的密钥粘贴到这里">
+        <p class="fh">只留在你的浏览器里，不会发送到任何地方。留空的话，
+        配置里会先显示一个占位符。</p>
       </div>
     </div>
   </fieldset>
@@ -630,86 +618,85 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
 
 <div id="out"></div>
 
-<h3 id="truc-trac">Gặp trục trặc</h3>
+<h3 id="truc-trac">遇到问题</h3>
 <div class="tw"><table>
-  <tr><th>Hiện tượng</th><th>Cách xử lý</th></tr>
-  <tr><td>Bấm chạy nhưng không lên <em>Running</em></td>
-      <td>Nhiều khả năng chưa cài phần lõi. Quay lại bước 02.</td></tr>
-  <tr><td>Đăng nhập xong mà không thấy tài khoản</td>
-      <td>Trình duyệt có thể chặn cửa sổ bật lên. Thử lại và cho phép khi trình duyệt hỏi.
-      Kiểm tra ở tab <strong>Authentication Files</strong>.</td></tr>
+  <tr><th>现象</th><th>怎么办</th></tr>
+  <tr><td>点了运行但没变成 <em>Running</em></td>
+      <td>多半是还没装核心。回到第 02 步。</td></tr>
+  <tr><td>登录完了却看不到账号</td>
+      <td>浏览器可能拦了弹出窗口。重试一次，浏览器问的时候点允许。
+      再到 <strong>Authentication Files</strong> 标签页确认。</td></tr>
   <tr><td><code>401</code></td>
-      <td>Khoá điền vào công cụ không khớp khoá trong <strong>Authentication Keys</strong>.
-      Đối chiếu lại từng ký tự.</td></tr>
+      <td>填进工具里的密钥和 <strong>Authentication Keys</strong> 里的对不上。
+      一个字符一个字符对一遍。</td></tr>
   <tr><td><code>404</code></td>
-      <td>Sai phần <code>/v1</code> ở cuối địa chỉ. Xem lại bảng ở mục Quy tắc chung.</td></tr>
+      <td>地址结尾的 <code>/v1</code> 写错了。回去看通用规则那节的表格。</td></tr>
   <tr><td><code>connection refused</code></td>
-      <td>Proxy chưa bật. Mở ứng dụng, vào <span class="menu">Home</span> và cho chạy lại.</td></tr>
+      <td>代理没启动。打开应用，进 <span class="menu">Home</span> 重新运行一次。</td></tr>
   <tr><td><code>unknown provider for model …</code></td>
-      <td>Tên model không thuộc tài khoản nào bạn đã đăng nhập. Xem lại danh sách ở nút
-      <strong>Models</strong>, hoặc đăng nhập thêm tài khoản tương ứng.</td></tr>
-  <tr><td>Báo hết lượt</td>
-      <td>Tài khoản đã dùng hết hạn mức. Chờ hồi, hoặc đăng nhập thêm một tài khoản nữa.</td></tr>
+      <td>这个模型名不属于你登录过的任何账号。回去看 <strong>Models</strong>
+      按钮里的列表，或者再登录对应的账号。</td></tr>
+  <tr><td>提示额度用完</td>
+      <td>账号额度已经用光了。等它恢复，或者再登录一个账号。</td></tr>
 </table></div>
 
-<h3 id="hoi-dap">Câu hỏi hay gặp</h3>
+<h3 id="hoi-dap">常见问题</h3>
 
 <details>
-  <summary>Có cần dùng dòng lệnh không?</summary>
-  <p>Không. Phần cài đặt chỉ là bấm nút trong ứng dụng có giao diện. Phần cấu hình thì
-  trang này tự sinh ra sẵn, việc còn lại là chép và dán vào đúng chỗ.</p>
+  <summary>需要用命令行吗？</summary>
+  <p>不需要。安装部分只是在带界面的应用里点按钮。配置部分这个页面会帮你生成好，
+  剩下的就是复制粘贴到对的位置。</p>
 </details>
 
 <details>
-  <summary>Có tốn thêm tiền không?</summary>
-  <p>Ứng dụng miễn phí. Nhưng nó không tạo ra lượt dùng mới — bạn vẫn tiêu vào hạn mức
-  của tài khoản mình đang trả tiền.</p>
+  <summary>会额外花钱吗？</summary>
+  <p>应用是免费的。但它不会凭空变出新的用量 —— 花的还是你在付费的那个账号的额度。</p>
 </details>
 
 <details>
-  <summary>Nó có gửi dữ liệu của tôi đi đâu lạ không?</summary>
-  <p>Không. Ứng dụng chạy trên máy bạn và chỉ nghe ở địa chỉ nội bộ
-  <code>127.0.0.1</code>, máy khác không gọi vào được. Dữ liệu đi thẳng từ máy bạn tới
-  nhà cung cấp mà bạn đã đăng nhập, giống như khi dùng trực tiếp.</p>
+  <summary>它会把我的数据发到什么奇怪的地方吗？</summary>
+  <p>不会。应用跑在你自己的电脑上，只监听本机地址
+  <code>127.0.0.1</code>，别的机器连不进来。数据从你的电脑直接发给你登录的那家服务商，
+  和你直接用它们时一样。</p>
 </details>
 
 <details>
-  <summary>Dùng ChatGPT để chạy Claude Code thì có giống hệt bản thật không?</summary>
-  <p>Không. Giao diện và thao tác thì y hệt, nhưng model khác nhau thì cách làm việc
-  khác nhau — chất lượng và cách trả lời đều lệch ít nhiều. Hãy xem đây là cách để dùng
-  được công cụ mình thích, không phải cách để có Claude miễn phí.</p>
+  <summary>用 ChatGPT 驱动 Claude Code，效果和正版完全一样吗？</summary>
+  <p>不一样。界面和操作是一模一样的，但模型不同，干活的方式就不同 ——
+  质量和回答风格都会有些偏差。把这看作一种“能用上自己喜欢的工具”的办法，
+  而不是白嫖 Claude 的办法。</p>
 </details>
 
 <details>
-  <summary>Cài nhiều công cụ cùng lúc được không?</summary>
-  <p>Được, và đây là điểm hay. Một proxy phục vụ đồng thời mọi công cụ — Claude Code,
-  Codex CLI và OpenCode cùng trỏ vào <code>:8317</code>, cả ba chạy song song, dùng chung
-  tài khoản bạn đã đăng nhập.</p>
+  <summary>可以同时配好几个工具吗？</summary>
+  <p>可以，而且这正是它的妙处。一个代理同时服务所有工具 —— Claude Code、
+  Codex CLI 和 OpenCode 都指向 <code>:8317</code>，三个并行跑，
+  共用你登录的那些账号。</p>
 </details>
 
 <details>
-  <summary>Muốn gỡ đi thì làm sao?</summary>
-  <p>Vào <span class="menu">Home</span> bấm <strong>stop</strong>, rồi xoá ứng dụng như
-  mọi phần mềm khác. Các công cụ bạn đã khai báo sẽ quay về như cũ sau khi bạn xoá phần
-  địa chỉ và khoá đã thêm.</p>
+  <summary>想卸载的话怎么办？</summary>
+  <p>进 <span class="menu">Home</span> 点 <strong>stop</strong>，
+  然后像卸载其他软件一样把应用删掉。你配置过的那些工具，
+  在你把加进去的地址和密钥删掉之后，就会恢复原样。</p>
 </details>
 
 <details>
-  <summary>Tài khoản của tôi có bị khoá vì dùng cách này không?</summary>
-  <p>Nói thẳng: có rủi ro. Truy cập tài khoản thuê bao bằng công cụ tự động thường nằm
-  ngoài phạm vi điều khoản sử dụng của nhà cung cấp. Rủi ro thấp khi dùng cá nhân ở mức
-  bình thường, nhưng tăng lên rõ nếu nhiều người dùng chung một tài khoản hoặc gọi với
-  tần suất bất thường. Cân nhắc trước khi dùng cho tài khoản quan trọng.</p>
+  <summary>这样用会不会导致我的账号被封？</summary>
+  <p>说实话：有风险。用自动化工具访问订阅制账号，通常超出了服务商使用条款的范围。
+  个人正常用量下风险较低，但如果多人共用一个账号，或者调用频率明显异常，
+  风险就会明显上升。用在重要账号上之前请先掂量一下。</p>
 </details>
+
 </section>
 
 <footer>
-  Phần mềm dùng ở đây là <strong>CLIProxyAPI</strong> và bản có giao diện
-  <strong>EasyCLIProxyAPI</strong> — mã nguồn mở, giấy phép MIT,
-  <a href="https://github.com/router-for-me/CLIProxyAPI">github.com/router-for-me/CLIProxyAPI</a>.
-  Ảnh chụp màn hình trong trang đã được làm mờ các thông tin riêng.
-  Danh sách model lấy theo bản lõi v7.2 — tài khoản của bạn có thể khác, luôn đối chiếu
-  với nút <strong>Models</strong> trong ứng dụng.
+  这里用到的软件是 <strong>CLIProxyAPI</strong> 以及它的图形界面版
+  <strong>EasyCLIProxyAPI</strong> —— 开源，MIT 许可证，
+  <a href="https://github.com/router-for-me/CLIProxyAPI">github.com/router-for-me/CLIProxyAPI</a>。
+  页面中的截图已对私有信息做了模糊处理。
+  模型列表基于核心版本 v7.2 —— 你的账号可能不同，请始终以应用里
+  <strong>Models</strong> 按钮显示的为准。
 </footer>
 
 </div>
@@ -727,7 +714,7 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
   /* ---------- du lieu model, lay tu registry cua CLIProxyAPI v7.2 ---------- */
   const ACCOUNTS = {
     chatgpt: {
-      label: "ChatGPT", note: "nút Codex",
+      label: "ChatGPT", note: "Codex 按钮",
       plans: {
         free: { label: "Free", models: ["gpt-5.5","gpt-5.6-terra","gpt-5.6-luna","gpt-5.4-mini","codex-auto-review"] },
         plus: { label: "Plus", models: ["gpt-5.6-sol","gpt-5.6-terra","gpt-5.6-luna","gpt-5.5","gpt-5.4","gpt-5.4-mini","gpt-5.3-codex-spark","codex-auto-review"] },
@@ -736,23 +723,23 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
       }
     },
     claude: {
-      label: "Claude", note: "nút Claude",
+      label: "Claude", note: "Claude 按钮",
       models: ["claude-opus-5","claude-sonnet-5","claude-opus-4-8","claude-opus-4-7","claude-opus-4-6",
                "claude-sonnet-4-6","claude-fable-5","claude-sonnet-4-5-20250929","claude-haiku-4-5-20251001",
                "claude-3-5-haiku-20241022"]
     },
     gemini: {
-      label: "Gemini", note: "nút Antigravity",
+      label: "Gemini", note: "Antigravity 按钮",
       models: ["gemini-pro-agent","gemini-3.1-pro-low","gemini-3-flash","gemini-3-flash-agent",
                "gemini-3.6-flash-high","gemini-3.5-flash-low","gemini-3.1-flash-lite",
                "claude-sonnet-4-6","claude-opus-4-6-thinking"]
     },
     kimi: {
-      label: "Kimi", note: "nút Kimi",
+      label: "Kimi", note: "Kimi 按钮",
       models: ["kimi-k3","kimi-k3-256k","kimi-k2.7-code","kimi-k2.7-code-highspeed","kimi-k2.6","kimi-k2.5","kimi-k2-thinking","kimi-k2"]
     },
     grok: {
-      label: "Grok", note: "nút xAI",
+      label: "Grok", note: "xAI 按钮",
       models: ["grok-4.6","grok-4.5","grok-4.3","grok-composer-2.5-fast","grok-3-mini","grok-3-mini-fast"]
     }
   };
@@ -764,42 +751,42 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
     "claude-code": {
       label: "Claude Code", proto: "Anthropic", slash: false,
       file: "~/.claude/settings.json",
-      where: "Mở file này bằng trình soạn thảo bất kỳ. Nếu file đã có nội dung, chỉ thêm khối <code>env</code> vào trong dấu ngoặc nhọn ngoài cùng, đừng xoá phần cũ. Chưa có file thì tạo mới."
+      where: "用任何文本编辑器打开这个文件。如果文件里已经有内容，只要把 <code>env</code> 这一块加进最外层的大括号里，别删掉原有的部分。还没有这个文件就新建一个。"
     },
     "codex-cli": {
       label: "Codex CLI", proto: "OpenAI Responses", slash: true,
       file: "~/.codex/config.toml",
-      where: "Dán vào cuối file. Nếu đã có dòng <code>model</code> hoặc <code>model_provider</code> thì sửa lại thay vì thêm dòng thứ hai."
+      where: "粘贴到文件末尾。如果已经有 <code>model</code> 或 <code>model_provider</code> 这一行，请改掉它，不要再加第二行。"
     },
     "gemini-cli": {
       label: "Gemini CLI", proto: "Gemini", slash: false,
       file: "~/.zshrc  (macOS)  ·  ~/.bashrc  (Linux)",
-      where: "Dán vào cuối file, rồi mở cửa sổ dòng lệnh mới. Trên Windows thì đặt hai biến này trong phần biến môi trường của hệ thống."
+      where: "粘贴到文件末尾，然后开一个新的命令行窗口。Windows 上则把这两个变量加到系统的环境变量里。"
     },
     "opencode": {
       label: "OpenCode", proto: "OpenAI", slash: true,
       file: "~/.config/opencode/opencode.json",
-      where: "Chưa có thì tạo mới cả thư mục lẫn file."
+      where: "没有的话，文件夹和文件都新建一个。"
     },
     "cline": {
       label: "Cline / Roo Code", proto: "OpenAI", slash: true, ui: true,
-      file: "Bảng cài đặt trong VS Code",
-      where: "Mở panel Cline trong VS Code, bấm biểu tượng bánh răng, rồi điền từng ô theo bảng."
+      file: "VS Code 里的设置面板",
+      where: "在 VS Code 里打开 Cline 面板，点齿轮图标，然后照着表格逐栏填写。"
     },
     "continue": {
       label: "Continue.dev", proto: "OpenAI", slash: true,
       file: "~/.continue/config.yaml",
-      where: "Thêm vào mục <code>models</code> đã có sẵn trong file."
+      where: "加到文件里已有的 <code>models</code> 一节下面。"
     },
     "droid": {
       label: "Droid", proto: "OpenAI", slash: true,
       file: "~/.factory/config.json",
-      where: "Chưa có thì tạo mới. Đã có <code>custom_models</code> thì thêm một phần tử vào mảng đó."
+      where: "没有就新建一个。已经有 <code>custom_models</code> 的话，往那个数组里加一个元素。"
     }
   };
 
   const BASE = "http://127.0.0.1:8317";
-  const KEY_PLACEHOLDER = "sk-dan-khoa-cua-ban-vao-day";
+  const KEY_PLACEHOLDER = "sk-paste-your-key-here";
 
   const $ = s => document.querySelector(s);
   const accOpts = $("#acc-opts"), planOpts = $("#plan-opts"), planWrap = $("#plan-wrap");
@@ -855,7 +842,7 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
   function build() {
     const accounts = pickedAccounts();
     if (!accounts.length) {
-      out.innerHTML = `<div class="empty">Chọn ít nhất một loại tài khoản ở bước 1 để xem cấu hình.</div>`;
+      out.innerHTML = `<div class="empty">在第 1 步至少选一种账号，配置就会显示在这里。</div>`;
       return;
     }
     const toolId = pickedTool(), t = TOOLS[toolId];
@@ -875,10 +862,9 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
     "ANTHROPIC_AUTH_TOKEN": "${key}"
   }
 }`;
-        extra = `<div class="note"><span class="tag">Vì sao ngắn thế</span>
-          <p>Bạn chỉ dùng tài khoản Claude, mà Claude Code vốn đã hiểu sẵn tên các model
-          Claude. Không cần khai model, lệnh <code>/model</code> trong Claude Code vẫn
-          hoạt động đúng như bình thường.</p></div>`;
+        extra = `<div class="note"><span class="tag">为什么这么短</span>
+          <p>你只用 Claude 账号，而 Claude Code 本来就认识 Claude 各个模型的名字。
+          不需要额外写模型，Claude Code 里的 <code>/model</code> 命令照常好用。</p></div>`;
       } else {
         body =
 `{
@@ -891,21 +877,20 @@ hiện ra bên dưới, kèm chỗ dán và nút chép.</p>
     "CLAUDE_CODE_SUBAGENT_MODEL": "${main}"
   }
 }`;
-        extra = `<div class="note"><span class="tag">Ba dòng model để làm gì</span>
-          <p>Claude Code luôn gọi theo tên model của Claude. Ba dòng đó dịch các tên
-          <em>Opus</em>, <em>Sonnet</em>, <em>Haiku</em> sang model thật của bạn — nên khi
-          bạn chọn <em>Opus</em> trong <code>/model</code> thì nó chạy
-          <code>${esc(main)}</code>.</p>
-          <p>Bạn có thể trỏ mỗi tên sang một model khác nhau để dùng
-          <code>/model</code> làm công tắc chuyển nhanh.</p></div>`;
+        extra = `<div class="note"><span class="tag">那三行模型是干什么的</span>
+          <p>Claude Code 永远按 Claude 的模型名来调用。那三行把
+          <em>Opus</em>、<em>Sonnet</em>、<em>Haiku</em> 这几个名字翻译成你真正的模型 ——
+          所以当你在 <code>/model</code> 里选 <em>Opus</em> 时，跑的其实是
+          <code>${esc(main)}</code>。</p>
+          <p>你也可以让每个名字指向不同的模型，把
+          <code>/model</code> 当成快速切换的开关来用。</p></div>`;
       }
-      swap = `<p>Gõ <code>/model</code> rồi chọn. Muốn mỗi tên chạy một model khác nhau
-        thì sửa ba dòng <code>..._MODEL</code> cho khác nhau — ví dụ để
-        <em>Opus</em> là model mạnh, <em>Sonnet</em> là model nhanh, rồi chuyển qua lại
-        bằng một lệnh.</p>
-        <p class="fh" style="max-width:60ch">Lưu ý: gõ thẳng <code>/model &lt;tên&gt;</code>
-        sẽ ghi đè mặc định vào file cấu hình. Muốn đổi tạm cho riêng phiên đang mở thì
-        chọn trong bảng hiện ra, ở mục ghi <em>this session only</em>.</p>`;
+      swap = `<p>输入 <code>/model</code> 然后选。想让每个名字跑不同的模型，
+        就把那三行 <code>..._MODEL</code> 改成不一样的 —— 比如让
+        <em>Opus</em> 是最强的模型、<em>Sonnet</em> 是最快的模型，一条命令就能来回切。</p>
+        <p class="fh" style="max-width:60ch">注意：直接输入 <code>/model &lt;名字&gt;</code>
+        会把默认值写进配置文件。只想给当前这个会话临时换一下的话，
+        请在弹出的列表里选写着 <em>this session only</em> 的那一项。</p>`;
     }
 
     else if (toolId === "codex-cli") {
@@ -924,21 +909,20 @@ requires_openai_auth = true`;
 `model = "${light}"
 model_provider = "cliproxyapi"`;
       swap =
-`<p><strong>Đổi ngay trong lúc đang chạy:</strong> gõ <code>/models</code> rồi chọn.</p>
- <p><strong>Chạy một lần với model khác:</strong> <code>codex -m ${esc(light)}</code></p>
- <p><strong>Lưu sẵn nhiều bộ:</strong> tạo thêm file thứ hai bên dưới, rồi gọi
- <code>codex -p light</code>. Codex sẽ chồng file đó lên cấu hình chính, nên chỉ cần ghi
- những dòng khác biệt.</p>`;
+`<p><strong>运行中直接切换：</strong>输入 <code>/models</code> 然后选。</p>
+ <p><strong>临时用另一个模型跑一次：</strong><code>codex -m ${esc(light)}</code></p>
+ <p><strong>预存多套配置：</strong>再建下面这第二个文件，然后用
+ <code>codex -p light</code> 调用。Codex 会把它叠加在主配置之上，所以只需要写有差别的那几行。</p>`;
     }
 
     else if (toolId === "gemini-cli") {
       body =
 `export GOOGLE_GEMINI_BASE_URL="${url}"
 export GEMINI_API_KEY="${key}"`;
-      extra = `<div class="note warn"><span class="tag">Có thể trục trặc</span>
-        <p>Gemini CLI hỗ trợ đổi địa chỉ chưa ổn định — đã có báo cáo nó bỏ qua hai biến
-        này và vẫn gọi thẳng lên Google. Nếu không ăn, dùng tạm OpenCode hoặc Claude Code,
-        cả hai đều gọi được model Gemini qua proxy.</p></div>`;
+      extra = `<div class="note warn"><span class="tag">可能会出问题</span>
+        <p>Gemini CLI 对改地址的支持还不稳定 —— 已经有人反馈它会忽略这两个变量，
+        照样直接连 Google。如果不生效，可以先用 OpenCode 或 Claude Code，
+        这两个都能通过代理调用 Gemini 模型。</p></div>`;
     }
 
     else if (toolId === "opencode") {
@@ -955,29 +939,29 @@ export GEMINI_API_KEY="${key}"`;
   },
   "model": "${main}"
 }`;
-      swap = `<p>Dòng <code>model</code> chỉ là mặc định lúc mở. Trong OpenCode gõ
-        <code>/models</code> để chọn model khác — mọi model thuộc tài khoản bạn đã đăng
-        nhập đều hiện ra, không phải khai trước từng cái.</p>`;
+      swap = `<p><code>model</code> 这一行只是启动时的默认值。在 OpenCode 里输入
+        <code>/models</code> 就能换别的模型 —— 你登录的账号下的所有模型都会列出来，
+        不用一个个提前写好。</p>`;
     }
 
     else if (toolId === "continue") {
       body =
 `models:
-  - name: Model chính
+  - name: 主力模型
     provider: openai
     model: ${main}
     apiBase: ${url}
     apiKey: ${key}
     roles: [chat, edit]
-  - name: Model nhẹ
+  - name: 轻量模型
     provider: openai
     model: ${light}
     apiBase: ${url}
     apiKey: ${key}
     roles: [chat, edit, apply]`;
-      swap = `<p>Mục <code>models</code> là một danh sách, nên khai bao nhiêu cũng được —
-        cứ lặp lại khối bốn dòng và đổi <code>name</code> với <code>model</code>.
-        Trong VS Code, bấm vào tên model ở đáy khung chat để chuyển.</p>`;
+      swap = `<p><code>models</code> 是一个列表，想写多少个都行 ——
+        把那四行的块复制一遍，改掉 <code>name</code> 和 <code>model</code> 即可。
+        在 VS Code 里点聊天框底部的模型名就能切换。</p>`;
     }
 
     else if (toolId === "droid") {
@@ -998,54 +982,54 @@ export GEMINI_API_KEY="${key}"`;
     }
   ]
 }`;
-      swap = `<p><code>custom_models</code> là một mảng — thêm bao nhiêu khối cũng được,
-        mỗi khối một model. Trong Droid chọn model ở phần chuyển model.</p>`;
-      extra = `<div class="note"><span class="tag">Lưu ý</span>
-        <p>Nếu bạn đổi <code>"provider"</code> thành <code>"anthropic"</code> thì
-        <code>base_url</code> phải bỏ <code>/v1</code> đi.</p></div>`;
+      swap = `<p><code>custom_models</code> 是一个数组 —— 想加多少个块都行，
+        一个块一个模型。在 Droid 里到切换模型的地方选就行。</p>`;
+      extra = `<div class="note"><span class="tag">注意</span>
+        <p>如果你把 <code>"provider"</code> 改成 <code>"anthropic"</code>，
+        那 <code>base_url</code> 就要去掉 <code>/v1</code>。</p></div>`;
     }
 
     else if (toolId === "cline") {
       out.innerHTML = `
-        <div class="outhead"><h4>Điền vào bảng cài đặt của ${esc(t.label)}</h4>
+        <div class="outhead"><h4>填进 ${esc(t.label)} 的设置面板</h4>
           <span class="badge">${esc(t.proto)}</span></div>
         <p>${t.where}</p>
         <div class="tw"><table>
-          <tr><th>Ô</th><th>Điền</th></tr>
+          <tr><th>栏位</th><th>填入</th></tr>
           <tr><td>API Provider</td><td><strong>OpenAI Compatible</strong></td></tr>
           <tr><td>Base URL</td><td><code>${esc(url)}</code></td></tr>
           <tr><td>API Key</td><td><code>${esc(key)}</code></td></tr>
           <tr><td>Model ID</td><td><code>${esc(main)}</code></td></tr>
         </table></div>
-        <div class="note warn"><span class="tag">Ngốn nhiều lượt</span>
-          <p>Cline đọc cả dự án để lấy ngữ cảnh nên tiêu tốn nhanh hơn hẳn các công cụ
-          khác. Dùng nhiều thì nên để dành tài khoản thuê bao cho công cụ khác.</p></div>`;
+        <div class="note warn"><span class="tag">很费额度</span>
+          <p>Cline 会读整个项目来获取上下文，所以额度消耗比其他工具快得多。
+          如果用得多，建议把订阅账号留给别的工具。</p></div>`;
       return;
     }
 
     out.innerHTML = `
-      <div class="outhead"><h4>Cấu hình cho ${esc(t.label)}</h4>
+      <div class="outhead"><h4>${esc(t.label)} 的配置</h4>
         <span class="badge">${esc(t.proto)}</span></div>
       <p>${t.where}</p>
       <div class="codebox">
         <div class="codebar">
           <span class="fp">${esc(t.file)}</span>
-          <button class="copy" type="button">Chép</button>
+          <button class="copy" type="button">复制</button>
         </div>
         <pre><code>${esc(body)}</code></pre>
       </div>
       ${extra}
-      ${body2 ? `<h4>Bộ thứ hai, không bắt buộc</h4>
+      ${body2 ? `<h4>第二套配置（可选）</h4>
         <div class="codebox">
           <div class="codebar">
             <span class="fp">${esc(file2)}</span>
-            <button class="copy" type="button">Chép</button>
+            <button class="copy" type="button">复制</button>
           </div>
           <pre><code>${esc(body2)}</code></pre>
         </div>` : ""}
-      ${swap ? `<div class="note"><span class="tag">Đổi model về sau</span>${swap}</div>` : ""}
-      <div class="note"><span class="tag">Sau khi dán xong</span>
-        <p>Đóng hẳn công cụ rồi mở lại. Cửa sổ đang mở vẫn dùng cấu hình cũ.</p></div>`;
+      ${swap ? `<div class="note"><span class="tag">以后怎么换模型</span>${swap}</div>` : ""}
+      <div class="note"><span class="tag">粘贴完之后</span>
+        <p>把工具完全关掉再重新打开。已经开着的窗口用的还是旧配置。</p></div>`;
   }
 
   /* ---------- nut chep ---------- */
@@ -1062,9 +1046,9 @@ export GEMINI_API_KEY="${key}"`;
       try { ok = document.execCommand("copy"); } catch {}
       ta.remove();
     }
-    btn.textContent = ok ? "Đã chép" : "Hãy tự bôi đen";
+    btn.textContent = ok ? "已复制" : "请手动选中复制";
     btn.classList.toggle("done", ok);
-    setTimeout(() => { btn.textContent = "Chép"; btn.classList.remove("done"); }, 1800);
+    setTimeout(() => { btn.textContent = "复制"; btn.classList.remove("done"); }, 1800);
   });
 
   /* ---------- lang nghe ---------- */
